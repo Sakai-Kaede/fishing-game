@@ -12,6 +12,10 @@ export class User {
     name: string;
     count: number;
   }[];
+  private achievements: {
+    name: string;
+    achieved: boolean;
+  }[];
 
   constructor(
     username: string = "xxx",
@@ -22,6 +26,10 @@ export class User {
     caughtFish: {
       name: string;
       count: number;
+    }[] = [],
+    achievements: {
+      name: string;
+      achieved: boolean;
     }[] = []
   ) {
     if (username.length < 3 || username.length > 256) {
@@ -36,6 +44,7 @@ export class User {
     this.sumScore = sumScore;
     this.fishingRodLevel = fishingRodLevel;
     this.caughtFish = caughtFish;
+    this.achievements = achievements;
   }
 
   // ユーザーIDを生成
@@ -99,6 +108,10 @@ export class User {
     sumScore: number;
     fishingRodLevel: number;
     caughtFish: { name: string; count: number }[];
+    achievements: {
+      name: string;
+      achieved: boolean;
+    }[];
   } {
     return {
       username: this.username,
@@ -107,6 +120,7 @@ export class User {
       sumScore: this.sumScore,
       fishingRodLevel: this.fishingRodLevel,
       caughtFish: this.caughtFish,
+      achievements: this.achievements,
     };
   }
 }
@@ -130,6 +144,10 @@ export interface IUserRepository {
     caughtFish: {
       name: string;
       count: number;
+    }[],
+    achievements: {
+      name: string;
+      achieved: boolean;
     }[]
   ): Promise<{ username: string; userId: string }>;
 

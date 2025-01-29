@@ -26,7 +26,7 @@ export class UpdateFishingRodLevelUseCase {
       undefined, // パスワード
       undefined, // 合計スコア
       user.fishingRodLevel,
-      undefined // 捕まえた魚
+      undefined // 捕まえた魚リスト
     );
     const updatableFishingRodLevel =
       newUser.isBigInputFishingRodLevel(fishingRodLevel);

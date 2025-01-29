@@ -26,7 +26,8 @@ export class RegisterUserUseCase {
       newUser.getUser().password,
       newUser.getUser().sumScore,
       newUser.getUser().fishingRodLevel,
-      newUser.getUser().caughtFish
+      newUser.getUser().caughtFish,
+      newUser.getUser().achievements
     );
     return {
       username: savedUser.username,

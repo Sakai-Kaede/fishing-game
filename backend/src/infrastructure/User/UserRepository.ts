@@ -5,19 +5,38 @@ export class UserRepository {
   public authUser = async (
     username: string,
     userId: string,
-    password: string
-  ): Promise<{ username: string; userId: string }> => {
+    password: string,
+    sumScore: number,
+    fishingRodLevel: number,
+    caughtFish: {
+      name: string;
+      count: number;
+    }[]
+  ): Promise<{
+    username: string;
+    userId: string;
+    fishingRodLevel: number;
+    caughtFish: {
+      name: string;
+      count: number;
+    }[];
+  }> => {
     try {
       const newUser = new UserModel({
         username,
         password,
         userId,
+        sumScore,
+        fishingRodLevel,
+        caughtFish,
       });
       const savedUser = await newUser.save();
 
       return {
         username: savedUser.username,
         userId: savedUser.userId,
+        fishingRodLevel: savedUser.fishingRodLevel,
+        caughtFish: savedUser.caughtFish,
       };
     } catch (err) {
       console.error("ユーザー作成エラー:", err);
@@ -81,7 +100,7 @@ export class UserRepository {
         throw new Error("ユーザーが見つかりません");
       }
 
-      user.sumScore += additionalScore;
+      user.sumScore = additionalScore;
       await user.save();
       console.log(`ユーザー ${userId} の sumScore を更新しました`);
 

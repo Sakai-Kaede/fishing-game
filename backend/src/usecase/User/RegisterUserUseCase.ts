@@ -10,7 +10,7 @@ interface RegisterUserOutput {
   userId: string;
 }
 
-export class ResisterUserUseCase {
+export class RegisterUserUseCase {
   private userRepository: IUserRepository;
 
   constructor(userRepository: IUserRepository) {
@@ -23,7 +23,10 @@ export class ResisterUserUseCase {
     const savedUser = await this.userRepository.authUser(
       newUser.getUser().username,
       newUser.getUser().userId,
-      newUser.getUser().password
+      newUser.getUser().password,
+      newUser.getUser().sumScore,
+      newUser.getUser().fishingRodLevel,
+      newUser.getUser().caughtFish
     );
     return {
       username: savedUser.username,

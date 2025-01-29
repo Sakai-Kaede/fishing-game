@@ -20,10 +20,12 @@ export class AddSumScoreUseCase {
       throw new Error(`ユーザーID ${userId} が見つかりません`);
     }
     const newUser = new User(
-      user.username,
-      user.password,
-      undefined,
-      user.sumScore
+      undefined, // ユーザー名
+      undefined, // ユーザーID
+      undefined, // パスワード
+      user.sumScore,
+      undefined, // 釣竿レベル
+      undefined // 捕まえた魚リスト
     );
     const updateSumScore = newUser.addScore(additionalScore);
     return await this.userRepository.updateSumScore(

@@ -14,8 +14,8 @@ export class User {
   }[];
 
   constructor(
-    username: string,
-    password: string,
+    username: string = "xxx",
+    password: string = "xxxxxx",
     userId: string = this.generateUserId(),
     sumScore: number = 0,
     fishingRodLevel: number = 1,
@@ -124,7 +124,13 @@ export interface IUserRepository {
   authUser(
     username: string,
     userId: string,
-    password: string
+    password: string,
+    sumScore: number,
+    fishingRodLevel: number,
+    caughtFish: {
+      name: string;
+      count: number;
+    }[]
   ): Promise<{ username: string; userId: string }>;
 
   /**

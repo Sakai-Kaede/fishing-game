@@ -11,6 +11,10 @@ export class UserRepository {
     caughtFish: {
       name: string;
       count: number;
+    }[],
+    achievements: {
+      name: string;
+      achieved: boolean;
     }[]
   ): Promise<{
     username: string;
@@ -19,6 +23,10 @@ export class UserRepository {
     caughtFish: {
       name: string;
       count: number;
+    }[];
+    achievements: {
+      name: string;
+      achieved: boolean;
     }[];
   }> => {
     try {
@@ -29,6 +37,7 @@ export class UserRepository {
         sumScore,
         fishingRodLevel,
         caughtFish,
+        achievements,
       });
       const savedUser = await newUser.save();
 
@@ -37,6 +46,7 @@ export class UserRepository {
         userId: savedUser.userId,
         fishingRodLevel: savedUser.fishingRodLevel,
         caughtFish: savedUser.caughtFish,
+        achievements: savedUser.achievements,
       };
     } catch (err) {
       console.error("ユーザー作成エラー:", err);
@@ -57,16 +67,24 @@ export class UserRepository {
         throw new Error("ユーザーが見つかりません");
       }
 
-      user.fishingRodLevel = newLevel;
-
       if (user.sumScore < requiredScore) {
         throw new Error("スコアが不足しています");
       }
+
+      user.fishingRodLevel = newLevel;
       user.sumScore -= requiredScore;
 
       await user.save();
       return user.fishingRodLevel;
     } catch (err) {
+      if (err instanceof Error && err.message === "ユーザーが見つかりません") {
+        throw err;
+      }
+
+      if (err instanceof Error && err.message === "スコアが不足しています") {
+        throw err;
+      }
+
       console.error("ユーザー更新エラー:", err);
       throw new Error("ユーザー情報の更新に失敗しました");
     }

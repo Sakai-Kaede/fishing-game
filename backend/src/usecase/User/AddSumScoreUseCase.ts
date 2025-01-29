@@ -25,7 +25,8 @@ export class AddSumScoreUseCase {
       undefined, // パスワード
       user.sumScore,
       undefined, // 釣竿レベル
-      undefined // 捕まえた魚リスト
+      undefined, // 捕まえた魚リスト
+      undefined // 実績
     );
     const updateSumScore = newUser.addScore(additionalScore);
     return await this.userRepository.updateSumScore(

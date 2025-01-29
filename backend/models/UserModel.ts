@@ -10,6 +10,10 @@ export interface IUser extends Document {
     name: string;
     count: number;
   }[];
+  achievements: {
+    name: string;
+    achieved: boolean;
+  }[];
 }
 
 const UserSchema: Schema<IUser> = new mongoose.Schema(
@@ -47,6 +51,14 @@ const UserSchema: Schema<IUser> = new mongoose.Schema(
         {
           name: { type: String, required: true },
           count: { type: Number, required: true },
+        },
+      ],
+    },
+    achievements: {
+      type: [
+        {
+          name: { type: String, required: true },
+          achieved: { type: Boolean, required: true, default: false },
         },
       ],
     },

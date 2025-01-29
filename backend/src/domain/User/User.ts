@@ -1,4 +1,6 @@
 import bcrypt from "bcrypt";
+import { fishList } from "@/constants/FishData";
+import { IUser } from "@/models/UserModel";
 
 export class User {
   private username: string;
@@ -39,31 +41,36 @@ export class User {
     const isMatch = await bcrypt.compare(inputPassword, this.password);
     return isMatch;
   }
-  // 釣り竿のレベルを更新
-  public upgradeFishingRod(level: number): void {
-    if (level < this.fishingRodLevel)
-      throw new Error(
-        "現在のレベルや現在のレベルより低いレベルにはアップグレードできません"
-      );
-    this.fishingRodLevel = level;
-  }
-  // スコアを加算
-  public addScore(score: number): void {
-    this.sumScore += score;
-  }
-  // 魚を追加
-  public addCaughtFish(name: string): void {
-    const existingFish = this.caughtFish.find((fish) => fish.name === name);
-    if (existingFish) {
-      existingFish.count += 1;
-    } else {
-      this.caughtFish.push({ name, count: 1 });
+  // 釣竿レベル更新のためのバリデーションチェック（返り値は更新後のレベルと必要なスコア）
+  public validateFishingRodLevelUpgrade(
+    input: number
+  ): [number, number] | Error {
+    switch (input) {
+      case 5:
+        return [5, 1000];
+      case 10:
+        return [10, 3000];
+      case 20:
+        return [20, 5000];
+      default:
+        throw new Error("無効な入力です");
     }
   }
+  // 魚名のバリデーションチェック
+  public validateFishName = (name: string): string | Error => {
+    const fish = fishList.find((fish) => fish.name === name);
+
+    if (fish) {
+      return fish.name;
+    } else {
+      throw new Error("指定された魚はリストに存在しません");
+    }
+  };
   // ユーザー情報の取得
   public getUser(): {
     username: string;
     userId: string;
+    password: string;
     sumScore: number;
     fishingRodLevel: number;
     caughtFish: { name: string; count: number }[];
@@ -71,9 +78,79 @@ export class User {
     return {
       username: this.username,
       userId: this.userId,
+      password: this.password,
       sumScore: this.sumScore,
       fishingRodLevel: this.fishingRodLevel,
       caughtFish: this.caughtFish,
     };
   }
+}
+
+export interface IUserRepository {
+  /**
+   * 新しいユーザーを登録します。
+   *
+   * @param username ユーザー名
+   * @param userId ユーザーID（ユニーク）
+   * @param password ユーザーのパスワード
+   * @returns 登録したユーザー情報（username, userId）
+   * @throws エラーが発生した場合、ユーザー登録に失敗します
+   */
+  authUser(
+    username: string,
+    userId: string,
+    password: string
+  ): Promise<{ username: string; userId: string }>;
+
+  /**
+   * ユーザーの釣竿レベルを更新します。
+   *
+   * @param userId ユーザーID
+   * @param newLevel 新しいレベル
+   * @param requiredScore 必要なスコア（現在のsumScoreから減算される）
+   * @returns 更新後の釣竿レベル（fishingRodLevel）
+   * @throws ユーザーが見つからない、またはsumScoreが不足している場合、エラーが発生します
+   */
+  updateFishingRodLevel(
+    userId: string,
+    newLevel: number,
+    requiredScore: number
+  ): Promise<number>;
+
+  /**
+   * ユーザーIDを元にユーザー情報を取得します。
+   *
+   * @param userId ユーザーID
+   * @returns ユーザー情報（IUser型）または見つからない場合はnull
+   * @throws ユーザーが見つからない場合、エラーが発生します
+   */
+  getUserById(userId: string): Promise<IUser | null>;
+
+  /**
+   * ユーザーのsumScoreを更新します。
+   *
+   * @param userId ユーザーID
+   * @param additionalScore 追加するスコア（sumScoreに加算されます）
+   * @returns 更新後の合計スコア（sumScore）
+   * @throws ユーザーが見つからない場合、エラーが発生します
+   */
+  updateSumScore(userId: string, additionalScore: number): Promise<number>;
+
+  /**
+   * ユーザーのcaughtFishのcountを1増やします。
+   *
+   * @param userId ユーザーID
+   * @param name 捕まえた魚の名前
+   * @returns 更新後の捕まえた魚のリスト（caughtFish）
+   * @throws ユーザーが見つからない、または魚名が無効な場合、エラーが発生します
+   */
+  incrementCaughtFishCount(
+    userId: string,
+    name: string
+  ): Promise<
+    {
+      name: string;
+      count: number;
+    }[]
+  >;
 }

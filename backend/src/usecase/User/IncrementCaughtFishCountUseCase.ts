@@ -24,7 +24,7 @@ export class IncrementCaughtFishCountUseCase {
     if (!user) {
       throw new Error(`ユーザーID ${userId} が見つかりません`);
     }
-    const newUser = new User(user.username, user.password);
+    const newUser = new User();
     const validateName = newUser.validateFishName(name);
     if (validateName instanceof Error) {
       throw validateName;

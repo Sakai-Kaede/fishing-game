@@ -5,15 +5,25 @@ import { IUser } from "@/models/UserModel";
 export class User {
   private username: string;
   private password: string;
-  private userId: string = this.generateUserId();
-  private sumScore: number = 0;
-  private fishingRodLevel: number = 1;
+  private userId: string;
+  private sumScore: number;
+  private fishingRodLevel: number;
   private caughtFish: {
     name: string;
     count: number;
-  }[] = [];
+  }[];
 
-  constructor(username: string, password: string) {
+  constructor(
+    username: string,
+    password: string,
+    userId: string = this.generateUserId(),
+    sumScore: number = 0,
+    fishingRodLevel: number = 1,
+    caughtFish: {
+      name: string;
+      count: number;
+    }[] = []
+  ) {
     if (username.length < 3 || username.length > 256) {
       throw new Error("ユーザー名は3文字以上256文字以内である必要があります");
     }
@@ -22,6 +32,10 @@ export class User {
     }
     this.username = username;
     this.password = this.hashPasswordSync(password);
+    this.userId = userId;
+    this.sumScore = sumScore;
+    this.fishingRodLevel = fishingRodLevel;
+    this.caughtFish = caughtFish;
   }
 
   // ユーザーIDを生成
@@ -35,11 +49,15 @@ export class User {
     const saltRounds = 10;
     return bcrypt.hashSync(password, saltRounds);
   }
-
   // パスワードの照合メソッド
   public async comparePassword(inputPassword: string): Promise<boolean> {
     const isMatch = await bcrypt.compare(inputPassword, this.password);
     return isMatch;
+  }
+  // スコアを加算
+  public addScore(score: number): number {
+    this.sumScore += score;
+    return this.sumScore;
   }
   // 釣竿レベル更新のためのバリデーションチェック（返り値は更新後のレベルと必要なスコア）
   public validateFishingRodLevelUpgrade(
@@ -55,6 +73,13 @@ export class User {
       default:
         throw new Error("無効な入力です");
     }
+  }
+  // 釣竿レベルを比較するメソッド
+  public isBigInputFishingRodLevel(inputLevel: number): number | Error {
+    if (inputLevel <= this.fishingRodLevel) {
+      throw new Error("入力された釣竿レベルは現在の釣竿レベル以下です");
+    }
+    return inputLevel;
   }
   // 魚名のバリデーションチェック
   public validateFishName = (name: string): string | Error => {

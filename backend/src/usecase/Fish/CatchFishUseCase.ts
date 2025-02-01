@@ -57,5 +57,11 @@ export class CaughtFishUseCase {
     console.log(
       `ユーザー ${userId} が魚 ${latestPreFish.fish.name} を捕まえました。スコア: ${fishScore}`
     );
+    return {
+      fish: {
+        name: latestPreFish.fish.name,
+        score: latestPreFish.fish.score,
+      },
+    };
   }
 }

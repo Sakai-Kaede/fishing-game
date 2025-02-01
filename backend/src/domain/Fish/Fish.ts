@@ -120,4 +120,12 @@ export interface IFishRepository {
    * @throws ランダムIDに関連するデータが見つからない場合、エラーが発生します。
    */
   isRandomIdInvalid(randomId: string): Promise<boolean>;
+  /**
+   * 指定したユーザーIDの最新のPreFish以外を削除します。
+   *
+   * @param userId 古いPreFishを削除する対象のユーザーID
+   * @returns なし
+   * @throws PreFish情報が見つからない場合、または削除処理中にエラーが発生した場合、エラーをスローします。
+   */
+  deleteOldPreFishByUserId(userId: string): Promise<void>;
 }

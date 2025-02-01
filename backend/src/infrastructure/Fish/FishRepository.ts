@@ -110,4 +110,29 @@ export class FishRepository {
       throw new Error("ランダムIDの無効化状態確認に失敗しました");
     }
   };
+
+  // userIdで指定した最新のPreFish以外を削除する
+  public deleteOldPreFishByUserId = async (userId: string): Promise<void> => {
+    try {
+      const latestPreFish = await PreFishModel.findOne({ userId })
+        .sort({ createdAt: -1 })
+        .select("createdAt");
+
+      if (!latestPreFish) {
+        console.log(`ユーザーID ${userId} のPreFish情報が見つかりません`);
+        return;
+      }
+      const deleteResult = await PreFishModel.deleteMany({
+        userId,
+        createdAt: { $lt: latestPreFish.createdAt },
+      });
+
+      console.log(
+        `ユーザーID ${userId} の古いPreFish ${deleteResult.deletedCount} 件を削除しました`
+      );
+    } catch (err) {
+      console.error(`ユーザーID ${userId} の古いPreFish削除エラー:`, err);
+      throw new Error("古いPreFishの削除に失敗しました");
+    }
+  };
 }

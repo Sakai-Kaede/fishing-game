@@ -46,7 +46,9 @@ export class FishRepository {
   };
 
   // ユーザーIDから最新のPreFish情報を取得する
-  public getLatestFishByUserId = async (userId: string): Promise<IPreFish> => {
+  public getLatestPreFishByUserId = async (
+    userId: string
+  ): Promise<IPreFish> => {
     try {
       const latestPreFish = await PreFishModel.findOne({ userId })
         .sort({ createdAt: -1 })

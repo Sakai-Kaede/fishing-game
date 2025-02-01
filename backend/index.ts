@@ -11,7 +11,12 @@ import { GetUserDataController } from "@/src/presentation/User/GetUserDataContro
 import { IncrementCaughtFishCountController } from "@/src/presentation/User/IncrementCaughtFishCountController";
 import { RegisterUserController } from "@/src/presentation/User/RegisterUserController";
 import { UpdateFishingRodLevelController } from "@/src/presentation/User/UpdateFishingRodLevelController";
-import { IUserRepository } from "./src/domain/User/User";
+
+import { FishRepository } from "@/src/infrastructure/Fish/FishRepository";
+import { CaughtFishController } from "@/src/presentation/Fish/CatchFishController";
+import { CreatePreFishController } from "@/src/presentation/Fish/CreatePreFishController";
+import { IUserRepository } from "@/src/domain/User/User";
+import { IFishRepository } from "@/src/domain/Fish/Fish";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -22,6 +27,7 @@ app.use(express.json());
 
 // インフラ層のリポジトリをインスタンス化
 const userRepository: IUserRepository = new UserRepository();
+const fishRepository: IFishRepository = new FishRepository();
 
 // プレゼンテーション層のコントローラをインスタンス化
 const addSumScoreController = new AddSumScoreController(userRepository);
@@ -33,12 +39,24 @@ const updateFishingRodLevelController = new UpdateFishingRodLevelController(
   userRepository
 );
 
+const createFishController = new CreatePreFishController(
+  fishRepository,
+  userRepository
+);
+const catchFishController = new CaughtFishController(
+  fishRepository,
+  userRepository
+);
+
 // エンドポイントを登録
 addSumScoreController.addSumScore(app);
 getUserDataController.getUserData(app);
 incrementCaughtFishCountController.incrementCaughtFishCount(app);
 registerUserController.registerUser(app);
 updateFishingRodLevelController.updateFishingRodLevel(app);
+
+createFishController.createPreFish(app);
+catchFishController.caughtFish(app);
 
 connectDB()
   .then(() => {

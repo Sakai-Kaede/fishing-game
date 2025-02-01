@@ -2,6 +2,7 @@ export const fishList = [
   {
     name: "イワシ",
     score: 60,
+    frequency: 60,
     requiredInteractions: 5,
     CatchableMinDepth: 0,
     CatchableMaxDepth: 3,
@@ -9,6 +10,7 @@ export const fishList = [
   {
     name: "タイ",
     score: 135,
+    frequency: 135,
     requiredInteractions: 25,
     CatchableMinDepth: 0,
     CatchableMaxDepth: 20,
@@ -16,6 +18,7 @@ export const fishList = [
   {
     name: "ヒラメ",
     score: 130,
+    frequency: 130,
     requiredInteractions: 25,
     CatchableMinDepth: 0,
     CatchableMaxDepth: 20,
@@ -23,6 +26,7 @@ export const fishList = [
   {
     name: "サンマ",
     score: 120,
+    frequency: 120,
     requiredInteractions: 25,
     CatchableMinDepth: 0,
     CatchableMaxDepth: 7,
@@ -30,6 +34,7 @@ export const fishList = [
   {
     name: "ブリ",
     score: 122,
+    frequency: 122,
     requiredInteractions: 25,
     CatchableMinDepth: 0,
     CatchableMaxDepth: 10,
@@ -37,6 +42,7 @@ export const fishList = [
   {
     name: "イカ",
     score: 105,
+    frequency: 105,
     requiredInteractions: 25,
     CatchableMinDepth: 10,
     CatchableMaxDepth: 20,
@@ -44,6 +50,7 @@ export const fishList = [
   {
     name: "タコ",
     score: 98,
+    frequency: 98,
     requiredInteractions: 25,
     CatchableMinDepth: 0,
     CatchableMaxDepth: 3,
@@ -51,6 +58,7 @@ export const fishList = [
   {
     name: "ウナギ",
     score: 137,
+    frequency: 137,
     requiredInteractions: 25,
     CatchableMinDepth: 25,
     CatchableMaxDepth: 80,
@@ -58,6 +66,7 @@ export const fishList = [
   {
     name: "サケ",
     score: 124,
+    frequency: 124,
     requiredInteractions: 25,
     CatchableMinDepth: 0,
     CatchableMaxDepth: 4,
@@ -65,6 +74,7 @@ export const fishList = [
   {
     name: "アジ",
     score: 118,
+    frequency: 118,
     requiredInteractions: 25,
     CatchableMinDepth: 0,
     CatchableMaxDepth: 15,
@@ -72,6 +82,7 @@ export const fishList = [
   {
     name: "クラゲ",
     score: 90,
+    frequency: 90,
     requiredInteractions: 3,
     CatchableMinDepth: 8,
     CatchableMaxDepth: 28,
@@ -79,6 +90,7 @@ export const fishList = [
   {
     name: "トビウオ",
     score: 110,
+    frequency: 110,
     requiredInteractions: 10,
     CatchableMinDepth: 0,
     CatchableMaxDepth: 4,
@@ -86,6 +98,7 @@ export const fishList = [
   {
     name: "クリオネ",
     score: 95,
+    frequency: 95,
     requiredInteractions: 6,
     CatchableMinDepth: 15,
     CatchableMaxDepth: 60,
@@ -93,6 +106,7 @@ export const fishList = [
   {
     name: "スズキ",
     score: 100,
+    frequency: 100,
     requiredInteractions: 25,
     CatchableMinDepth: 5,
     CatchableMaxDepth: 8,
@@ -100,6 +114,7 @@ export const fishList = [
   {
     name: "フグ",
     score: 133,
+    frequency: 133,
     requiredInteractions: 10,
     CatchableMinDepth: 10,
     CatchableMaxDepth: 30,
@@ -107,6 +122,7 @@ export const fishList = [
   {
     name: "カツオ",
     score: 125,
+    frequency: 125,
     requiredInteractions: 25,
     CatchableMinDepth: 4,
     CatchableMaxDepth: 10,
@@ -114,6 +130,7 @@ export const fishList = [
   {
     name: "ウミガメ",
     score: 160,
+    frequency: 160,
     requiredInteractions: 25,
     CatchableMinDepth: 3,
     CatchableMaxDepth: 20,
@@ -121,6 +138,7 @@ export const fishList = [
   {
     name: "ダイオウグソクムシ",
     score: 180,
+    frequency: 180,
     requiredInteractions: 25,
     CatchableMinDepth: 20,
     CatchableMaxDepth: 50,
@@ -128,6 +146,7 @@ export const fishList = [
   {
     name: "メンダコ",
     score: 157,
+    frequency: 157,
     requiredInteractions: 25,
     CatchableMinDepth: 20,
     CatchableMaxDepth: 100,
@@ -135,6 +154,7 @@ export const fishList = [
   {
     name: "マグロ",
     score: 210,
+    frequency: 210,
     requiredInteractions: 300,
     CatchableMinDepth: 10,
     CatchableMaxDepth: 15,
@@ -142,6 +162,7 @@ export const fishList = [
   {
     name: "キンメダイ",
     score: 270,
+    frequency: 270,
     requiredInteractions: 25,
     CatchableMinDepth: 20,
     CatchableMaxDepth: 80,
@@ -149,6 +170,7 @@ export const fishList = [
   {
     name: "サメ",
     score: 150,
+    frequency: 150,
     requiredInteractions: 51,
     CatchableMinDepth: 3,
     CatchableMaxDepth: 15,
@@ -156,6 +178,7 @@ export const fishList = [
   {
     name: "ウツボ",
     score: 140,
+    frequency: 140,
     requiredInteractions: 30,
     CatchableMinDepth: 6,
     CatchableMaxDepth: 14,
@@ -163,6 +186,7 @@ export const fishList = [
   {
     name: "海草",
     score: 50,
+    frequency: 50,
     requiredInteractions: 10,
     CatchableMinDepth: 0,
     CatchableMaxDepth: 100,
@@ -170,6 +194,7 @@ export const fishList = [
   {
     name: "伊勢海老",
     score: 250,
+    frequency: 250,
     requiredInteractions: 20,
     CatchableMinDepth: 0,
     CatchableMaxDepth: 3,
@@ -177,6 +202,7 @@ export const fishList = [
   {
     name: "マンボウ",
     score: 300,
+    frequency: 300,
     requiredInteractions: 45,
     CatchableMinDepth: 10,
     CatchableMaxDepth: 30,
@@ -184,6 +210,7 @@ export const fishList = [
   {
     name: "カジキ",
     score: 450,
+    frequency: 450,
     requiredInteractions: 300,
     CatchableMinDepth: 40,
     CatchableMaxDepth: 60,
@@ -191,6 +218,7 @@ export const fishList = [
   {
     name: "ザトウクジラ",
     score: 600,
+    frequency: 600,
     requiredInteractions: 700,
     CatchableMinDepth: 40,
     CatchableMaxDepth: 100,
@@ -198,6 +226,7 @@ export const fishList = [
   {
     name: "リュウグウノツカイ",
     score: 800,
+    frequency: 800,
     requiredInteractions: 500,
     CatchableMinDepth: 70,
     CatchableMaxDepth: 87,
@@ -205,6 +234,7 @@ export const fishList = [
   {
     name: "ダンクルオステウス",
     score: 1200,
+    frequency: 1200,
     requiredInteractions: 999,
     CatchableMinDepth: 85,
     CatchableMaxDepth: 100,

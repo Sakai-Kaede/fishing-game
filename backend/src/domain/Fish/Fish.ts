@@ -1,5 +1,6 @@
 import { fishList } from "@/constants/FishData";
 import { FishInterface } from "@/config/types";
+import { IPreFish } from "@/models/PreFishModel";
 
 export class Fish {
   private fish: FishInterface;
@@ -55,4 +56,51 @@ export class Fish {
   ) {
     return requiredInteractions <= limit;
   }
+}
+
+export interface IFishRepository {
+  /**
+   * 魚のレスポンスを保存します。
+   *
+   * @param fish 魚の情報（FishInterface型）
+   * @param randomId ランダムID
+   * @param userId ユーザーID
+   * @returns 保存された魚の情報、ランダムID、ユーザーID
+   * @throws ユーザーが存在しない場合、ユーザーIDが見つからないというエラーが発生します。
+   * @throws 魚の保存に失敗した場合、保存処理のエラーが発生します。
+   */
+  savePreFish(
+    fish: FishInterface,
+    randomId: string,
+    userId: string
+  ): Promise<{
+    fish: FishInterface;
+    randomId: string;
+    userId: string;
+  }>;
+  /**
+   * ユーザーIDから最新のPreFish情報を取得します。
+   *
+   * @param userId ユーザーID
+   * @returns ユーザーIDに関連する最新のPreFish情報（IPreFish型）
+   * @throws 最新のPreFishが見つからない場合、エラーが発生します。
+   */
+  getLatestFishByUserId(userId: string): Promise<IPreFish>;
+  /**
+   * 指定したrandomIdを無効化します。
+   *
+   * @param randomId 無効化するランダムID
+   * @returns 無効化が成功した場合、何も返さない
+   * @throws ランダムIDが見つからない場合、エラーが発生します。
+   * @throws すでに無効化されている場合、処理は何も行いません。
+   */
+  invalidateRandomId(randomId: string): Promise<void>;
+  /**
+   * ランダムIDが無効化されているかを確認します。
+   *
+   * @param randomId 無効化状態を確認するランダムID
+   * @returns ランダムIDが無効化されている場合、trueを返す。無効化されていない場合、falseを返す。
+   * @throws ランダムIDに関連するデータが見つからない場合、エラーが発生します。
+   */
+  isRandomIdInvalid(randomId: string): Promise<boolean>;
 }

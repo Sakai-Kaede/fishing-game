@@ -56,6 +56,23 @@ export class Fish {
   ) {
     return requiredInteractions <= limit;
   }
+  public checkTimeDifference(
+    latestCreatedAt: Date | { createdAt: Date },
+    waitTime: number
+  ): void {
+    const now = new Date();
+
+    const latestDate =
+      latestCreatedAt instanceof Date
+        ? latestCreatedAt
+        : latestCreatedAt.createdAt;
+
+    const timeDifference = now.getTime() - new Date(latestDate).getTime();
+
+    if (timeDifference < waitTime) {
+      throw new Error("前回のリクエストから20秒以上経過していません");
+    }
+  }
 }
 
 export interface IFishRepository {
@@ -85,7 +102,7 @@ export interface IFishRepository {
    * @returns ユーザーIDに関連する最新のPreFish情報（IPreFish型）
    * @throws 最新のPreFishが見つからない場合、エラーが発生します。
    */
-  getLatestFishByUserId(userId: string): Promise<IPreFish>;
+  getLatestPreFishByUserId(userId: string): Promise<IPreFish>;
   /**
    * 指定したrandomIdを無効化します。
    *

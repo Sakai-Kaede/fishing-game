@@ -32,8 +32,10 @@ export class CreatePreFishUseCase {
       } catch (error: unknown) {
         if (error instanceof Error) {
           console.error("エラー:", error.message);
+          throw error;
         } else {
           console.error("予期しないエラー:", error);
+          throw error;
         }
       }
     }
@@ -53,12 +55,10 @@ export class CreatePreFishUseCase {
       randomId,
       userId
     );
-
+    await this.fishRepository.deleteOldPreFishByUserId(userId);
     FishInterface.requiredInteractions = saveRequiredInteractions;
-
     return {
       fish: savedFish.fish,
-      userId: savedFish.userId,
       randomId: savedFish.randomId,
     };
   }

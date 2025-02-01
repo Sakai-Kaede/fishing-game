@@ -26,9 +26,9 @@ export class CaughtFishController {
             res.status(400).json({ message: "userId と fish が必要です。" });
             return;
           }
-          await this.caughtFishUseCase.execute(userId, randomId);
+          const result = await this.caughtFishUseCase.execute(userId, randomId);
 
-          res.status(200).json({ message: "魚を捕まえました！" });
+          res.status(200).json(result);
         } catch (error: any) {
           res.status(400).json({ message: error.message });
         }

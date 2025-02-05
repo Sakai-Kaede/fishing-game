@@ -4,7 +4,7 @@ import { CardInterface } from "@/models/PokerModel";
 export class PokerRepository {
   private static readonly HAND_SIZE = 5;
 
-  public async createPokerGame(
+  public async createPokerData(
     userId: string,
     deck: CardInterface[],
     score: number
@@ -25,7 +25,7 @@ export class PokerRepository {
           "手札が5枚揃っていません。デッキに十分なカードがありません。"
         );
       }
-      const newGameData = new PokerGameModel({
+      const newPokerData = new PokerGameModel({
         userId,
         deck,
         hand,
@@ -34,9 +34,9 @@ export class PokerRepository {
         pokerFlag: false,
         doubleUpFlag: false,
       });
-      const savedGameData = await newGameData.save();
+      const savedPokerData = await newPokerData.save();
 
-      return { ...savedGameData.toObject() };
+      return { ...savedPokerData.toObject() };
     } catch (err) {
       console.error("ゲームデータ作成エラー:", err);
       throw new Error("ゲームデータ作成に失敗しました");
@@ -89,7 +89,7 @@ export class PokerRepository {
     await PokerGameModel.updateOne({ userId }, { $set: { deck: newDeck } });
   }
 
-  public async getGameData(userId: string): Promise<IPokerGame | null> {
+  public async getPokerData(userId: string): Promise<IPokerGame | null> {
     return await PokerGameModel.findOne({ userId });
   }
 
@@ -101,8 +101,8 @@ export class PokerRepository {
       if (newHand.length !== PokerRepository.HAND_SIZE) {
         throw new Error("手札は必ず5枚である必要があります");
       }
-      const gameData = await PokerGameModel.findOne({ userId });
-      if (!gameData) throw new Error("ゲームデータが見つかりません");
+      const pokerData = await PokerGameModel.findOne({ userId });
+      if (!pokerData) throw new Error("ゲームデータが見つかりません");
 
       await PokerGameModel.updateOne(
         { userId },

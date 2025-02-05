@@ -13,19 +13,19 @@ export class ChangeAndCalculateHandUseCase {
     userId: string,
     swapIndices: number[]
   ): Promise<{ hand: CardInterface[]; score: number }> {
-    const gameData = await this.pokerRepository.getGameData(userId);
-    if (!gameData) throw new Error("ゲームデータが存在しません");
-    if (!gameData.pokerFlag) {
+    const pokerData = await this.pokerRepository.getPokerData(userId);
+    if (!pokerData) throw new Error("ゲームデータが存在しません");
+    if (!pokerData.pokerFlag) {
       throw new Error("ポーカー状態ではありません");
     }
-    const poker = new Poker(gameData.deck);
-    let hand = gameData.hand;
+    const poker = new Poker(pokerData.deck);
+    let hand = pokerData.hand;
 
     // 交換するカードがある場合は交換
     if (swapIndices.length > 0) {
       hand = poker.swapCards(hand, swapIndices);
     }
-    const score = poker.calculateScore(hand, gameData.score);
+    const score = poker.calculateScore(hand, pokerData.score);
 
     if (score === 0) {
     } else {

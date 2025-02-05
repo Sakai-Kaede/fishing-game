@@ -16,15 +16,15 @@ export class JudgeDoubleUpUseCase {
     userId: string,
     guess: "higher" | "lower"
   ): Promise<{ guessCorrect: boolean; drawnCard: CardInterface }> {
-    const gameData = await this.pokerRepository.getGameData(userId);
-    if (!gameData || !gameData.doubleUpCard) {
+    const pokerData = await this.pokerRepository.getPokerData(userId);
+    if (!pokerData || !pokerData.doubleUpCard) {
       throw new Error("ダブルアップカードが設定されていません");
     }
-    if (!gameData.doubleUpFlag) {
+    if (!pokerData.doubleUpFlag) {
       throw new Error("ダブルアップ状態ではありません");
     }
 
-    const poker = new Poker(gameData.deck);
+    const poker = new Poker(pokerData.deck);
     const drawnCard = poker.drawDoubleUpCard();
 
     if (!drawnCard) throw new Error("デッキにカードがありません");
@@ -32,8 +32,8 @@ export class JudgeDoubleUpUseCase {
     await this.pokerRepository.updateDeck(userId, poker.deck);
     await this.pokerRepository.updateDoubleUpCard(userId, drawnCard);
 
-    const previousCard = gameData.doubleUpCard;
-    let newScore = gameData.score;
+    const previousCard = pokerData.doubleUpCard;
+    let newScore = pokerData.score;
     let guessCorrect = false;
 
     if (
@@ -41,7 +41,7 @@ export class JudgeDoubleUpUseCase {
       poker.rankToValue(previousCard.rank as Rank)
     ) {
       guessCorrect = poker.compareCardValues(drawnCard, previousCard, guess);
-      newScore = guessCorrect ? gameData.score * 2 : 0;
+      newScore = guessCorrect ? pokerData.score * 2 : 0;
     } else {
       return { guessCorrect: true, drawnCard };
     }
@@ -55,7 +55,7 @@ export class JudgeDoubleUpUseCase {
     if (
       guessCorrect &&
       // 10回目の成功
-      gameData.doubleUpSuccessCount + 1 ===
+      pokerData.doubleUpSuccessCount + 1 ===
         JudgeDoubleUpUseCase.MAX_DOUBLE_UP_SUCCESS
     ) {
       const user = await this.userRepository.getUserById(userId);

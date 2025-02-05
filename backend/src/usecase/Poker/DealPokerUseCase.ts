@@ -32,16 +32,16 @@ export class DealPokerUseCase {
     }
 
     const deck: CardInterface[] = pokerDomain.deck; // デッキを生成
-    let gameData = await this.pokerRepository.getGameData(userId);
+    let pokerData = await this.pokerRepository.getPokerData(userId);
 
     const hand = deck.slice(0, 5);
     if (hand.length !== 5) {
       throw new Error("デッキに十分なカードがありません");
     }
 
-    if (gameData) {
+    if (pokerData) {
       // 既存データがある場合は初期化データで更新
-      await this.pokerRepository.updateGameData(userId, {
+      await this.pokerRepository.updatePokerData(userId, {
         deck: deck.slice(5),
         hand,
         hasSwapped: false,
@@ -53,7 +53,7 @@ export class DealPokerUseCase {
       });
     } else {
       // 新規作成
-      await this.pokerRepository.createGameData(userId, deck, bet);
+      await this.pokerRepository.createPokerData(userId, deck, bet);
     }
 
     const newUser = new User(

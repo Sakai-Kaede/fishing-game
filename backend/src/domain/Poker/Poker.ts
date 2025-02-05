@@ -163,15 +163,15 @@ export interface IPokerRepository {
    */
   updateDeck(userId: string, newDeck: CardInterface[]): Promise<void>;
   /**
-   * ゲームデータを取得します。
+   * ポーカーゲームデータを取得します。
    *
    * @param userId ユーザーID
    * @returns ユーザーのゲームデータ、存在しない場合は null
    * @throws ゲームデータの取得に失敗した場合、エラーが発生します。
    */
-  getGameData(userId: string): Promise<IPokerGame | null>;
+  getPokerData(userId: string): Promise<IPokerGame | null>;
   /**
-   * 新規のゲームデータを作成します。
+   * 新規のポーカーゲームデータを作成します。
    *
    * @param userId ユーザーID
    * @param deck 初期デッキ情報
@@ -179,7 +179,7 @@ export interface IPokerRepository {
    * @returns 作成されたゲームデータ
    * @throws ゲームデータの作成に失敗した場合、エラーが発生します。
    */
-  createGameData(
+  createPokerData(
     userId: string,
     deck: CardInterface[],
     score: number
@@ -213,13 +213,13 @@ export interface IPokerRepository {
     doubleUpCard: CardInterface
   ): Promise<void>;
   /**
-   * ゲームデータをまとめて更新します。
+   * ポーカーゲームデータをまとめて更新します。
    *
    * @param userId ユーザーID
    * @param updateData 更新するゲームデータ
    * @throws ゲームデータの更新に失敗した場合、エラーが発生します。
    */
-  updateGameData(
+  updatePokerData(
     userId: string,
     updateData: {
       deck: CardInterface[];

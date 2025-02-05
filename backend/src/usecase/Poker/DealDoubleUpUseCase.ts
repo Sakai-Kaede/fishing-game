@@ -20,9 +20,9 @@ export class DealDoubleUpUseCase {
     userId: string,
     isDoubleUp: boolean
   ): Promise<{ card?: CardInterface }> {
-    const gameData = await this.pokerRepository.getGameData(userId);
-    if (!gameData) throw new Error("ゲームデータが存在しません");
-    if (!gameData.doubleUpFlag) {
+    const pokerData = await this.pokerRepository.getPokerData(userId);
+    if (!pokerData) throw new Error("ゲームデータが存在しません");
+    if (!pokerData.doubleUpFlag) {
       throw new Error("ダブルアップ状態ではありません");
     }
     if (!isDoubleUp) {
@@ -41,21 +41,21 @@ export class DealDoubleUpUseCase {
         undefined,
         undefined
       );
-      const updateSumScore = newUser.addScore(gameData.score);
+      const updateSumScore = newUser.addScore(pokerData.score);
       await this.userRepository.updateSumScore(user.userId, updateSumScore);
       return {};
     }
 
     let doubleUpCard;
-    const poker = new Poker(gameData.deck);
+    const poker = new Poker(pokerData.deck);
     if (
-      gameData.doubleUpCard.rank === "None" &&
-      gameData.doubleUpCard.suit === "None"
+      pokerData.doubleUpCard.rank === "None" &&
+      pokerData.doubleUpCard.suit === "None"
     ) {
       poker.shuffleDeck();
       doubleUpCard = poker.drawDoubleUpCard();
     } else {
-      doubleUpCard = gameData.doubleUpCard;
+      doubleUpCard = pokerData.doubleUpCard;
     }
 
     if (!doubleUpCard) throw new Error("デッキにカードがありません");

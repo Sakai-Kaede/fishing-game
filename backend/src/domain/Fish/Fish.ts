@@ -57,20 +57,28 @@ export class Fish {
     return requiredInteractions <= limit;
   }
   public checkTimeDifference(
-    latestCreatedAt: Date | { createdAt: Date },
+    latestCreatedAt: Date | { createdAt: Date; updatedAt: Date },
     waitTime: number
   ): void {
     const now = new Date();
 
+    // createdAt と updatedAt をそれぞれ取得
     const latestDate =
       latestCreatedAt instanceof Date
         ? latestCreatedAt
         : latestCreatedAt.createdAt;
 
-    const timeDifference = now.getTime() - new Date(latestDate).getTime();
+    const latestUpdatedAt =
+      latestCreatedAt instanceof Date
+        ? latestCreatedAt
+        : latestCreatedAt.updatedAt;
 
-    if (timeDifference < waitTime) {
-      throw new Error("前回のリクエストから20秒以上経過していません");
+    const createdAtDifference = now.getTime() - new Date(latestDate).getTime();
+    const updatedAtDifference =
+      now.getTime() - new Date(latestUpdatedAt).getTime();
+
+    if (createdAtDifference < waitTime || updatedAtDifference < waitTime) {
+      throw new Error("前回のリクエストから指定の待機時間が経過していません");
     }
   }
 }
@@ -120,12 +128,14 @@ export interface IFishRepository {
    * @throws ランダムIDに関連するデータが見つからない場合、エラーが発生します。
    */
   isRandomIdInvalid(randomId: string): Promise<boolean>;
-  /**
-   * 指定したユーザーIDの最新のPreFish以外を削除します。
-   *
-   * @param userId 古いPreFishを削除する対象のユーザーID
-   * @returns なし
-   * @throws PreFish情報が見つからない場合、または削除処理中にエラーが発生した場合、エラーをスローします。
-   */
-  deleteOldPreFishByUserId(userId: string): Promise<void>;
+
+  updatePreFish(
+    fish: FishInterface,
+    randomId: string,
+    userId: string
+  ): Promise<{
+    fish: FishInterface;
+    randomId: string;
+    userId: string;
+  }>;
 }

@@ -7,6 +7,7 @@ export interface IPreFish extends Document {
   randomId: string;
   isInvalid: boolean;
   createdAt: Date;
+  updatedAt: Date;
 }
 
 const IPreFish: Schema<IPreFish> = new mongoose.Schema(

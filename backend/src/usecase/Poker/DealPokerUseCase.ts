@@ -22,6 +22,9 @@ export class DealPokerUseCase {
     if (bet <= 0) {
       throw new Error("betは1以上である必要があります");
     }
+    if (bet > 10000) {
+      throw new Error("betは10000以下である必要があります");
+    }
     const pokerDomain = new Poker([]);
     pokerDomain.initializeDeck();
     const user = await this.userRepository.getUserById(userId);

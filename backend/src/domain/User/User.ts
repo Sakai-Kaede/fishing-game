@@ -68,6 +68,11 @@ export class User {
     this.sumScore += score;
     return this.sumScore;
   }
+  // スコアを減算
+  public subtractScore(score: number): number {
+    this.sumScore -= score;
+    return this.sumScore;
+  }
   // 釣竿レベル更新のためのバリデーションチェック（返り値は更新後のレベルと必要なスコア）
   public validateFishingRodLevelUpgrade(
     input: number

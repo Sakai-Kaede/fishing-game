@@ -18,6 +18,13 @@ import { CreatePreFishController } from "@/src/presentation/Fish/CreatePreFishCo
 import { IUserRepository } from "@/src/domain/User/User";
 import { IFishRepository } from "@/src/domain/Fish/Fish";
 
+import { PokerRepository } from "@/src/infrastructure/Poker/PokerRepository";
+import { ChangeAndCalculateHandController } from "@/src/presentation/Poker/ChangeAndCalculateHandController";
+import { DealCardsController } from "@/src/presentation/Poker/DealCardsController";
+import { DealDoubleUpController } from "@/src/presentation/Poker/DealDoubleUpController";
+import { JudgeDoubleUpController } from "@/src/presentation/Poker/JudgeDoubleUpController";
+import { IPokerRepository } from "@/src/domain/Poker/Poker";
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -28,6 +35,7 @@ app.use(express.json());
 // インフラ層のリポジトリをインスタンス化
 const userRepository: IUserRepository = new UserRepository();
 const fishRepository: IFishRepository = new FishRepository();
+const pokerRepository: IPokerRepository = new PokerRepository();
 
 // プレゼンテーション層のコントローラをインスタンス化
 const addSumScoreController = new AddSumScoreController(userRepository);
@@ -48,6 +56,22 @@ const catchFishController = new CaughtFishController(
   userRepository
 );
 
+const calculateHandScoreController = new ChangeAndCalculateHandController(
+  pokerRepository
+);
+const dealCardsController = new DealCardsController(
+  pokerRepository,
+  userRepository
+);
+const dealDoubleUpController = new DealDoubleUpController(
+  pokerRepository,
+  userRepository
+);
+const judgeDoubleUpController = new JudgeDoubleUpController(
+  pokerRepository,
+  userRepository
+);
+
 // エンドポイントを登録
 addSumScoreController.addSumScore(app);
 getUserDataController.getUserData(app);
@@ -57,6 +81,11 @@ updateFishingRodLevelController.updateFishingRodLevel(app);
 
 createFishController.createPreFish(app);
 catchFishController.caughtFish(app);
+
+calculateHandScoreController.changeAndCalculateHand(app);
+dealCardsController.dealCards(app);
+dealDoubleUpController.dealDoubleUp(app);
+judgeDoubleUpController.judgeDoubleUp(app);
 
 connectDB()
   .then(() => {

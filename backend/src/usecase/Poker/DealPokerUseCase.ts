@@ -15,7 +15,10 @@ export class DealPokerUseCase {
     this.userRepository = userRepository;
   }
 
-  public async execute(userId: string, bet: number): Promise<CardInterface[]> {
+  public async execute(
+    userId: string,
+    bet: number
+  ): Promise<{ hand: CardInterface[]; updateSumScore: number }> {
     if (bet <= 0) {
       throw new Error("betは1以上である必要があります");
     }
@@ -69,6 +72,6 @@ export class DealPokerUseCase {
     await this.userRepository.updateSumScore(user.userId, updateSumScore);
     await this.pokerRepository.updatePokerState(userId, true, false);
 
-    return hand;
+    return { hand, updateSumScore };
   }
 }

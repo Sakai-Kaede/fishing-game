@@ -87,7 +87,6 @@ export class Poker {
     return bet * multiplier;
   }
   public drawDoubleUpCard(): CardInterface | null {
-    console.log("Current Deck:", this.deck);
     return this.deck.length > 0 ? this.deck.pop()! : null;
   }
   public initializeDeck(): void {

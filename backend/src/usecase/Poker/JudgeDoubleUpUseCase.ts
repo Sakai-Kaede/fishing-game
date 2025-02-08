@@ -15,7 +15,11 @@ export class JudgeDoubleUpUseCase {
   public async execute(
     userId: string,
     guess: "higher" | "lower"
-  ): Promise<{ guessCorrect: boolean; drawnCard: CardInterface }> {
+  ): Promise<{
+    guessCorrect: boolean;
+    drawnCard: CardInterface;
+    newScore: number;
+  }> {
     const pokerData = await this.pokerRepository.getPokerData(userId);
     if (!pokerData || !pokerData.doubleUpCard) {
       throw new Error("ダブルアップカードが設定されていません");
@@ -43,7 +47,7 @@ export class JudgeDoubleUpUseCase {
       guessCorrect = poker.compareCardValues(drawnCard, previousCard, guess);
       newScore = guessCorrect ? pokerData.score * 2 : 0;
     } else {
-      return { guessCorrect: true, drawnCard };
+      return { guessCorrect: true, drawnCard, newScore: 0 };
     }
 
     if (guessCorrect) {
@@ -72,13 +76,13 @@ export class JudgeDoubleUpUseCase {
         undefined
       );
       // スコアをダブルアップして、保存する
-      const updateSumScore = newUser.addScore(newScore * 2);
-      await this.userRepository.updateSumScore(user.userId, updateSumScore);
+      newScore = newUser.addScore(newScore * 2);
+      await this.userRepository.updateSumScore(user.userId, newScore);
       await this.pokerRepository.updatePokerState(userId, false, false);
     }
 
     await this.pokerRepository.updateScore(userId, newScore);
 
-    return { guessCorrect, drawnCard };
+    return { guessCorrect, drawnCard, newScore };
   }
 }

@@ -43,6 +43,7 @@ export class DealDoubleUpUseCase {
       );
       const updateSumScore = newUser.addScore(pokerData.score);
       await this.userRepository.updateSumScore(user.userId, updateSumScore);
+      await this.userRepository.addPokerAchievements(userId, pokerData.score);
       return { updateSumScore };
     }
 

@@ -132,6 +132,7 @@ export class FishRepository {
         {
           $set: {
             fish,
+            isInvalid: false,
             randomId,
           },
         }

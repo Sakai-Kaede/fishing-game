@@ -1,4 +1,4 @@
-import { Suit, Rank } from "@/config/types";
+import { Rank } from "@/config/types";
 import { Poker } from "@/src/domain/Poker/Poker";
 import { IPokerRepository } from "@/src/domain/Poker/Poker";
 import { CardInterface } from "@/models/PokerModel";
@@ -19,6 +19,7 @@ export class JudgeDoubleUpUseCase {
     guessCorrect: boolean;
     drawnCard: CardInterface;
     newScore: number;
+    updateSumScore?: number;
   }> {
     const pokerData = await this.pokerRepository.getPokerData(userId);
     if (!pokerData || !pokerData.doubleUpCard) {
@@ -77,8 +78,13 @@ export class JudgeDoubleUpUseCase {
       );
       // スコアをダブルアップして、保存する
       newScore = newUser.addScore(newScore * 2);
-      await this.userRepository.updateSumScore(user.userId, newScore);
+      const updateSumScore = await this.userRepository.updateSumScore(
+        user.userId,
+        newScore
+      );
+      await this.userRepository.addPokerAchievements(userId, newScore);
       await this.pokerRepository.updatePokerState(userId, false, false);
+      return { guessCorrect, drawnCard, newScore, updateSumScore };
     }
 
     await this.pokerRepository.updateScore(userId, newScore);

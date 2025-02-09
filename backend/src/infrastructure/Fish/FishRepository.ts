@@ -52,7 +52,7 @@ export class FishRepository {
     try {
       const latestPreFish = await PreFishModel.findOne({ userId })
         .sort({ createdAt: -1 })
-        .select("fish userId randomId isInvalid createdAt")
+        .select("fish userId randomId isInvalid createdAt updatedAt") // updatedAt を追加
         .lean();
 
       if (!latestPreFish) {
@@ -111,28 +111,41 @@ export class FishRepository {
     }
   };
 
-  // userIdで指定した最新のPreFish以外を削除する
-  public deleteOldPreFishByUserId = async (userId: string): Promise<void> => {
+  // PreFishデータの更新
+  public updatePreFish = async (
+    fish: FishInterface,
+    randomId: string,
+    userId: string
+  ): Promise<{
+    fish: FishInterface;
+    randomId: string;
+    userId: string;
+  }> => {
     try {
-      const latestPreFish = await PreFishModel.findOne({ userId })
-        .sort({ createdAt: -1 })
-        .select("createdAt");
-
-      if (!latestPreFish) {
-        console.log(`ユーザーID ${userId} のPreFish情報が見つかりません`);
-        return;
+      const user = await UserModel.findOne({ userId });
+      if (!user) {
+        throw new Error(`ユーザーID ${userId} は存在しません`);
       }
-      const deleteResult = await PreFishModel.deleteMany({
-        userId,
-        createdAt: { $lt: latestPreFish.createdAt },
-      });
 
-      console.log(
-        `ユーザーID ${userId} の古いPreFish ${deleteResult.deletedCount} 件を削除しました`
+      await PreFishModel.updateOne(
+        { userId },
+        {
+          $set: {
+            fish,
+            isInvalid: false,
+            randomId,
+          },
+        }
       );
-    } catch (err) {
-      console.error(`ユーザーID ${userId} の古いPreFish削除エラー:`, err);
-      throw new Error("古いPreFishの削除に失敗しました");
+
+      return {
+        fish: fish,
+        userId: userId,
+        randomId: randomId,
+      };
+    } catch (error) {
+      console.error("魚の更新エラー:", error);
+      throw new Error("魚のレスポンス更新に失敗しました");
     }
   };
 }

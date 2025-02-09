@@ -36,7 +36,7 @@ export class JudgeDoubleUpController {
             message: result.guessCorrect
               ? "ダブルアップ成功！"
               : "ダブルアップ失敗。",
-            result: result,
+            DOUBLEUP_RESULT: result,
           });
         } catch (error: any) {
           res.status(400).json({ message: error.message });

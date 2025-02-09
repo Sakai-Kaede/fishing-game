@@ -19,7 +19,7 @@ export class DealDoubleUpUseCase {
   public async execute(
     userId: string,
     isDoubleUp: boolean
-  ): Promise<{ card?: CardInterface }> {
+  ): Promise<{ card?: CardInterface; updateSumScore?: number }> {
     const pokerData = await this.pokerRepository.getPokerData(userId);
     if (!pokerData) throw new Error("ゲームデータが存在しません");
     if (!pokerData.doubleUpFlag) {
@@ -43,7 +43,8 @@ export class DealDoubleUpUseCase {
       );
       const updateSumScore = newUser.addScore(pokerData.score);
       await this.userRepository.updateSumScore(user.userId, updateSumScore);
-      return {};
+      await this.userRepository.addPokerAchievements(userId, pokerData.score);
+      return { updateSumScore };
     }
 
     let doubleUpCard;

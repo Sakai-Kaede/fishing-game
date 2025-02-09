@@ -207,4 +207,29 @@ export interface IUserRepository {
       count: number;
     }[]
   >;
+
+  /**
+   * ユーザーの捕まえた魚の実績を更新します。
+   * 魚の種類や数に応じて達成可能な実績を追加します。
+   *
+   * @param userId ユーザーID
+   * @param caughtFish 捕まえた魚のリスト（名前と数）
+   * @returns なし
+   * @throws ユーザーが見つからない場合、エラーが発生します
+   */
+  addFishingAchievements(
+    userId: string,
+    caughtFish: { name: string; count: number }[]
+  ): Promise<void>;
+
+  /**
+   * ユーザーのポーカーポイントに基づいて実績を更新します。
+   * ポイント数に応じて達成可能な実績を追加します。
+   *
+   * @param userId ユーザーID
+   * @param points ユーザーのポーカーポイント
+   * @returns なし
+   * @throws ユーザーが見つからない場合、エラーが発生します
+   */
+  addPokerAchievements(userId: string, points: number): Promise<void>;
 }

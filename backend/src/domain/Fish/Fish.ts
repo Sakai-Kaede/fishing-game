@@ -57,20 +57,28 @@ export class Fish {
     return requiredInteractions <= limit;
   }
   public checkTimeDifference(
-    latestCreatedAt: Date | { createdAt: Date },
+    latestCreatedAt: Date | { createdAt: Date; updatedAt: Date },
     waitTime: number
   ): void {
     const now = new Date();
 
+    // createdAt と updatedAt をそれぞれ取得
     const latestDate =
       latestCreatedAt instanceof Date
         ? latestCreatedAt
         : latestCreatedAt.createdAt;
 
-    const timeDifference = now.getTime() - new Date(latestDate).getTime();
+    const latestUpdatedAt =
+      latestCreatedAt instanceof Date
+        ? latestCreatedAt
+        : latestCreatedAt.updatedAt;
 
-    if (timeDifference < waitTime) {
-      throw new Error("前回のリクエストから20秒以上経過していません");
+    const createdAtDifference = now.getTime() - new Date(latestDate).getTime();
+    const updatedAtDifference =
+      now.getTime() - new Date(latestUpdatedAt).getTime();
+
+    if (createdAtDifference < waitTime || updatedAtDifference < waitTime) {
+      throw new Error("前回のリクエストから指定の待機時間が経過していません");
     }
   }
 }
@@ -95,6 +103,7 @@ export interface IFishRepository {
     randomId: string;
     userId: string;
   }>;
+
   /**
    * ユーザーIDから最新のPreFish情報を取得します。
    *
@@ -103,6 +112,7 @@ export interface IFishRepository {
    * @throws 最新のPreFishが見つからない場合、エラーが発生します。
    */
   getLatestPreFishByUserId(userId: string): Promise<IPreFish>;
+
   /**
    * 指定したrandomIdを無効化します。
    *
@@ -112,6 +122,7 @@ export interface IFishRepository {
    * @throws すでに無効化されている場合、処理は何も行いません。
    */
   invalidateRandomId(randomId: string): Promise<void>;
+
   /**
    * ランダムIDが無効化されているかを確認します。
    *
@@ -120,12 +131,23 @@ export interface IFishRepository {
    * @throws ランダムIDに関連するデータが見つからない場合、エラーが発生します。
    */
   isRandomIdInvalid(randomId: string): Promise<boolean>;
+
   /**
-   * 指定したユーザーIDの最新のPreFish以外を削除します。
+   * 捕まえる前の魚の情報を更新します。
    *
-   * @param userId 古いPreFishを削除する対象のユーザーID
-   * @returns なし
-   * @throws PreFish情報が見つからない場合、または削除処理中にエラーが発生した場合、エラーをスローします。
+   * @param fish 更新対象の魚情報
+   * @param randomId ランダムに生成された識別ID
+   * @param userId ユーザーID
+   * @returns 更新後の魚情報、ランダムID、ユーザーIDを含むオブジェクト
+   * @throws 更新処理中にエラーが発生した場合に例外をスローします
    */
-  deleteOldPreFishByUserId(userId: string): Promise<void>;
+  updatePreFish(
+    fish: FishInterface,
+    randomId: string,
+    userId: string
+  ): Promise<{
+    fish: FishInterface;
+    randomId: string;
+    userId: string;
+  }>;
 }

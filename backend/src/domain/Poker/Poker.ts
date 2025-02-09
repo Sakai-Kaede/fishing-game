@@ -145,6 +145,7 @@ export interface IPokerRepository {
     pokerFlag: boolean,
     doubleUpFlag: boolean
   ): Promise<void>;
+
   /**
    * ユーザーのスコアを更新します。
    *
@@ -153,6 +154,7 @@ export interface IPokerRepository {
    * @throws スコアの更新に失敗した場合、エラーが発生します。
    */
   updateScore(userId: string, score: number): Promise<void>;
+
   /**
    * デッキ情報を更新します。
    *
@@ -161,6 +163,7 @@ export interface IPokerRepository {
    * @throws デッキ情報の更新に失敗した場合、エラーが発生します。
    */
   updateDeck(userId: string, newDeck: CardInterface[]): Promise<void>;
+
   /**
    * ポーカーゲームデータを取得します。
    *
@@ -169,6 +172,7 @@ export interface IPokerRepository {
    * @throws ゲームデータの取得に失敗した場合、エラーが発生します。
    */
   getPokerData(userId: string): Promise<IPokerGame | null>;
+
   /**
    * 新規のポーカーゲームデータを作成します。
    *
@@ -192,6 +196,7 @@ export interface IPokerRepository {
     doubleUpFlag: boolean;
     doubleUpSuccessCount: number;
   }>;
+
   /**
    * ユーザーの手札情報を更新します。
    *
@@ -200,6 +205,7 @@ export interface IPokerRepository {
    * @throws 手札の枚数が5枚でない場合、または手札の更新に失敗した場合、エラーが発生します。
    */
   updateHand(userId: string, newHand: CardInterface[]): Promise<void>;
+
   /**
    * ダブルアップ時のカード情報を更新します。
    *
@@ -211,6 +217,7 @@ export interface IPokerRepository {
     userId: string,
     doubleUpCard: CardInterface
   ): Promise<void>;
+
   /**
    * ポーカーゲームデータをまとめて更新します。
    *
@@ -231,6 +238,7 @@ export interface IPokerRepository {
       doubleUpSuccessCount: number;
     }
   ): Promise<void>;
+
   /**
    * ダブルアップ成功回数を1増加します。
    *

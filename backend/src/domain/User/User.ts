@@ -207,4 +207,11 @@ export interface IUserRepository {
       count: number;
     }[]
   >;
+
+  addFishingAchievements(
+    userId: string,
+    caughtFish: { name: string; count: number }[]
+  ): Promise<void>;
+
+  addPokerAchievements(userId: string, points: number): Promise<void>;
 }

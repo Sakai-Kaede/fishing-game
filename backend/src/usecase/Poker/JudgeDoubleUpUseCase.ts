@@ -1,4 +1,4 @@
-import { Suit, Rank } from "@/config/types";
+import { Rank } from "@/config/types";
 import { Poker } from "@/src/domain/Poker/Poker";
 import { IPokerRepository } from "@/src/domain/Poker/Poker";
 import { CardInterface } from "@/models/PokerModel";
@@ -82,6 +82,7 @@ export class JudgeDoubleUpUseCase {
         user.userId,
         newScore
       );
+      await this.userRepository.addPokerAchievements(userId, newScore);
       await this.pokerRepository.updatePokerState(userId, false, false);
       return { guessCorrect, drawnCard, newScore, updateSumScore };
     }

@@ -68,6 +68,9 @@ export class CaughtFishUseCase {
       undefined,
       undefined
     );
+
+    const caughtFish = user.caughtFish;
+    await this.userRepository.addFishingAchievements(userId, caughtFish);
     const newScore = newUser.addScore(fishScore);
     await this.userRepository.updateSumScore(userId, newScore);
 

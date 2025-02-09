@@ -1,5 +1,8 @@
 import UserModel, { IUser } from "@/models/UserModel";
-
+import {
+  FISH_ACHIEVEMENTS,
+  POKER_ACHIEVEMENTS,
+} from "@/constants/AchievementData";
 export class UserRepository {
   // 新規ユーザーを登録する
   public authUser = async (
@@ -159,6 +162,83 @@ export class UserRepository {
     } catch (err) {
       console.error("魚のカウント更新エラー:", err);
       throw new Error("魚のカウントの更新に失敗しました");
+    }
+  };
+
+  // 魚の種類と数に基づいて実績を追加
+  public addFishingAchievements = async (
+    userId: string,
+    caughtFish: { name: string; count: number }[]
+  ): Promise<void> => {
+    try {
+      const user = await UserModel.findOne({ userId });
+      if (!user) return Promise.reject(new Error("ユーザーが見つかりません"));
+
+      let achievementsToAdd = user.achievements;
+
+      const uniqueFishCount = new Set(caughtFish.map((fish) => fish.name)).size;
+      const totalFishCount = caughtFish.reduce(
+        (total, fish) => total + fish.count,
+        0
+      );
+
+      FISH_ACHIEVEMENTS.TYPES.forEach(({ count, name }) => {
+        if (
+          uniqueFishCount >= count &&
+          !achievementsToAdd.some(
+            (achievement) => achievement.name === name && achievement.achieved
+          )
+        ) {
+          achievementsToAdd.push({ name, achieved: true });
+        }
+      });
+
+      FISH_ACHIEVEMENTS.COUNTS.forEach(({ count, name }) => {
+        if (
+          totalFishCount >= count &&
+          !achievementsToAdd.some(
+            (achievement) => achievement.name === name && achievement.achieved
+          )
+        ) {
+          achievementsToAdd.push({ name, achieved: true });
+        }
+      });
+
+      user.achievements = achievementsToAdd;
+      await user.save();
+      return Promise.resolve();
+    } catch (err) {
+      return Promise.reject(err);
+    }
+  };
+
+  // ポーカーのポイントに基づいて実績を追加
+  public addPokerAchievements = async (
+    userId: string,
+    points: number
+  ): Promise<void> => {
+    try {
+      const user = await UserModel.findOne({ userId });
+      if (!user) return Promise.reject(new Error("ユーザーが見つかりません"));
+
+      let achievementsToAdd = user.achievements;
+
+      POKER_ACHIEVEMENTS.forEach(({ points: requiredPoints, name }) => {
+        if (
+          points >= requiredPoints &&
+          !achievementsToAdd.some(
+            (achievement) => achievement.name === name && achievement.achieved
+          )
+        ) {
+          achievementsToAdd.push({ name, achieved: true });
+        }
+      });
+
+      user.achievements = achievementsToAdd;
+      await user.save();
+      return Promise.resolve();
+    } catch (err) {
+      return Promise.reject(err);
     }
   };
 }

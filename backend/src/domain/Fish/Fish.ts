@@ -103,6 +103,7 @@ export interface IFishRepository {
     randomId: string;
     userId: string;
   }>;
+
   /**
    * ユーザーIDから最新のPreFish情報を取得します。
    *
@@ -111,6 +112,7 @@ export interface IFishRepository {
    * @throws 最新のPreFishが見つからない場合、エラーが発生します。
    */
   getLatestPreFishByUserId(userId: string): Promise<IPreFish>;
+
   /**
    * 指定したrandomIdを無効化します。
    *
@@ -120,6 +122,7 @@ export interface IFishRepository {
    * @throws すでに無効化されている場合、処理は何も行いません。
    */
   invalidateRandomId(randomId: string): Promise<void>;
+
   /**
    * ランダムIDが無効化されているかを確認します。
    *
@@ -129,6 +132,15 @@ export interface IFishRepository {
    */
   isRandomIdInvalid(randomId: string): Promise<boolean>;
 
+  /**
+   * 捕まえる前の魚の情報を更新します。
+   *
+   * @param fish 更新対象の魚情報
+   * @param randomId ランダムに生成された識別ID
+   * @param userId ユーザーID
+   * @returns 更新後の魚情報、ランダムID、ユーザーIDを含むオブジェクト
+   * @throws 更新処理中にエラーが発生した場合に例外をスローします
+   */
   updatePreFish(
     fish: FishInterface,
     randomId: string,

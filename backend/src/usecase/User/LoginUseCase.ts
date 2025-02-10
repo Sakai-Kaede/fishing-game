@@ -36,7 +36,9 @@ export class LoginUseCase {
     // ユーザーを検索
     const user = await this.userRepository.findUserByUsername(username);
     if (!user) {
-      throw new Error("ユーザーが見つかりません");
+      throw new Error(
+        "ユーザーが存在しないか、パスワードか好きな魚が間違っています"
+      );
     }
 
     const newUser = new User(
@@ -57,7 +59,9 @@ export class LoginUseCase {
         favoriteFish
       ))
     ) {
-      throw new Error("パスワードか好きな魚が間違っています");
+      throw new Error(
+        "ユーザーが存在しないか、パスワードか好きな魚が間違っています"
+      );
     }
 
     return {

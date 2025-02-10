@@ -14,6 +14,7 @@ export interface IUser extends Document {
     name: string;
     achieved: boolean;
   }[];
+  favoriteFish: string;
 }
 
 const UserSchema: Schema<IUser> = new mongoose.Schema(
@@ -61,6 +62,10 @@ const UserSchema: Schema<IUser> = new mongoose.Schema(
           achieved: { type: Boolean, required: true, default: false },
         },
       ],
+    },
+    favoriteFish: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

@@ -16,6 +16,7 @@ export class User {
     name: string;
     achieved: boolean;
   }[];
+  private favoriteFish: string;
 
   constructor(
     username: string = "xxx",
@@ -30,7 +31,8 @@ export class User {
     achievements: {
       name: string;
       achieved: boolean;
-    }[] = []
+    }[] = [],
+    favoriteFish: string = "xxx"
   ) {
     if (username.length < 3 || username.length > 256) {
       throw new Error("ユーザー名は3文字以上256文字以内である必要があります");
@@ -45,6 +47,7 @@ export class User {
     this.fishingRodLevel = fishingRodLevel;
     this.caughtFish = caughtFish;
     this.achievements = achievements;
+    this.favoriteFish = favoriteFish;
   }
 
   // ユーザーIDを生成
@@ -58,6 +61,7 @@ export class User {
     const saltRounds = 10;
     return bcrypt.hashSync(password, saltRounds);
   }
+
   // パスワードの照合メソッド
   public async comparePassword(inputPassword: string): Promise<boolean> {
     const isMatch = await bcrypt.compare(inputPassword, this.password);
@@ -117,6 +121,7 @@ export class User {
       name: string;
       achieved: boolean;
     }[];
+    favoriteFish: string;
   } {
     return {
       username: this.username,
@@ -126,7 +131,19 @@ export class User {
       fishingRodLevel: this.fishingRodLevel,
       caughtFish: this.caughtFish,
       achievements: this.achievements,
+      favoriteFish: this.favoriteFish,
     };
+  }
+
+  // パスワードと好きな魚を照合するメソッド
+  public async verifyPasswordAndFavoriteFish(
+    password: string,
+    userPassword: string,
+    favoriteFish: string
+  ): Promise<boolean> {
+    const isPasswordValid = await bcrypt.compare(password, userPassword);
+    const isFavoriteFishValid = this.favoriteFish === favoriteFish;
+    return isPasswordValid && isFavoriteFishValid;
   }
 }
 
@@ -153,7 +170,8 @@ export interface IUserRepository {
     achievements: {
       name: string;
       achieved: boolean;
-    }[]
+    }[],
+    favoriteFish: string
   ): Promise<{ username: string; userId: string }>;
 
   /**
@@ -232,4 +250,37 @@ export interface IUserRepository {
    * @throws ユーザーが見つからない場合、エラーが発生します
    */
   addPokerAchievements(userId: string, points: number): Promise<void>;
+
+  /**
+   * ユーザー名をもとにユーザー情報を取得します。
+   *
+   * @param username 検索するユーザー名
+   * @returns ユーザー情報のPromiseオブジェクト。情報には以下が含まれます:
+   * - username: ユーザー名
+   * - userId: ユーザーID
+   * - password: パスワード
+   * - sumScore: ユーザーの総スコア
+   * - fishingRodLevel: 釣り竿のレベル
+   * - caughtFish: 捕まえた魚の情報（魚の名前と捕獲数）
+   * - achievements: 実績情報（実績名と達成状況）
+   * - favoriteFish: お気に入りの魚
+   *
+   * ユーザーが見つからない場合は `null` を返します。
+   */
+  findUserByUsername(username: string): Promise<{
+    username: string;
+    userId: string;
+    password: string;
+    sumScore: number;
+    fishingRodLevel: number;
+    caughtFish: {
+      name: string;
+      count: number;
+    }[];
+    achievements: {
+      name: string;
+      achieved: boolean;
+    }[];
+    favoriteFish: string;
+  } | null>;
 }

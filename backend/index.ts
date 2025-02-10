@@ -11,11 +11,12 @@ import { GetUserDataController } from "@/src/presentation/User/GetUserDataContro
 import { IncrementCaughtFishCountController } from "@/src/presentation/User/IncrementCaughtFishCountController";
 import { RegisterUserController } from "@/src/presentation/User/RegisterUserController";
 import { UpdateFishingRodLevelController } from "@/src/presentation/User/UpdateFishingRodLevelController";
+import { LoginController } from "@/src/presentation/User/LoginController";
+import { IUserRepository } from "@/src/domain/User/User";
 
 import { FishRepository } from "@/src/infrastructure/Fish/FishRepository";
 import { CaughtFishController } from "@/src/presentation/Fish/CatchFishController";
 import { CreatePreFishController } from "@/src/presentation/Fish/CreatePreFishController";
-import { IUserRepository } from "@/src/domain/User/User";
 import { IFishRepository } from "@/src/domain/Fish/Fish";
 
 import { PokerRepository } from "@/src/infrastructure/Poker/PokerRepository";
@@ -46,6 +47,7 @@ const registerUserController = new RegisterUserController(userRepository);
 const updateFishingRodLevelController = new UpdateFishingRodLevelController(
   userRepository
 );
+const loginController = new LoginController(userRepository);
 
 const createFishController = new CreatePreFishController(
   fishRepository,
@@ -78,6 +80,7 @@ getUserDataController.getUserData(app);
 incrementCaughtFishCountController.incrementCaughtFishCount(app);
 registerUserController.registerUser(app);
 updateFishingRodLevelController.updateFishingRodLevel(app);
+loginController.login(app);
 
 createFishController.createPreFish(app);
 catchFishController.caughtFish(app);

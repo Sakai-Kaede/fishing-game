@@ -21,12 +21,13 @@ export class AddSumScoreUseCase {
     }
     const newUser = new User(
       undefined, // ユーザー名
-      undefined, // ユーザーID
       undefined, // パスワード
+      undefined, // ユーザーID
       user.sumScore,
       undefined, // 釣竿レベル
       undefined, // 捕まえた魚リスト
-      undefined // 実績
+      undefined, // 実績
+      undefined // 好きな魚
     );
     const updateSumScore = newUser.addScore(additionalScore);
     return await this.userRepository.updateSumScore(

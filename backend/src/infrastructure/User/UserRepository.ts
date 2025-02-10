@@ -3,6 +3,7 @@ import {
   FISH_ACHIEVEMENTS,
   POKER_ACHIEVEMENTS,
 } from "@/constants/AchievementData";
+
 export class UserRepository {
   // 新規ユーザーを登録する
   public authUser = async (
@@ -18,19 +19,11 @@ export class UserRepository {
     achievements: {
       name: string;
       achieved: boolean;
-    }[]
+    }[],
+    favoriteFish: string
   ): Promise<{
     username: string;
     userId: string;
-    fishingRodLevel: number;
-    caughtFish: {
-      name: string;
-      count: number;
-    }[];
-    achievements: {
-      name: string;
-      achieved: boolean;
-    }[];
   }> => {
     try {
       const newUser = new UserModel({
@@ -41,15 +34,13 @@ export class UserRepository {
         fishingRodLevel,
         caughtFish,
         achievements,
+        favoriteFish,
       });
       const savedUser = await newUser.save();
 
       return {
         username: savedUser.username,
         userId: savedUser.userId,
-        fishingRodLevel: savedUser.fishingRodLevel,
-        caughtFish: savedUser.caughtFish,
-        achievements: savedUser.achievements,
       };
     } catch (err) {
       console.error("ユーザー作成エラー:", err);
@@ -239,6 +230,48 @@ export class UserRepository {
       return Promise.resolve();
     } catch (err) {
       return Promise.reject(err);
+    }
+  };
+
+  // ユーザー名からユーザーを検索する
+  public findUserByUsername = async (
+    username: string
+  ): Promise<{
+    username: string;
+    userId: string;
+    password: string;
+    sumScore: number;
+    fishingRodLevel: number;
+    caughtFish: {
+      name: string;
+      count: number;
+    }[];
+    achievements: {
+      name: string;
+      achieved: boolean;
+    }[];
+    favoriteFish: string;
+  } | null> => {
+    try {
+      const user = await UserModel.findOne({ username });
+      if (!user) {
+        console.log(`ユーザー ${username} は見つかりませんでした`);
+        return null;
+      }
+
+      return {
+        username: user.username,
+        userId: user.userId,
+        password: user.password,
+        sumScore: user.sumScore,
+        fishingRodLevel: user.fishingRodLevel,
+        caughtFish: user.caughtFish,
+        achievements: user.achievements,
+        favoriteFish: user.favoriteFish,
+      };
+    } catch (err) {
+      console.error("ユーザー検索エラー:", err);
+      throw new Error("ユーザー検索に失敗しました");
     }
   };
 }

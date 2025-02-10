@@ -22,11 +22,13 @@ export class UpdateFishingRodLevelUseCase {
 
     const newUser = new User(
       undefined, // ユーザー名
-      undefined, // ユーザーID
       undefined, // パスワード
+      undefined, // ユーザーID
       undefined, // 合計スコア
       user.fishingRodLevel,
-      undefined // 捕まえた魚リスト
+      undefined, // 捕まえた魚リスト
+      undefined, // 実績
+      undefined // 好きな魚
     );
     const updatableFishingRodLevel =
       newUser.isBigInputFishingRodLevel(fishingRodLevel);

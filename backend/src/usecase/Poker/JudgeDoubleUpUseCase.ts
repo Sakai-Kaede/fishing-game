@@ -68,13 +68,14 @@ export class JudgeDoubleUpUseCase {
         throw new Error(`ユーザーID ${userId} が見つかりません`);
       }
       const newUser = new User(
-        undefined,
-        undefined,
-        undefined,
-        user.sumScore,
-        undefined,
-        undefined,
-        undefined
+        undefined, // ユーザー名
+        undefined, // パスワード
+        undefined, // ユーザーID
+        user.sumScore, // 合計スコア
+        undefined, // 釣竿レベル
+        undefined, // 捕まえた魚リスト
+        undefined, // 実績
+        undefined // 好きな魚
       );
       // スコアをダブルアップして、保存する
       newScore = newUser.addScore(newScore * 2);

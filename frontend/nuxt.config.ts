@@ -27,4 +27,5 @@ export default defineNuxtConfig({
     },
   },
   modules: ["@nuxt/image"],
+  plugins: ["~/plugins/runtimeConfig.ts"],
 });

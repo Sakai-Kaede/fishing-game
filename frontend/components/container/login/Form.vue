@@ -25,16 +25,6 @@
             @focus="passwordError = ''"
             type="password"
           />
-          <AtomsTextInput
-            v-model="confirmPassword"
-            id="confirmPassword"
-            name="confirmPassword"
-            label="確認用パスワード："
-            type="password"
-            :size="'large'"
-            :errorMessage="confirmPasswordError"
-            @focus="confirmPasswordError = ''"
-          />
           <MoleculesDropdownMenu
             label="好きな海の生き物"
             :items="[
@@ -51,7 +41,7 @@
             :errorMessage="favoriteFishError"
           />
           <br />
-          <AtomsButton size="large" type="submit">登録</AtomsButton>
+          <AtomsButton size="large" type="submit">ログイン</AtomsButton>
         </form>
       </template>
     </AtomsCard>
@@ -73,7 +63,6 @@ import { useUserStore } from "@/store/user";
 
 const username = ref("");
 const password = ref("");
-const confirmPassword = ref("");
 const favoriteFish = ref("");
 const errorMessage = ref("");
 const userStore = useUserStore();
@@ -81,7 +70,6 @@ const router = useRouter();
 
 const passwordError = ref("");
 const usernameError = ref("");
-const confirmPasswordError = ref("");
 const favoriteFishError = ref("");
 
 const handleSelect = (item: string) => {
@@ -93,25 +81,15 @@ const registerUser = async (event: Event) => {
   event.preventDefault();
 
   if (!username.value) {
-    usernameError.value = "ユーザー名は必須です。";
-  } else if (username.value.length < 3) {
-    usernameError.value = "ユーザー名は3文字以上で入力してください。";
+    usernameError.value = "ユーザー名を入力してください。";
   } else {
     usernameError.value = "";
   }
 
   if (!password.value) {
-    passwordError.value = "パスワードは必須です。";
-  } else if (password.value.length < 6) {
-    passwordError.value = "パスワードは6文字以上で入力してください。";
+    passwordError.value = "パスワードを入力してください。";
   } else {
     passwordError.value = "";
-  }
-
-  if (password.value !== confirmPassword.value) {
-    confirmPasswordError.value = "パスワードが一致しません。";
-  } else {
-    confirmPasswordError.value = "";
   }
 
   if (!favoriteFish.value) {
@@ -121,10 +99,9 @@ const registerUser = async (event: Event) => {
   if (
     !usernameError.value &&
     !passwordError.value &&
-    !confirmPasswordError.value &&
     !favoriteFishError.value
   ) {
-    const result = await userStore.register(
+    const result = await userStore.login(
       username.value,
       password.value,
       favoriteFish.value
@@ -133,12 +110,7 @@ const registerUser = async (event: Event) => {
     if (result.success) {
       router.push("/");
     } else {
-      console.log(result);
-      if (result.message === "その名前は既に使用されています") {
-        usernameError.value = result.message;
-      } else {
-        errorMessage.value = "ユーザー登録に失敗しました";
-      }
+      errorMessage.value = "ログインに失敗しました";
     }
   }
 };

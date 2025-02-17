@@ -11,129 +11,8 @@ export const useUserStore = defineStore(
     const sumScore = ref(0);
     const fishingRodLevel = ref(1);
     const highestScoringFish = ref<string | null>(null);
-
-    const caughtFish = ref([
-      {
-        name: "イワシ",
-        count: 0,
-      },
-      {
-        name: "タイ",
-        count: 0,
-      },
-      {
-        name: "ヒラメ",
-        count: 0,
-      },
-      {
-        name: "サンマ",
-        count: 0,
-      },
-      {
-        name: "ブリ",
-        count: 0,
-      },
-      {
-        name: "イカ",
-        count: 0,
-      },
-      {
-        name: "タコ",
-        count: 0,
-      },
-      {
-        name: "ウナギ",
-        count: 0,
-      },
-      {
-        name: "サケ",
-        count: 0,
-      },
-      {
-        name: "アジ",
-        count: 0,
-      },
-      {
-        name: "クラゲ",
-        count: 0,
-      },
-      {
-        name: "トビウオ",
-        count: 0,
-      },
-      {
-        name: "クリオネ",
-        count: 0,
-      },
-      {
-        name: "スズキ",
-        count: 0,
-      },
-      {
-        name: "フグ",
-        count: 0,
-      },
-      {
-        name: "カツオ",
-        count: 0,
-      },
-      {
-        name: "ウミガメ",
-        count: 0,
-      },
-      {
-        name: "ダイオウグソクムシ",
-        count: 0,
-      },
-      {
-        name: "メンダコ",
-        count: 0,
-      },
-      {
-        name: "マグロ",
-        count: 0,
-      },
-      {
-        name: "キンメダイ",
-        count: 0,
-      },
-      {
-        name: "サメ",
-        count: 0,
-      },
-      {
-        name: "ウツボ",
-        count: 0,
-      },
-      {
-        name: "海草",
-        count: 0,
-      },
-      {
-        name: "伊勢海老",
-        count: 0,
-      },
-      {
-        name: "マンボウ",
-        count: 0,
-      },
-      {
-        name: "カジキ",
-        count: 0,
-      },
-      {
-        name: "ザトウクジラ",
-        count: 0,
-      },
-      {
-        name: "リュウグウノツカイ",
-        count: 0,
-      },
-      {
-        name: "ダンクルオステウス",
-        count: 0,
-      },
-    ]);
+    const caughtFish = ref([{}]);
+    const achievements = ref([{}]);
 
     // ユーザー登録
     async function register(
@@ -165,14 +44,48 @@ export const useUserStore = defineStore(
       }
     }
 
+    // ログイン
+    async function login(
+      inputUsername: string,
+      inputPassword: string,
+      inputFavoriteFish: string
+    ) {
+      try {
+        const userRepository = RepositoryFactory.get("user");
+        const user = (await userRepository.login(
+          inputUsername,
+          inputPassword,
+          inputFavoriteFish
+        )) as User;
+
+        // ユーザーデータを更新
+        username.value = user.username;
+        userId.value = user.userId;
+        sumScore.value = user.sumScore;
+        fishingRodLevel.value = user.fishingRodLevel;
+        caughtFish.value = [...user.caughtFish];
+        achievements.value = [...user.achievements];
+
+        return { success: true, message: "ログインに成功しました。" };
+      } catch (error: unknown) {
+        let errorMessage = "ログインに失敗しました。";
+        if (error instanceof Error) {
+          errorMessage = error.message;
+        }
+        return { success: false, message: errorMessage };
+      }
+    }
+
     return {
       username,
       userId,
       sumScore,
       fishingRodLevel,
       caughtFish,
+      achievements,
       highestScoringFish,
       register,
+      login,
     };
   },
   {

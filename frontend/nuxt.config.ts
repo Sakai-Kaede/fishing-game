@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     { path: "~/components/presentational/Atoms", prefix: "Atoms" },
     { path: "~/components/presentational/Molecules", prefix: "Molecules" },
     { path: "~/components/container/register", prefix: "Register" },
+    { path: "~/components/container/login", prefix: "Login" },
   ],
   css: ["~/assets/scss/main.scss"],
   vite: {

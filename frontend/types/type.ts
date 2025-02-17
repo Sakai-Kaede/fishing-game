@@ -3,6 +3,10 @@ export interface User {
   userId: string;
   sumScore: number;
   fishingRodLevel: number;
-  caughtFishResults: { name: string; isCaught: boolean }[] | null;
+  caughtFish: { name: string; count: number }[];
+  achievements: {
+    name: string;
+    achieved: boolean;
+  }[];
   message?: string;
 }

@@ -1,8 +1,6 @@
 <template>
-  <div class="no-scroll">
-    <div class="container">
-      <RegisterForm />
-    </div>
+  <div class="container">
+    <RegisterForm />
   </div>
 </template>
 

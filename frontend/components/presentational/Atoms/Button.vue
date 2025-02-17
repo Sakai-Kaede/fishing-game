@@ -8,7 +8,6 @@
 import "@/assets/scss/main.scss";
 import { computed } from "vue";
 
-// Props definition
 const props = defineProps({
   variant: {
     type: String,
@@ -29,7 +28,6 @@ const props = defineProps({
 
 const emit = defineEmits(["click"]);
 
-// Computed class based on props
 const computedClass = computed(() => {
   return [
     "button",
@@ -39,7 +37,6 @@ const computedClass = computed(() => {
   ];
 });
 
-// Emit click event if not disabled
 const handleClick = (event: MouseEvent) => {
   if (!props.disabled) {
     emit("click", event);

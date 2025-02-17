@@ -1,11 +1,16 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
-  components: [
-    {
-      path: "~/components/presentational/Atoms",
-      prefix: "Atoms",
+  runtimeConfig: {
+    public: {
+      apiBase: "http://localhost:3000",
     },
+  },
+  components: [
+    { path: "~/components/presentational/Atoms", prefix: "Atoms" },
+    { path: "~/components/presentational/Molecules", prefix: "Molecules" },
+    { path: "~/components/container/register", prefix: "Register" },
+    { path: "~/components/container/login", prefix: "Login" },
   ],
   css: ["~/assets/scss/main.scss"],
   vite: {
@@ -21,5 +26,10 @@ export default defineNuxtConfig({
       },
     },
   },
-  modules: ["@nuxt/image"],
+  modules: [
+    "@pinia/nuxt",
+    "pinia-plugin-persistedstate/nuxt",
+    "nuxt-phosphor-icons",
+  ],
+  plugins: ["~/plugins/runtimeConfig.ts"],
 });

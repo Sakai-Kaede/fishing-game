@@ -7,10 +7,9 @@ export default defineNuxtConfig({
     },
   },
   components: [
-    {
-      path: "~/components/presentational/Atoms",
-      prefix: "Atoms",
-    },
+    { path: "~/components/presentational/Atoms", prefix: "Atoms" },
+    { path: "~/components/presentational/Molecules", prefix: "Molecules" },
+    { path: "~/components/container/register", prefix: "Register" },
   ],
   css: ["~/assets/scss/main.scss"],
   vite: {
@@ -26,6 +25,10 @@ export default defineNuxtConfig({
       },
     },
   },
-  modules: ["@nuxt/image"],
+  modules: [
+    "@pinia/nuxt",
+    "pinia-plugin-persistedstate/nuxt",
+    "nuxt-phosphor-icons",
+  ],
   plugins: ["~/plugins/runtimeConfig.ts"],
 });

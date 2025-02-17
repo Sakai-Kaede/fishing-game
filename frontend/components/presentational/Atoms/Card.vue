@@ -29,7 +29,7 @@ const props = defineProps({
   },
   hoverEffect: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 });
 
@@ -90,6 +90,7 @@ const computedClass = computed(() => {
 }
 
 .card-content {
+  font-size: 1.5rem;
   margin-top: 0.8rem;
   text-align: center;
 }

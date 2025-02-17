@@ -42,8 +42,12 @@ export class UserRepository {
         username: savedUser.username,
         userId: savedUser.userId,
       };
-    } catch (err) {
+    } catch (err: any) {
       console.error("ユーザー作成エラー:", err);
+      if (err.code === 11000) {
+        throw new Error("その名前は既に使用されています");
+      }
+
       throw new Error("ユーザー作成に失敗しました");
     }
   };

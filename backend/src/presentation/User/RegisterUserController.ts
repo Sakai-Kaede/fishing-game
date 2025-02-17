@@ -20,7 +20,13 @@ export class RegisterUserController {
         });
         res.status(200).json(result);
       } catch (error: any) {
-        res.status(400).json({ message: error.message });
+        if (error.message === "その名前は既に使用されています") {
+          // 重複したユーザー名の場合は 409 Conflict
+          res.status(409).json({ message: error.message });
+        } else {
+          // その他のエラーは 400 Bad Request
+          res.status(400).json({ message: error.message });
+        }
       }
     });
   }

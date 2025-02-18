@@ -17,8 +17,10 @@ interface LoginUserOutput {
     count: number;
   }[];
   achievements: {
+    count: number;
     name: string;
-    achieved: boolean;
+    level: number;
+    group: number;
   }[];
   message: string;
 }

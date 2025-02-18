@@ -13,8 +13,10 @@ export class User {
     count: number;
   }[];
   private achievements: {
+    count: number;
     name: string;
-    achieved: boolean;
+    level: number;
+    group: number;
   }[];
   private favoriteFish: string;
 
@@ -29,8 +31,10 @@ export class User {
       count: number;
     }[] = [],
     achievements: {
+      count: number;
       name: string;
-      achieved: boolean;
+      level: number;
+      group: number;
     }[] = [],
     favoriteFish: string = "xxx"
   ) {
@@ -118,8 +122,10 @@ export class User {
     fishingRodLevel: number;
     caughtFish: { name: string; count: number }[];
     achievements: {
+      count: number;
       name: string;
-      achieved: boolean;
+      level: number;
+      group: number;
     }[];
     favoriteFish: string;
   } {
@@ -145,6 +151,39 @@ export class User {
     const isFavoriteFishValid = this.favoriteFish === favoriteFish;
     return isPasswordValid && isFavoriteFishValid;
   }
+
+  // achievements を group ごとに最も level が高いもののみ残す
+  public groupAchievementsByMaxLevel = (
+    achievements: {
+      count: number;
+      name: string;
+      level: number;
+      group: number;
+    }[]
+  ): { count: number; name: string; level: number; group: number }[] => {
+    // achievements を group ごとに最も level が高いもののみ残す
+    const achievementsGroupedByMaxLevel = achievements.reduce(
+      (result, achievement) => {
+        const { group, level } = achievement;
+
+        // グループがすでに存在している場合、最も高い level を保持
+        if (!result[group]) {
+          result[group] = achievement; // グループがなければそのまま追加
+        } else if (result[group].level < level) {
+          result[group] = achievement; // 既存のレベルより高い場合、更新
+        }
+
+        return result;
+      },
+      {} as Record<
+        number,
+        { count: number; name: string; level: number; group: number }
+      >
+    );
+
+    // グループごとに最もレベルが高いものを配列に変換
+    return Object.values(achievementsGroupedByMaxLevel);
+  };
 }
 
 export interface IUserRepository {
@@ -168,8 +207,10 @@ export interface IUserRepository {
       count: number;
     }[],
     achievements: {
+      count: number;
       name: string;
-      achieved: boolean;
+      level: number;
+      group: number;
     }[],
     favoriteFish: string
   ): Promise<{ username: string; userId: string }>;
@@ -278,8 +319,10 @@ export interface IUserRepository {
       count: number;
     }[];
     achievements: {
+      count: number;
       name: string;
-      achieved: boolean;
+      level: number;
+      group: number;
     }[];
     favoriteFish: string;
   } | null>;
@@ -289,7 +332,18 @@ export interface IUserRepository {
    *
    * @returns ユーザー名とsumScoreを含むリスト
    */
-  getUsersBySumScore(): Promise<{ username: string; sumScore: number }[]>;
+  getUsersBySumScore(): Promise<
+    {
+      username: string;
+      sumScore: number;
+      achievements: {
+        count: number;
+        name: string;
+        level: number;
+        group: number;
+      }[];
+    }[]
+  >;
 
   /**
    * ユーザーのsumScoreに基づいた順位を取得します。

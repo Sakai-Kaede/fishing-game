@@ -10,7 +10,7 @@ import { GetUserDataController } from "@/src/presentation/User/GetUserDataContro
 import { RegisterUserController } from "@/src/presentation/User/RegisterUserController";
 import { UpdateFishingRodLevelController } from "@/src/presentation/User/UpdateFishingRodLevelController";
 import { LoginController } from "@/src/presentation/User/LoginController";
-import { GetRankingController } from "@/src/presentation/User/GetRunkingController";
+import { GetRankingController } from "@/src/presentation/User/GetRankingController";
 import { IUserRepository } from "@/src/domain/User/User";
 
 import { FishRepository } from "@/src/infrastructure/Fish/FishRepository";

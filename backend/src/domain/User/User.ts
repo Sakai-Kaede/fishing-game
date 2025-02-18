@@ -283,4 +283,19 @@ export interface IUserRepository {
     }[];
     favoriteFish: string;
   } | null>;
+
+  /**
+   * ユーザーをsumScore順に取得します。（最大100件）
+   *
+   * @returns ユーザー名とsumScoreを含むリスト
+   */
+  getUsersBySumScore(): Promise<{ username: string; sumScore: number }[]>;
+
+  /**
+   * ユーザーのsumScoreに基づいた順位を取得します。
+   *
+   * @param userId ユーザーID
+   * @returns 指定したユーザーの順位（1から始まる）
+   */
+  getUserRankBySumScore(userId: string): Promise<number>;
 }

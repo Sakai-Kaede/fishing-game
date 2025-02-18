@@ -12,6 +12,7 @@ import { IncrementCaughtFishCountController } from "@/src/presentation/User/Incr
 import { RegisterUserController } from "@/src/presentation/User/RegisterUserController";
 import { UpdateFishingRodLevelController } from "@/src/presentation/User/UpdateFishingRodLevelController";
 import { LoginController } from "@/src/presentation/User/LoginController";
+import { GetRankingController } from "@/src/presentation/User/GetRunkingController";
 import { IUserRepository } from "@/src/domain/User/User";
 
 import { FishRepository } from "@/src/infrastructure/Fish/FishRepository";
@@ -48,6 +49,7 @@ const updateFishingRodLevelController = new UpdateFishingRodLevelController(
   userRepository
 );
 const loginController = new LoginController(userRepository);
+const getRankingController = new GetRankingController(userRepository);
 
 const createFishController = new CreatePreFishController(
   fishRepository,
@@ -81,6 +83,7 @@ incrementCaughtFishCountController.incrementCaughtFishCount(app);
 registerUserController.registerUser(app);
 updateFishingRodLevelController.updateFishingRodLevel(app);
 loginController.login(app);
+getRankingController.getRanking(app);
 
 createFishController.createPreFish(app);
 catchFishController.caughtFish(app);

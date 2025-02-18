@@ -278,4 +278,47 @@ export class UserRepository {
       throw new Error("ユーザー検索に失敗しました");
     }
   };
+
+  // ユーザー情報をスコア順に取得する（最大100件）
+  public getUsersBySumScore = async (): Promise<
+    { username: string; sumScore: number }[]
+  > => {
+    try {
+      const users = await UserModel.find(
+        {},
+        { username: 1, sumScore: 1, _id: 0 }
+      )
+        .sort({ sumScore: -1 })
+        .limit(100);
+      return users.map((user) => ({
+        username: user.username,
+        sumScore: user.sumScore,
+      }));
+    } catch (err) {
+      console.error("スコア順ユーザー取得エラー:", err);
+      throw new Error("スコア順ユーザー取得に失敗しました");
+    }
+  };
+
+  // ユーザーのsumScoreに基づいた順位を取得する
+  public getUserRankBySumScore = async (userId: string): Promise<number> => {
+    try {
+      const users = await UserModel.find(
+        {},
+        { username: 1, sumScore: 1, userId: 1, _id: 0 }
+      ).sort({ sumScore: -1 });
+      const user = users.find((u) => u.userId === userId);
+
+      if (!user) {
+        throw new Error("指定したユーザーが見つかりません");
+      }
+
+      const rank = users.findIndex((u) => u.userId === userId) + 1;
+
+      return rank;
+    } catch (err) {
+      console.error("順位取得エラー:", err);
+      throw new Error("ユーザーの順位取得に失敗しました");
+    }
+  };
 }

@@ -17,8 +17,10 @@ export class UserRepository {
       count: number;
     }[],
     achievements: {
+      count: number;
       name: string;
-      achieved: boolean;
+      level: number;
+      group: number;
     }[],
     favoriteFish: string
   ): Promise<{
@@ -177,25 +179,21 @@ export class UserRepository {
         0
       );
 
-      FISH_ACHIEVEMENTS.TYPES.forEach(({ count, name }) => {
+      FISH_ACHIEVEMENTS.TYPES.forEach(({ count, name, level, group }) => {
         if (
           uniqueFishCount >= count &&
-          !achievementsToAdd.some(
-            (achievement) => achievement.name === name && achievement.achieved
-          )
+          !achievementsToAdd.some((achievement) => achievement.name === name)
         ) {
-          achievementsToAdd.push({ name, achieved: true });
+          achievementsToAdd.push({ name, count, level, group });
         }
       });
 
-      FISH_ACHIEVEMENTS.COUNTS.forEach(({ count, name }) => {
+      FISH_ACHIEVEMENTS.COUNTS.forEach(({ count, name, level, group }) => {
         if (
           totalFishCount >= count &&
-          !achievementsToAdd.some(
-            (achievement) => achievement.name === name && achievement.achieved
-          )
+          !achievementsToAdd.some((achievement) => achievement.name === name)
         ) {
-          achievementsToAdd.push({ name, achieved: true });
+          achievementsToAdd.push({ name, count, level, group });
         }
       });
 
@@ -210,7 +208,7 @@ export class UserRepository {
   // ポーカーのポイントに基づいて実績を追加
   public addPokerAchievements = async (
     userId: string,
-    points: number
+    count: number
   ): Promise<void> => {
     try {
       const user = await UserModel.findOne({ userId });
@@ -218,16 +216,21 @@ export class UserRepository {
 
       let achievementsToAdd = user.achievements;
 
-      POKER_ACHIEVEMENTS.forEach(({ points: requiredPoints, name }) => {
-        if (
-          points >= requiredPoints &&
-          !achievementsToAdd.some(
-            (achievement) => achievement.name === name && achievement.achieved
-          )
-        ) {
-          achievementsToAdd.push({ name, achieved: true });
+      POKER_ACHIEVEMENTS.forEach(
+        ({ count: requiredPoints, name, level, group }) => {
+          if (
+            count >= requiredPoints &&
+            !achievementsToAdd.some((achievement) => achievement.name === name)
+          ) {
+            achievementsToAdd.push({
+              name,
+              count: requiredPoints,
+              level,
+              group,
+            });
+          }
         }
-      });
+      );
 
       user.achievements = achievementsToAdd;
       await user.save();
@@ -251,8 +254,10 @@ export class UserRepository {
       count: number;
     }[];
     achievements: {
+      count: number;
       name: string;
-      achieved: boolean;
+      level: number;
+      group: number;
     }[];
     favoriteFish: string;
   } | null> => {
@@ -281,18 +286,29 @@ export class UserRepository {
 
   // ユーザー情報をスコア順に取得する（最大100件）
   public getUsersBySumScore = async (): Promise<
-    { username: string; sumScore: number }[]
+    {
+      username: string;
+      sumScore: number;
+      achievements: {
+        count: number;
+        name: string;
+        level: number;
+        group: number;
+      }[];
+    }[]
   > => {
     try {
       const users = await UserModel.find(
         {},
-        { username: 1, sumScore: 1, _id: 0 }
+        { username: 1, sumScore: 1, achievements: 1, _id: 0 }
       )
         .sort({ sumScore: -1 })
         .limit(100);
+
       return users.map((user) => ({
         username: user.username,
         sumScore: user.sumScore,
+        achievements: user.achievements,
       }));
     } catch (err) {
       console.error("スコア順ユーザー取得エラー:", err);

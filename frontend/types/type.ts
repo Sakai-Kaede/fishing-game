@@ -12,3 +12,14 @@ export interface User {
   }[];
   message?: string;
 }
+
+export interface Ranking {
+  username: string;
+  sumScore: string;
+  achievements: {
+    count: number;
+    name: string;
+    level: number;
+    group: number;
+  }[];
+}

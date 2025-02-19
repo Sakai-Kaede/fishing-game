@@ -39,4 +39,14 @@ export default {
       },
     });
   },
+
+  async getRanking(userId?: string) {
+    const apiBase = useNuxtApp().$apiBase;
+    const endpoint = userId
+      ? `${apiBase}/rank?userId=${userId}`
+      : `${apiBase}/rank`;
+    return await $fetch(endpoint, {
+      method: "GET",
+    });
+  },
 };

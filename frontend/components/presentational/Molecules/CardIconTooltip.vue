@@ -1,7 +1,7 @@
 <template>
   <AtomsTooltip>
     <template #target>
-      <RankingCardIcon :color="color"></RankingCardIcon>
+      <AtomsCardIcon :color="color"></AtomsCardIcon>
     </template>
     <template #text>{{ tooltipText }}</template>
   </AtomsTooltip>

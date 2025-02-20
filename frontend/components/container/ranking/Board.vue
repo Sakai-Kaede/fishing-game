@@ -18,20 +18,20 @@
         <span class="ranking-username">{{ ranking.username }}</span>
         <span class="ranking-score">スコア: {{ ranking.sumScore }}</span>
 
-        <RankingFishIconTooltip
+        <MoleculesFishIconTooltip
           :tooltipText="getAchievementName(ranking, 1)"
           :color="getAchievementColor(ranking, 1)"
-        ></RankingFishIconTooltip>
+        ></MoleculesFishIconTooltip>
 
-        <RankingFishIconTooltip
+        <MoleculesFishIconTooltip
           :tooltipText="getAchievementName(ranking, 2)"
           :color="getAchievementColor(ranking, 2)"
-        ></RankingFishIconTooltip>
+        ></MoleculesFishIconTooltip>
 
-        <RankingCardIconTooltip
+        <MoleculesCardIconTooltip
           :tooltipText="getAchievementName(ranking, 3)"
           :color="getAchievementColor(ranking, 3)"
-        ></RankingCardIconTooltip>
+        ></MoleculesCardIconTooltip>
       </li>
     </ul>
   </div>

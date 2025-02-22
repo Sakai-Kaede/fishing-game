@@ -9,6 +9,9 @@
       class="trophy-icon"
     />
   </NuxtLink>
+  <NuxtLink to="/shop">
+    <img src="@/assets/images/naviIcon/shop.png" alt="お店" class="shop-icon" />
+  </NuxtLink>
 </template>
 
 <script setup lang="ts"></script>

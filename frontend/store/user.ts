@@ -76,6 +76,46 @@ export const useUserStore = defineStore(
       }
     }
 
+    // 釣竿レベルの更新
+    const updateFishingRodLevel = async (inputFishingRodLevel: number) => {
+      try {
+        if (!userId.value) {
+          throw new Error("ユーザーIDが見つかりません。ログインしてください。");
+        }
+        const userRepository = RepositoryFactory.get("user");
+        await userRepository.updateFishingRodLevel(
+          userId.value,
+          inputFishingRodLevel
+        );
+        fishingRodLevel.value = inputFishingRodLevel;
+      } catch (error: unknown) {
+        throw error;
+      }
+    };
+
+    // ユーザー情報の取得
+    const getUserData = async () => {
+      if (!userId.value) {
+        return { success: false, message: "ユーザーIDが設定されていません。" };
+      }
+      try {
+        const userRepository = RepositoryFactory.get("user");
+        const user = (await userRepository.getUserData(userId.value)) as User;
+
+        username.value = user.username;
+        sumScore.value = user.sumScore;
+        fishingRodLevel.value = user.fishingRodLevel;
+
+        return { success: true, message: "ユーザー情報を取得しました。" };
+      } catch (error: unknown) {
+        let errorMessage = "ユーザー情報の取得に失敗しました。";
+        if (error instanceof Error) {
+          errorMessage = error.message;
+        }
+        return { success: false, message: errorMessage };
+      }
+    };
+
     return {
       username,
       userId,
@@ -86,6 +126,8 @@ export const useUserStore = defineStore(
       highestScoringFish,
       register,
       login,
+      updateFishingRodLevel,
+      getUserData,
     };
   },
   {

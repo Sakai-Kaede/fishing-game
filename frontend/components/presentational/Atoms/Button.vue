@@ -13,7 +13,9 @@ const props = defineProps({
     type: String,
     default: "primary",
     validator: (value: string) =>
-      ["primary", "secondary", "text_underline"].includes(value),
+      ["primary", "primary_orange", "secondary", "text_underline"].includes(
+        value
+      ),
   },
   size: {
     type: String,
@@ -56,6 +58,13 @@ const handleClick = (event: MouseEvent) => {
     color: $gray-20;
     &:hover {
       background-color: $skyblue-50;
+    }
+  }
+  &--primary_orange {
+    background-color: $orange-40;
+    color: $gray-90;
+    &:hover {
+      background-color: $orange-50;
     }
   }
   &--secondary {

@@ -8,8 +8,8 @@ export const useUserStore = defineStore(
   () => {
     const username = ref("");
     const userId = ref("");
-    const sumScore = ref(0);
-    const fishingRodLevel = ref(1);
+    const sumScore = ref<Number>();
+    const fishingRodLevel = ref<Number>();
     const caughtFish = ref<Array<any> | null>(null);
     const achievements = ref<Array<any> | null>(null);
     const highScoreFish = ref<{ name: string; score: number } | null>(null);
@@ -21,6 +21,8 @@ export const useUserStore = defineStore(
       inputFavoriteFish: string
     ) {
       try {
+        localStorage.removeItem("user");
+
         const userRepository = RepositoryFactory.get("user");
         const user = (await userRepository.registerUser(
           inputUsername,
@@ -31,8 +33,9 @@ export const useUserStore = defineStore(
         // ユーザー情報をストアに保存
         username.value = user.username;
         userId.value = user.userId;
-        sumScore.value = user.sumScore;
-        fishingRodLevel.value = user.fishingRodLevel;
+        sumScore.value = 0;
+        fishingRodLevel.value = 1;
+        highScoreFish.value = { name: "デフォルトの魚", score: 0 };
 
         return { success: true, message: "ユーザー登録に成功しました。" };
       } catch (error: unknown) {
@@ -51,6 +54,8 @@ export const useUserStore = defineStore(
       inputFavoriteFish: string
     ) {
       try {
+        localStorage.removeItem("user");
+
         const userRepository = RepositoryFactory.get("user");
         const user = (await userRepository.login(
           inputUsername,

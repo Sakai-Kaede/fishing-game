@@ -60,10 +60,10 @@ const UserSchema: Schema<IUser> = new mongoose.Schema(
     achievements: {
       type: [
         {
-          count: { type: Number, required: true },
-          name: { type: String, required: true },
-          level: { type: Number, required: true },
-          group: { type: Number, required: true },
+          count: Number,
+          name: String,
+          level: Number,
+          group: Number,
         },
       ],
     },

@@ -8,13 +8,15 @@
 
 <style scoped lang="scss">
 .hamburger-menu {
-  position: absolute;
+  position: fixed;
   top: 2rem;
   left: 2rem;
+  z-index: 1000;
 }
 .user-profile {
-  position: absolute;
+  position: fixed;
   top: 2rem;
   right: 2rem;
+  z-index: 900;
 }
 </style>

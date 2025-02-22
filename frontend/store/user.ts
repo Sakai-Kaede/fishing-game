@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import type { User } from "@/types/type";
-
+import { fishList } from "@/constants/FishData";
 import { RepositoryFactory } from "@/repositories/index";
 
 export const useUserStore = defineStore(
@@ -10,9 +10,9 @@ export const useUserStore = defineStore(
     const userId = ref("");
     const sumScore = ref(0);
     const fishingRodLevel = ref(1);
-    const highestScoringFish = ref<string | null>(null);
-    const caughtFish = ref([{}]);
-    const achievements = ref([{}]);
+    const caughtFish = ref<Array<any> | null>(null);
+    const achievements = ref<Array<any> | null>(null);
+    const highScoreFish = ref<{ name: string; score: number } | null>(null);
 
     // ユーザー登録
     async function register(
@@ -65,6 +65,7 @@ export const useUserStore = defineStore(
         fishingRodLevel.value = user.fishingRodLevel;
         caughtFish.value = [...user.caughtFish];
         achievements.value = [...user.achievements];
+        highScoreFish.value = getHighestScoringFish();
 
         return { success: true, message: "ログインに成功しました。" };
       } catch (error: unknown) {
@@ -104,7 +105,9 @@ export const useUserStore = defineStore(
 
         username.value = user.username;
         sumScore.value = user.sumScore;
+        caughtFish.value = user.caughtFish;
         fishingRodLevel.value = user.fishingRodLevel;
+        highScoreFish.value = getHighestScoringFish();
 
         return { success: true, message: "ユーザー情報を取得しました。" };
       } catch (error: unknown) {
@@ -116,6 +119,37 @@ export const useUserStore = defineStore(
       }
     };
 
+    // 最もスコアが高い魚を更新
+    const updateHighScoreFish = (fish: { name: string; score: number }) => {
+      if (!highScoreFish.value || fish.score > highScoreFish.value.score) {
+        highScoreFish.value = fish;
+      }
+    };
+
+    // 最もスコアが高い魚を求める
+    const getHighestScoringFish = () => {
+      if (!caughtFish.value || caughtFish.value.length === 0) return null;
+
+      // caughtFishの中で最もスコアが高い魚を取得
+      const highestScoringFish = caughtFish.value.reduce(
+        (maxFish, currentFish) => {
+          // fishListからcurrentFish.nameのスコアを取得
+          const fishData = fishList.find(
+            (fish) => fish.name === currentFish.name
+          );
+          if (fishData && fishData.score > (maxFish?.score || 0)) {
+            return fishData; // スコアが高い魚を選ぶ
+          }
+          return maxFish;
+        },
+        null as { name: string; score: number } | null
+      );
+
+      return highestScoringFish
+        ? { name: highestScoringFish.name, score: highestScoringFish.score }
+        : null;
+    };
+
     return {
       username,
       userId,
@@ -123,11 +157,12 @@ export const useUserStore = defineStore(
       fishingRodLevel,
       caughtFish,
       achievements,
-      highestScoringFish,
+      highScoreFish,
       register,
       login,
       updateFishingRodLevel,
       getUserData,
+      updateHighScoreFish,
     };
   },
   {

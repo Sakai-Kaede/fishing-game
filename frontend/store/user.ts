@@ -21,14 +21,14 @@ export const useUserStore = defineStore(
       inputFavoriteFish: string
     ) {
       try {
-        localStorage.removeItem("user");
-
         const userRepository = RepositoryFactory.get("user");
         const user = (await userRepository.registerUser(
           inputUsername,
           inputPassword,
           inputFavoriteFish
         )) as User;
+
+        localStorage.removeItem("user");
 
         // ユーザー情報をストアに保存
         username.value = user.username;
@@ -54,14 +54,14 @@ export const useUserStore = defineStore(
       inputFavoriteFish: string
     ) {
       try {
-        localStorage.removeItem("user");
-
         const userRepository = RepositoryFactory.get("user");
         const user = (await userRepository.login(
           inputUsername,
           inputPassword,
           inputFavoriteFish
         )) as User;
+
+        localStorage.removeItem("user");
 
         // ユーザーデータを更新
         username.value = user.username;

@@ -23,3 +23,68 @@ export interface Ranking {
     group: number;
   }[];
 }
+
+export interface Card {
+  suit: string;
+  rank: string;
+}
+
+export interface PokerDeal {
+  hand: Card[];
+  updateSumScore: number;
+}
+
+export interface PokerResponse {
+  success: boolean;
+  message: string;
+  POKER_DEAL: PokerDeal;
+}
+
+export interface CardWithId {
+  suit: string;
+  rank: string;
+  _id: string;
+}
+
+export interface PokerResult {
+  hand: CardWithId[];
+  score: number;
+}
+
+export interface PokerResultResponse {
+  success: boolean;
+  message: string;
+  POKER_RESULT: PokerResult;
+}
+
+export interface DoubleUpDealFalse {
+  updateSumScore: number;
+}
+
+export interface DoubleUpFalseResponse {
+  success: boolean;
+  message: string;
+  DOUBLEUP_DEAL: DoubleUpDealFalse;
+}
+
+export interface DoubleUpDealTrue {
+  card: CardWithId;
+}
+
+export interface DoubleUpTrueResponse {
+  success: boolean;
+  message: string;
+  DOUBLEUP_DEAL: DoubleUpDealTrue;
+}
+
+export interface DoubleUpResult {
+  guessCorrect: boolean;
+  drawnCard: CardWithId;
+  newScore: number;
+}
+
+export interface DoubleUpResultResponse {
+  success: boolean;
+  message: string;
+  DOUBLEUP_RESULT: DoubleUpResult;
+}

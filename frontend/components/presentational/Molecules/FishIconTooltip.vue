@@ -1,7 +1,7 @@
 <template>
   <AtomsTooltip>
     <template #target>
-      <AtomsFishIcon :color="color"></AtomsFishIcon>
+      <AtomsFishIcon :color="color" :size="size"></AtomsFishIcon>
     </template>
     <template #text>{{ tooltipText }}</template>
   </AtomsTooltip>
@@ -18,8 +18,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    size: {
+      type: String,
+      default: "7rem",
+    },
   },
 });
 </script>
-
-<style scoped lang="scss"></style>

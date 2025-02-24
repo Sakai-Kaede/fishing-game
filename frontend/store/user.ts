@@ -155,6 +155,14 @@ export const useUserStore = defineStore(
         : null;
     };
 
+    // 捕まえた魚の名前を抽出する関数
+    const getCaughtFishNames = () => {
+      if (!caughtFish.value || caughtFish.value.length === 0) return [];
+
+      // 捕まえた魚の名前だけを抽出
+      return caughtFish.value.map((fish) => fish.name);
+    };
+
     return {
       username,
       userId,
@@ -168,6 +176,7 @@ export const useUserStore = defineStore(
       updateFishingRodLevel,
       getUserData,
       updateHighScoreFish,
+      getCaughtFishNames,
     };
   },
   {

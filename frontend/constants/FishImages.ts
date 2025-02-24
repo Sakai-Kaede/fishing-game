@@ -2,7 +2,7 @@ import アジ from "@/assets/images/fish/aji.png";
 import ブリ from "@/assets/images/fish/buri.png";
 import クリオネ from "@/assets/images/fish/clione.png";
 import ダイオウグソクムシ from "@/assets/images/fish/daiougusokumushi.png";
-import ダンクルオステウス from "@/assets/images/fish/daiougusokumushi.png";
+import ダンクルオステウス from "@/assets/images/fish/dunkleosteus.png";
 import フグ from "@/assets/images/fish/fugu.png";
 import ヒラメ from "@/assets/images/fish/hirame.png";
 import イカ from "@/assets/images/fish/ika.png";
@@ -30,7 +30,7 @@ import ウツボ from "@/assets/images/fish/unagi.png";
 import ザトウクジラ from "@/assets/images/fish/zatoukujira.png";
 import デフォルトの魚 from "@/assets/images/fish/default-fish.png";
 
-export {
+export const FishImages = {
   アジ,
   ブリ,
   クリオネ,
@@ -62,4 +62,6 @@ export {
   ウツボ,
   ザトウクジラ,
   デフォルトの魚,
-};
+} as const;
+
+export type FishImageKeys = keyof typeof FishImages;

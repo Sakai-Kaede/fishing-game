@@ -14,6 +14,10 @@ export default defineNuxtConfig({
     { path: "~/components/container/ranking", prefix: "Ranking" },
     { path: "~/components/container/shop", prefix: "Shop" },
     { path: "~/components/container/poker", prefix: "Poker" },
+    {
+      path: "~/components/container/illustratedBook",
+      prefix: "illustratedBook",
+    },
   ],
   css: ["~/assets/scss/main.scss"],
   vite: {

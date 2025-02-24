@@ -1,5 +1,5 @@
 <template>
-  <div class="fish" :style="cardStyle"></div>
+  <div class="fish" :style="fishStyle"></div>
 </template>
 
 <script>
@@ -13,9 +13,13 @@ export default {
         );
       },
     },
+    size: {
+      type: String,
+      default: "7rem",
+    },
   },
   computed: {
-    cardStyle() {
+    fishStyle() {
       let background;
       switch (this.color) {
         case "gold":
@@ -45,6 +49,8 @@ export default {
       }
       return {
         background,
+        width: this.size,
+        height: this.size,
       };
     },
   },
@@ -53,9 +59,6 @@ export default {
 
 <style lang="scss" scoped>
 .fish {
-  width: 7rem;
-  height: 7rem;
-
   -webkit-mask-image: url("@/assets/images/tools/suzuki.png");
   -webkit-mask-size: contain;
   -webkit-mask-repeat: no-repeat;

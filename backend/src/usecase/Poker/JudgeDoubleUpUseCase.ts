@@ -48,7 +48,7 @@ export class JudgeDoubleUpUseCase {
       guessCorrect = poker.compareCardValues(drawnCard, previousCard, guess);
       newScore = guessCorrect ? pokerData.score * 2 : 0;
     } else {
-      return { guessCorrect: true, drawnCard, newScore: 0 };
+      return { guessCorrect: true, drawnCard, newScore: pokerData.score };
     }
 
     if (guessCorrect) {

@@ -95,7 +95,7 @@ const computedFontSize = computed(() => {
     case "small":
       return "1.2rem";
     case "large":
-      return "1.6rem";
+      return "2rem";
     default:
       return "1.4rem";
   }
@@ -148,6 +148,7 @@ const computedWidth = computed(() => {
   }
 
   &__error {
+    font-size: 2rem;
     display: flex;
     align-items: center;
     margin-top: 8px;

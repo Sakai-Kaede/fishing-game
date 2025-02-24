@@ -13,9 +13,14 @@ const props = defineProps({
     type: String,
     default: "primary",
     validator: (value: string) =>
-      ["primary", "primary_orange", "secondary", "text_underline"].includes(
-        value
-      ),
+      [
+        "primary",
+        "primary_orange",
+        "secondary",
+        "text_underline",
+        "primary_poker",
+        "secondary_poker",
+      ].includes(value),
   },
   size: {
     type: String,
@@ -73,6 +78,23 @@ const handleClick = (event: MouseEvent) => {
     color: $skyblue-40;
     &:hover {
       background-color: $skyblue-40;
+      color: $gray-20;
+    }
+  }
+  &--primary_poker {
+    background: linear-gradient(45deg, #ffcc00, #ff6600);
+    color: $gray-10;
+    border: none;
+    &:hover {
+      background: linear-gradient(45deg, #ff6600, #ff3300);
+    }
+  }
+  &--secondary_poker {
+    background-color: transparent;
+    border: 2px solid #ff3300;
+    color: $gray-70;
+    &:hover {
+      background-color: #ff6600;
       color: $gray-20;
     }
   }

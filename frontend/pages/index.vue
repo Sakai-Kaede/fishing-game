@@ -19,6 +19,9 @@
       class="shop-icon"
     />
   </NuxtLink>
+  <NuxtLink to="/illustratedBook">
+    <img src="@/assets/images/naviIcon/illustratedBook.png" alt="図鑑" />
+  </NuxtLink>
 </template>
 
 <script setup lang="ts"></script>

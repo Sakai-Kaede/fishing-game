@@ -20,7 +20,15 @@ const props = defineProps({
     type: String,
     default: "default",
     validator: (value: string) =>
-      ["default", "primary", "secondary"].includes(value),
+      [
+        "default",
+        "primary",
+        "secondary",
+        "gold",
+        "silver",
+        "bronze",
+        "blue",
+      ].includes(value),
   },
   size: {
     type: String,
@@ -62,6 +70,39 @@ const computedClass = computed(() => {
   }
   &--secondary {
     background-color: $orange-40;
+  }
+  &--gold {
+    background: linear-gradient(
+      45deg,
+      #b67b03 0%,
+      #daaf08 45%,
+      #fee9a0 70%,
+      #daaf08 85%,
+      #b67b03 90% 100%
+    );
+  }
+  &--silver {
+    background: linear-gradient(
+      45deg,
+      #757575 0%,
+      #9e9e9e 45%,
+      #e8e8e8 70%,
+      #9e9e9e 85%,
+      #757575 90% 100%
+    );
+  }
+  &--bronze {
+    background: linear-gradient(
+      45deg,
+      #b87333 0%,
+      #d1885e 45%,
+      #f0c07b 70%,
+      #d1885e 85%,
+      #b87333 90% 100%
+    );
+  }
+  &--blue {
+    background-color: $skyblue-20;
   }
 }
 

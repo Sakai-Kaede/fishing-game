@@ -24,77 +24,15 @@
 <script setup lang="ts">
 import "@/assets/scss/main.scss";
 import { useUserStore } from "@/store/user";
-import {
-  アジ,
-  ブリ,
-  クリオネ,
-  ダイオウグソクムシ,
-  ダンクルオステウス,
-  フグ,
-  ヒラメ,
-  イカ,
-  伊勢海老,
-  イワシ,
-  クラゲ,
-  海草,
-  カジキ,
-  カツオ,
-  キンメダイ,
-  マグロ,
-  マンボウ,
-  メンダコ,
-  リュウグウノツカイ,
-  サメ,
-  サケ,
-  サンマ,
-  スズキ,
-  タイ,
-  タコ,
-  トビウオ,
-  ウミガメ,
-  ウナギ,
-  ウツボ,
-  ザトウクジラ,
-  デフォルトの魚,
-} from "@/constants/FishImages";
+import { FishImages } from "@/constants/FishImages";
+import type { FishImageKeys } from "@/constants/FishImages"; // FishImages と FishImageKeys をインポート
 
 const userStore = useUserStore();
 const isDataLoaded = ref(false);
 const highScoreFish = ref<{ name: string; score: number } | null>(null);
 
-const fishImages: Record<string, string> = {
-  アジ,
-  ブリ,
-  クリオネ,
-  ダイオウグソクムシ,
-  ダンクルオステウス,
-  フグ,
-  ヒラメ,
-  イカ,
-  伊勢海老,
-  イワシ,
-  クラゲ,
-  海草,
-  カジキ,
-  カツオ,
-  キンメダイ,
-  マグロ,
-  マンボウ,
-  メンダコ,
-  リュウグウノツカイ,
-  サメ,
-  サケ,
-  サンマ,
-  スズキ,
-  タイ,
-  タコ,
-  トビウオ,
-  ウミガメ,
-  ウナギ,
-  ウツボ,
-  ザトウクジラ,
-  デフォルトの魚,
-};
+// FishImages から画像マッピングを作成
+const fishImages: Record<FishImageKeys, string> = FishImages;
 
 onMounted(async () => {
   const result = await userStore.getUserData();
@@ -103,11 +41,9 @@ onMounted(async () => {
     console.error(result.message);
   } else {
     const highestScoringFish = userStore.highScoreFish;
-    if (highestScoringFish) {
-      highScoreFish.value = highestScoringFish;
-    } else {
-      highScoreFish.value = { name: "デフォルトの魚", score: 0 };
-    }
+    highScoreFish.value = highestScoringFish
+      ? highestScoringFish
+      : { name: "デフォルトの魚", score: 0 };
   }
   isDataLoaded.value = true;
 });
@@ -120,9 +56,11 @@ watch(
   }
 );
 
+// 魚の画像を取得
 const highScoreFishImage = computed(() => {
   const fishName = highScoreFish.value?.name || "デフォルトの魚";
-  return fishImages[fishName] || fishImages["デフォルトの魚"];
+  // FishImages から画像を取得
+  return fishImages[fishName as FishImageKeys] || fishImages["デフォルトの魚"];
 });
 </script>
 

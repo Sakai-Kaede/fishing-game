@@ -88,3 +88,11 @@ export interface DoubleUpResultResponse {
   message: string;
   DOUBLEUP_RESULT: DoubleUpResult;
 }
+
+export type TabKey = "図鑑" | "実績";
+
+export interface Tab {
+  key: TabKey;
+  label: string;
+  component: Component;
+}

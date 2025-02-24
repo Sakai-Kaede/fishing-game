@@ -5,14 +5,13 @@ import { IPokerGame } from "@/models/PokerModel";
 export class Poker {
   HAND_SIZE = 5;
   PAYOUT_MULTIPLIERS: Record<string, number> = {
-    "Straight Flush": 50,
-    "Four of a Kind": 25,
-    "Full House": 10,
-    Flush: 8,
-    Straight: 5,
-    "Three of a Kind": 3,
-    "Two Pair": 2,
-    "One Pair": 1,
+    "Straight Flush": 20,
+    "Four of a Kind": 10,
+    "Full House": 5,
+    Flush: 4,
+    Straight: 2,
+    "Three of a Kind": 1,
+    "Two Pair": 1,
     "High Card": 0,
   };
 
@@ -49,7 +48,6 @@ export class Poker {
     if (Object.values(rankCounts).includes(3)) return "Three of a Kind";
     if (Object.values(rankCounts).filter((count) => count === 2).length === 2)
       return "Two Pair";
-    if (Object.values(rankCounts).includes(2)) return "One Pair";
     return "High Card";
   }
 

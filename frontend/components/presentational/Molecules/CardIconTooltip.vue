@@ -1,7 +1,7 @@
 <template>
   <AtomsTooltip>
     <template #target>
-      <AtomsCardIcon :color="color"></AtomsCardIcon>
+      <AtomsCardIcon :color="color" :size="size"></AtomsCardIcon>
     </template>
     <template #text>{{ tooltipText }}</template>
   </AtomsTooltip>
@@ -17,6 +17,10 @@ export default defineComponent({
     color: {
       type: String,
       required: true,
+    },
+    size: {
+      type: String,
+      default: "5rem",
     },
   },
 });

@@ -13,6 +13,10 @@ export default {
         );
       },
     },
+    size: {
+      type: String,
+      default: "5rem",
+    },
   },
   computed: {
     cardStyle() {
@@ -45,6 +49,8 @@ export default {
       }
       return {
         background,
+        width: this.size,
+        height: this.size,
       };
     },
   },
@@ -53,9 +59,6 @@ export default {
 
 <style lang="scss" scoped>
 .card {
-  width: 5rem;
-  height: 5rem;
-
   -webkit-mask-image: url("@/assets/images/tools/card.png");
   -webkit-mask-size: contain;
   -webkit-mask-repeat: no-repeat;

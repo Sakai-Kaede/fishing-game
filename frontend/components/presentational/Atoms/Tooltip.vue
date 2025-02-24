@@ -44,7 +44,7 @@ import "@/assets/scss/main.scss";
   &:before {
     content: "";
     position: absolute;
-    top: -13px;
+    top: -11px;
     left: 50%;
     margin-left: -7px;
     border: 7px solid transparent;

@@ -54,7 +54,7 @@ import Spades_J from "@/assets/images/cards/Spades@J.png";
 import Spades_Q from "@/assets/images/cards/Spades@Q.png";
 import Spades_K from "@/assets/images/cards/Spades@K.png";
 
-export {
+export const CardImages = {
   Clubs_A,
   Clubs_2,
   Clubs_3,
@@ -107,4 +107,7 @@ export {
   Spades_J,
   Spades_Q,
   Spades_K,
-};
+} as const;
+
+// CardImageKeys 型を定義
+export type CardImageKeys = keyof typeof CardImages;

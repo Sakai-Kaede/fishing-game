@@ -12,6 +12,13 @@
   <NuxtLink to="/shop">
     <img src="@/assets/images/naviIcon/shop.png" alt="お店" class="shop-icon" />
   </NuxtLink>
+  <NuxtLink to="/poker">
+    <img
+      src="@/assets/images/naviIcon/poker.png"
+      alt="ポーカー"
+      class="shop-icon"
+    />
+  </NuxtLink>
 </template>
 
 <script setup lang="ts"></script>

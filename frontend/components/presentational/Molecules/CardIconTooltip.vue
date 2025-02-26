@@ -8,6 +8,7 @@
 </template>
 
 <script lang="ts">
+import type { AchievementColor } from "@/types/type";
 export default defineComponent({
   props: {
     tooltipText: {
@@ -15,7 +16,7 @@ export default defineComponent({
       required: true,
     },
     color: {
-      type: String,
+      type: String as () => AchievementColor,
       required: true,
     },
     size: {

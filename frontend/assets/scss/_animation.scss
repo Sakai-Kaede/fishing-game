@@ -1,0 +1,95 @@
+@keyframes MoveUpAndReturn {
+  0% {
+    top: 0;
+  }
+  50% {
+    top: -100vh;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+@keyframes rotateAndMoveUp {
+  0% {
+    transform: rotate(0deg);
+    top: 0;
+  }
+  50% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(45deg);
+    top: -100vh;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100;
+  }
+}
+
+@keyframes moveToRight {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-20rem);
+    opacity: 0;
+  }
+}
+
+@keyframes bubbles {
+  0% {
+    opacity: 0;
+    transform: translateY(0px) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100vh) scale(1.2);
+  }
+}
+
+@keyframes moveUpAndDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-100vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes swim {
+  0% {
+    transform: translateX(0) translateY(0);
+    opacity: 0;
+  }
+  25% {
+    transform: translateX(10px) translateY(-10px);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(0) translateY(10px);
+    opacity: 1;
+  }
+  75% {
+    transform: translateX(-10px) translateY(-10px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) translateY(0);
+    opacity: 0;
+  }
+}

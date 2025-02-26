@@ -18,6 +18,10 @@ export default defineNuxtConfig({
       path: "~/components/container/illustratedBook",
       prefix: "illustratedBook",
     },
+    {
+      path: "~/components/container/fishing",
+      prefix: "Fishing",
+    },
   ],
   css: ["~/assets/scss/main.scss"],
   vite: {
@@ -28,6 +32,7 @@ export default defineNuxtConfig({
             @use "@/assets/scss/variables.scss" as *;
             @use "@/assets/scss/base.scss" as *;
             @use "@/assets/scss/mixins.scss" as *;
+            @use "@/assets/scss/animation.scss" as *;
           `,
         },
       },

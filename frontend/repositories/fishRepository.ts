@@ -1,5 +1,7 @@
+import type { FishDetails } from "@/types/type";
+
 export default {
-  async fetchPreFish(userId: string, depth: number) {
+  async fetchPreFish(userId: string, depth: number): Promise<FishDetails> {
     const apiBase = useNuxtApp().$apiBase;
     return await $fetch(`${apiBase}/get-fish/${userId}`, {
       method: "POST",

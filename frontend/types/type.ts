@@ -96,3 +96,20 @@ export interface Tab {
   label: string;
   component: Component;
 }
+
+export interface Fish {
+  name: string;
+  score: number;
+  requiredInteractions: number;
+}
+
+export interface FishDetails {
+  fish: Fish;
+  userId: string;
+  randomId: string;
+  isInvalid: boolean;
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}

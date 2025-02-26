@@ -1,36 +1,3 @@
-<script setup lang="ts">
-
-const props = defineProps({
-  shape: {
-    type: String as PropType<'circle' | 'square'>,
-    default: 'square',
-  },
-  size: {
-    type: String as PropType<'small' | 'medium' | 'large'>,
-    default: 'medium',
-  },
-  color: {
-    type: String,
-    default: '#007BFF', // デフォルトの背景色
-  },
-  textColor: {
-    type: String,
-    default: '#FFFFFF', // デフォルトの文字色
-  },
-  onClick: {
-    type: Function as PropType<(event: MouseEvent) => void>,
-    default: () => {}, // デフォルトは空の関数
-  },
-});
-
-const shapeClass = computed(() => (props.shape === 'circle' ? 'button-circle' : 'button-square'));
-const sizeClass = computed(() => `button-${props.size}`);
-const styleObject = computed(() => ({
-  backgroundColor: props.color,
-  color: props.textColor,
-}));
-</script>
-
 <template>
   <button
     :class="['button-atom', shapeClass, sizeClass]"
@@ -40,6 +7,40 @@ const styleObject = computed(() => ({
     <slot>Button</slot>
   </button>
 </template>
+
+<script setup lang="ts">
+const props = defineProps({
+  shape: {
+    type: String as PropType<"circle" | "square">,
+    default: "square",
+  },
+  size: {
+    type: String as PropType<"small" | "medium" | "large">,
+    default: "medium",
+  },
+  color: {
+    type: String,
+    default: "#007BFF", // デフォルトの背景色
+  },
+  textColor: {
+    type: String,
+    default: "#FFFFFF", // デフォルトの文字色
+  },
+  onClick: {
+    type: Function as PropType<(event: MouseEvent) => void>,
+    default: () => {}, // デフォルトは空の関数
+  },
+});
+
+const shapeClass = computed(() =>
+  props.shape === "circle" ? "button-circle" : "button-square"
+);
+const sizeClass = computed(() => `button-${props.size}`);
+const styleObject = computed(() => ({
+  backgroundColor: props.color,
+  color: props.textColor,
+}));
+</script>
 
 <style scoped>
 .button-atom {

@@ -113,3 +113,11 @@ export interface FishDetails {
   updatedAt: string;
   __v: number;
 }
+
+export type AchievementColor =
+  | "gold"
+  | "silver"
+  | "bronze"
+  | "purple"
+  | "blue"
+  | "gray";

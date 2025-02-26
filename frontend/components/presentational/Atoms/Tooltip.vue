@@ -9,7 +9,7 @@
   </span>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import "@/assets/scss/main.scss";
 </script>
 

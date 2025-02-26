@@ -23,8 +23,6 @@ import "@/assets/scss/main.scss";
 import { RepositoryFactory } from "@/repositories";
 import { useUserStore } from "@/store/user";
 import { FishImages } from "@/constants/FishImages";
-import "@/assets/scss/main.scss";
-import { defineEmits } from "vue";
 import type { FishImageKeys } from "@/constants/FishImages";
 import { FishImageWidths } from "@/constants/FishImageWidths";
 import type { FishImageWidthKeys } from "@/constants/FishImageWidths";

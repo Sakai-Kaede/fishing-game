@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
-import { fishList } from "@/constants/FishData";
-import { IUser } from "@/models/UserModel";
+import { fishList } from "../../constants/FishData";
+import { IUser } from "../../models/UserModel";
 
 export class User {
   private username: string;

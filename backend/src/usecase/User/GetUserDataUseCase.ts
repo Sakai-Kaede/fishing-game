@@ -1,5 +1,5 @@
-import { IUserRepository } from "@/src/domain/User/User";
-import { IUser } from "@/models/UserModel";
+import { IUserRepository } from "../../domain/User/User";
+import { IUser } from "../../models/UserModel";
 
 interface GetUserDataInput {
   userId: string;

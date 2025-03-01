@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
-import { CaughtFishUseCase } from "@/src/usecase/Fish/CatchFishUseCase";
-import { IFishRepository } from "@/src/domain/Fish/Fish";
-import { IUserRepository } from "@/src/domain/User/User";
+import { CaughtFishUseCase } from "../../usecase/Fish/CatchFishUseCase";
+import { IFishRepository } from "../../domain/Fish/Fish";
+import { IUserRepository } from "../../domain/User/User";
 
 export class CaughtFishController {
   private caughtFishUseCase: CaughtFishUseCase;

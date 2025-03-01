@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
-import { LoginUseCase } from "@/src/usecase/User/LoginUseCase";
-import { IUserRepository } from "@/src/domain/User/User";
+import { LoginUseCase } from "../../usecase/User/LoginUseCase";
+import { IUserRepository } from "../../domain/User/User";
 
 export class LoginController {
   private loginUseCase: LoginUseCase;

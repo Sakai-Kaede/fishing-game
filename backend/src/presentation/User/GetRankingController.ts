@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
-import { GetUsersRankingUseCase } from "@/src/usecase/User/GetUsersRanking";
-import { GetRankUseCase } from "@/src/usecase/User/GetRank";
-import { IUserRepository } from "@/src/domain/User/User";
+import { GetUsersRankingUseCase } from "../../usecase/User/GetUsersRanking";
+import { GetRankUseCase } from "../../usecase/User/GetRank";
+import { IUserRepository } from "../../domain/User/User";
 
 export class GetRankingController {
   private getUsersRankingUseCase: GetUsersRankingUseCase;

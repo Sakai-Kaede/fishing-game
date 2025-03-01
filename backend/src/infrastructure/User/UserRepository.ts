@@ -1,8 +1,8 @@
-import UserModel, { IUser } from "@/models/UserModel";
+import UserModel, { IUser } from "../../models/UserModel";
 import {
   FISH_ACHIEVEMENTS,
   POKER_ACHIEVEMENTS,
-} from "@/constants/AchievementData";
+} from "../../constants/AchievementData";
 
 export class UserRepository {
   // 新規ユーザーを登録する

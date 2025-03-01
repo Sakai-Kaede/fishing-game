@@ -1,8 +1,8 @@
-import { Poker } from "@/src/domain/Poker/Poker";
-import { User } from "@/src/domain/User/User";
-import { IPokerRepository } from "@/src/domain/Poker/Poker";
-import { IUserRepository } from "@/src/domain/User/User";
-import { CardInterface } from "@/models/PokerModel";
+import { Poker } from "../../domain/Poker/Poker";
+import { User } from "../../domain/User/User";
+import { IPokerRepository } from "../../domain/Poker/Poker";
+import { IUserRepository } from "../../domain/User/User";
+import { CardInterface } from "../../models/PokerModel";
 
 export class DealPokerUseCase {
   private pokerRepository: IPokerRepository;

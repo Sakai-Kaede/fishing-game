@@ -1,6 +1,6 @@
-import { fishList } from "@/constants/FishData";
-import { FishInterface } from "@/config/types";
-import { IPreFish } from "@/models/PreFishModel";
+import { fishList } from "../../constants/FishData";
+import { FishInterface } from "../../config/types";
+import { IPreFish } from "../../models/PreFishModel";
 
 export class Fish {
   private fish: FishInterface;

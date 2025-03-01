@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
-import { IUserRepository } from "@/src/domain/User/User";
-import { DealPokerUseCase } from "@/src/usecase/Poker/DealPokerUseCase";
-import { IPokerRepository } from "@/src/domain/Poker/Poker";
+import { IUserRepository } from "../../domain/User/User";
+import { DealPokerUseCase } from "../../usecase/Poker/DealPokerUseCase";
+import { IPokerRepository } from "../../domain/Poker/Poker";
 
 export class DealCardsController {
   private dealCardsUseCase: DealPokerUseCase;

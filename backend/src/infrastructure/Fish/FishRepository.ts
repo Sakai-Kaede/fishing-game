@@ -1,7 +1,7 @@
-import { FishInterface } from "@/config/types";
-import { IPreFish } from "@/models/PreFishModel";
-import UserModel from "@/models/UserModel";
-import PreFishModel from "@/models/PreFishModel";
+import { FishInterface } from "../../config/types";
+import { IPreFish } from "../../models/PreFishModel";
+import UserModel from "../../models/UserModel";
+import PreFishModel from "../../models/PreFishModel";
 
 export class FishRepository {
   // 魚のレスポンスを保存する

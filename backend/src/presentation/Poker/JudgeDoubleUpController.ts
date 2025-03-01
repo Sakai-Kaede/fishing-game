@@ -1,7 +1,7 @@
-import { IPokerRepository } from "@/src/domain/Poker/Poker";
+import { IPokerRepository } from "../../domain/Poker/Poker";
 import { Router, Request, Response } from "express";
-import { JudgeDoubleUpUseCase } from "@/src/usecase/Poker/JudgeDoubleUpUseCase";
-import { IUserRepository } from "@/src/domain/User/User";
+import { JudgeDoubleUpUseCase } from "../../usecase/Poker/JudgeDoubleUpUseCase";
+import { IUserRepository } from "../../domain/User/User";
 
 export class JudgeDoubleUpController {
   private judgeDoubleUpUseCase: JudgeDoubleUpUseCase;

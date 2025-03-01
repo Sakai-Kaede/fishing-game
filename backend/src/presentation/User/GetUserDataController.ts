@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
-import { GetUserDataUseCase } from "@/src/usecase/User/GetUserDataUseCase";
-import { IUserRepository } from "@/src/domain/User/User";
+import { GetUserDataUseCase } from "../../usecase/User/GetUserDataUseCase";
+import { IUserRepository } from "../../domain/User/User";
 
 export class GetUserDataController {
   private getUserDataUseCase: GetUserDataUseCase;

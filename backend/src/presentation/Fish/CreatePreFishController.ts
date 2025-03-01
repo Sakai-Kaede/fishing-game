@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
-import { CreatePreFishUseCase } from "@/src/usecase/Fish/CreatePreFishUseCase";
-import { IFishRepository } from "@/src/domain/Fish/Fish";
-import { IUserRepository } from "@/src/domain/User/User";
+import { CreatePreFishUseCase } from "../../usecase/Fish/CreatePreFishUseCase";
+import { IFishRepository } from "../../domain/Fish/Fish";
+import { IUserRepository } from "../../domain/User/User";
 
 export class CreatePreFishController {
   private createPreFishUseCase: CreatePreFishUseCase;

@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
-import { UpdateFishingRodLevelUseCase } from "@/src/usecase/User/UpdateFishingRodLevelUseCase";
-import { IUserRepository } from "@/src/domain/User/User";
+import { UpdateFishingRodLevelUseCase } from "../../usecase/User/UpdateFishingRodLevelUseCase";
+import { IUserRepository } from "../../domain/User/User";
 
 export class UpdateFishingRodLevelController {
   private updateFishingRodLevelUseCase: UpdateFishingRodLevelUseCase;

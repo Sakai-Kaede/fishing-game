@@ -1,7 +1,7 @@
-import { IFishRepository } from "@/src/domain/Fish/Fish";
-import { IUserRepository } from "@/src/domain/User/User";
-import { Fish } from "@/src/domain/Fish/Fish";
-import { User } from "@/src/domain/User/User";
+import { IFishRepository } from "../../domain/Fish/Fish";
+import { IUserRepository } from "../../domain/User/User";
+import { Fish } from "../../domain/Fish/Fish";
+import { User } from "../../domain/User/User";
 
 export class CaughtFishUseCase {
   private fishRepository: IFishRepository;

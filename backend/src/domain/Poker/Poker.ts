@@ -1,6 +1,6 @@
-import { Suit, Rank } from "@/config/types";
-import { CardInterface } from "@/models/PokerModel";
-import { IPokerGame } from "@/models/PokerModel";
+import { Suit, Rank } from "../../config/types";
+import { CardInterface } from "../../models/PokerModel";
+import { IPokerGame } from "../../models/PokerModel";
 
 export class Poker {
   HAND_SIZE = 5;

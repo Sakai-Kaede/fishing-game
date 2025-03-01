@@ -1,5 +1,5 @@
-import PokerGameModel, { IPokerGame } from "@/models/PokerModel";
-import { CardInterface } from "@/models/PokerModel";
+import PokerGameModel, { IPokerGame } from "../../models/PokerModel";
+import { CardInterface } from "../../models/PokerModel";
 
 export class PokerRepository {
   private static readonly HAND_SIZE = 5;

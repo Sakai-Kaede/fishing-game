@@ -1,6 +1,6 @@
-import { Poker } from "@/src/domain/Poker/Poker";
-import { IPokerRepository } from "@/src/domain/Poker/Poker";
-import { CardInterface } from "@/models/PokerModel";
+import { Poker } from "../../domain/Poker/Poker";
+import { IPokerRepository } from "../../domain/Poker/Poker";
+import { CardInterface } from "../../models/PokerModel";
 
 export class ChangeAndCalculateHandUseCase {
   private pokerRepository: IPokerRepository;

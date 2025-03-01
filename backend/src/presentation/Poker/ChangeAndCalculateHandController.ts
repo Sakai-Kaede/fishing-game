@@ -1,6 +1,6 @@
-import { IPokerRepository } from "@/src/domain/Poker/Poker";
+import { IPokerRepository } from "../../domain/Poker/Poker";
 import { Router, Request, Response } from "express";
-import { ChangeAndCalculateHandUseCase } from "@/src/usecase/Poker/ChangeAndCalculateHandUseCase";
+import { ChangeAndCalculateHandUseCase } from "../../usecase/Poker/ChangeAndCalculateHandUseCase";
 
 export class ChangeAndCalculateHandController {
   private calculateHandScoreUseCase: ChangeAndCalculateHandUseCase;

@@ -1,7 +1,7 @@
-import { IPokerRepository } from "@/src/domain/Poker/Poker";
+import { IPokerRepository } from "../../domain/Poker/Poker";
 import { Router, Request, Response } from "express";
-import { DealDoubleUpUseCase } from "@/src/usecase/Poker/DealDoubleUpUseCase";
-import { IUserRepository } from "@/src/domain/User/User";
+import { DealDoubleUpUseCase } from "../../usecase/Poker/DealDoubleUpUseCase";
+import { IUserRepository } from "../../domain/User/User";
 
 export class DealDoubleUpController {
   private dealDoubleUpUseCase: DealDoubleUpUseCase;

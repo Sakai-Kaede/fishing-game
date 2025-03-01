@@ -1,9 +1,9 @@
-import { Rank } from "@/config/types";
-import { Poker } from "@/src/domain/Poker/Poker";
-import { IPokerRepository } from "@/src/domain/Poker/Poker";
-import { CardInterface } from "@/models/PokerModel";
-import { IUserRepository } from "@/src/domain/User/User";
-import { User } from "@/src/domain/User/User";
+import { Rank } from "../../config/types";
+import { Poker } from "../../domain/Poker/Poker";
+import { IPokerRepository } from "../../domain/Poker/Poker";
+import { CardInterface } from "../../models/PokerModel";
+import { IUserRepository } from "../../domain/User/User";
+import { User } from "../../domain/User/User";
 
 export class JudgeDoubleUpUseCase {
   private static readonly MAX_DOUBLE_UP_SUCCESS = 10;

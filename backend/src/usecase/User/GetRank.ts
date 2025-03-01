@@ -1,4 +1,4 @@
-import { IUserRepository } from "@/src/domain/User/User";
+import { IUserRepository } from "../../domain/User/User";
 
 interface GetRankUseCaseOutput {
   rank: number;

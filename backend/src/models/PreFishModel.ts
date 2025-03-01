@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
-import { FishInterface } from "@/config/types";
+import { FishInterface } from "../config/types";
 
 export interface IPreFish extends Document {
   fish: FishInterface;

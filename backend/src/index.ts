@@ -3,27 +3,27 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-import connectDB from "@/src/infrastructure/db/mongoConnection";
+import connectDB from "./infrastructure/db/mongoConnection";
 
-import { UserRepository } from "@/src/infrastructure/User/UserRepository";
-import { GetUserDataController } from "@/src/presentation/User/GetUserDataController";
-import { RegisterUserController } from "@/src/presentation/User/RegisterUserController";
-import { UpdateFishingRodLevelController } from "@/src/presentation/User/UpdateFishingRodLevelController";
-import { LoginController } from "@/src/presentation/User/LoginController";
-import { GetRankingController } from "@/src/presentation/User/GetRankingController";
-import { IUserRepository } from "@/src/domain/User/User";
+import { UserRepository } from "./infrastructure/User/UserRepository";
+import { GetUserDataController } from "./presentation/User/GetUserDataController";
+import { RegisterUserController } from "./presentation/User/RegisterUserController";
+import { UpdateFishingRodLevelController } from "./presentation/User/UpdateFishingRodLevelController";
+import { LoginController } from "./presentation/User/LoginController";
+import { GetRankingController } from "./presentation/User/GetRankingController";
+import { IUserRepository } from "./domain/User/User";
 
-import { FishRepository } from "@/src/infrastructure/Fish/FishRepository";
-import { CaughtFishController } from "@/src/presentation/Fish/CatchFishController";
-import { CreatePreFishController } from "@/src/presentation/Fish/CreatePreFishController";
-import { IFishRepository } from "@/src/domain/Fish/Fish";
+import { FishRepository } from "./infrastructure/Fish/FishRepository";
+import { CaughtFishController } from "./presentation/Fish/CatchFishController";
+import { CreatePreFishController } from "./presentation/Fish/CreatePreFishController";
+import { IFishRepository } from "./domain/Fish/Fish";
 
-import { PokerRepository } from "@/src/infrastructure/Poker/PokerRepository";
-import { ChangeAndCalculateHandController } from "@/src/presentation/Poker/ChangeAndCalculateHandController";
-import { DealCardsController } from "@/src/presentation/Poker/DealCardsController";
-import { DealDoubleUpController } from "@/src/presentation/Poker/DealDoubleUpController";
-import { JudgeDoubleUpController } from "@/src/presentation/Poker/JudgeDoubleUpController";
-import { IPokerRepository } from "@/src/domain/Poker/Poker";
+import { PokerRepository } from "./infrastructure/Poker/PokerRepository";
+import { ChangeAndCalculateHandController } from "./presentation/Poker/ChangeAndCalculateHandController";
+import { DealCardsController } from "./presentation/Poker/DealCardsController";
+import { DealDoubleUpController } from "./presentation/Poker/DealDoubleUpController";
+import { JudgeDoubleUpController } from "./presentation/Poker/JudgeDoubleUpController";
+import { IPokerRepository } from "./domain/Poker/Poker";
 
 const app = express();
 const port = process.env.PORT || 3000;

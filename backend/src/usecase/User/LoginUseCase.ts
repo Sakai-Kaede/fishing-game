@@ -1,5 +1,5 @@
-import { IUserRepository } from "@/src/domain/User/User";
-import { User } from "@/src/domain/User/User";
+import { IUserRepository } from "../../domain/User/User";
+import { User } from "../../domain/User/User";
 
 interface LoginUserInput {
   username: string;

@@ -20,6 +20,7 @@
           class="fish"
           :depth="depth"
           @catchFishComplete="handleCatchComplete"
+          @fishEscape="handleFishEscape"
           @updateProgress="handleUpdateProgress"
           @fishSpawned="handleFishSpawned"
         ></FishingFish>
@@ -28,9 +29,14 @@
     </div>
     <FishingShadow
       :depth="currentDepth"
-      :shadowSwitch="shadowSwitch"
-      :shadowFlag="shadowFlag"
-    ></FishingShadow>
+      :shadowSwitch="shadowSwitch_1"
+      :shadowFlag="shadowFlag_1"
+    />
+    <FishingShadow
+      :depth="currentDepth"
+      :shadowSwitch="shadowSwitch_2"
+      :shadowFlag="shadowFlag_2"
+    />
   </div>
 </template>
 
@@ -40,17 +46,23 @@ const isFishCaught = ref<boolean>(false);
 const progress = ref<number>(0);
 const isProgressVisible = ref<boolean>(false);
 const currentDepth = ref<number>(0);
-const shadowSwitch = ref<boolean>(false);
-const shadowFlag = ref<boolean>(false);
+const shadowSwitch_1 = ref<boolean>(false);
+const shadowSwitch_2 = ref<boolean>(false);
+const shadowFlag_1 = ref<boolean>(false);
+const shadowFlag_2 = ref<boolean>(false);
 
 // 魚を釣った際の処理
 const handleCatchComplete = () => {
-  console.log("Fish catch completed!");
   isFishCaught.value = true;
-  isProgressVisible.value = false;
+  setTimeout(() => {
+    isProgressVisible.value = false;
+  }, 2000);
   setTimeout(() => {
     isFishCaught.value = false;
   }, 6000);
+};
+const handleFishEscape = () => {
+  isProgressVisible.value = false;
 };
 
 // 魚が新しくスポーン（出現）したときの処理
@@ -79,9 +91,14 @@ onMounted(() => {
   setTimeout(() => {
     setInterval(() => {
       currentDepth.value = depth.value;
-      shadowSwitch.value = !shadowSwitch.value;
-      shadowFlag.value = true;
+      shadowSwitch_1.value = !shadowSwitch_1.value;
+      shadowFlag_1.value = true;
     }, 12000);
+    setInterval(() => {
+      currentDepth.value = depth.value;
+      shadowSwitch_2.value = !shadowSwitch_2.value;
+      shadowFlag_2.value = true;
+    }, 15000);
   }, 5000);
 });
 </script>
@@ -124,7 +141,7 @@ onMounted(() => {
 
 .progress-bar {
   position: absolute;
-  top: 30rem;
+  top: 30%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;

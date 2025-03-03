@@ -22,6 +22,7 @@
 import "@/assets/scss/main.scss";
 import { RepositoryFactory } from "@/repositories";
 import { useUserStore } from "@/store/user";
+import type { FishDetails } from "@/types/type";
 import { FishImages } from "@/constants/FishImages";
 import type { FishImageKeys } from "@/constants/FishImages";
 import { FishImageWidths } from "@/constants/FishImageWidths";
@@ -32,28 +33,12 @@ const props = defineProps({
 });
 const emit = defineEmits([
   "catchFishComplete",
+  "fishEscape",
   "updateProgress",
   "fishSpawned",
 ]);
 
 const userStore = useUserStore();
-
-interface Fish {
-  name: string;
-  score: number;
-  requiredInteractions: number;
-}
-
-interface FishDetails {
-  fish: Fish;
-  userId: string;
-  randomId: string;
-  isInvalid: boolean;
-  _id: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
 
 const fish = ref<FishDetails | null>(null);
 const fishRepository = RepositoryFactory.get("fish");
@@ -64,7 +49,6 @@ const imageWidth = ref(0);
 
 // ボタン表示フラグとアニメーション制御フラグ
 const isButtonVisible = ref(true);
-const isProgressContainerVisible = ref(false);
 const isRotatingAndMovingUp = ref(false);
 const isMovingRight = ref(false);
 const isFadeIn = ref(false);
@@ -87,7 +71,6 @@ const progress = computed(() => {
 const userId = userStore.userId;
 
 const preFish = async () => {
-  isProgressContainerVisible.value = true;
   if (props.depth === undefined) {
     console.error("Depth is undefined.");
     return;
@@ -99,17 +82,17 @@ const preFish = async () => {
 const handleCaughtFish = async () => {
   if (fish.value) {
     clickCount.value++;
-    if (clickCount.value >= 50) {
+    if (clickCount.value > 50) {
       disabled.value = true;
-      isProgressContainerVisible.value = false;
+      emit("fishEscape");
       isFadeIn.value = false;
       isMovingRight.value = true;
     } else if (clickCount.value >= fish.value.fish.requiredInteractions) {
       disabled.value = true;
-      await fishRepository.catchFish(userStore.userId, fish.value.randomId);
       emit("catchFishComplete");
       isFadeIn.value = false;
       isRotatingAndMovingUp.value = true;
+      await fishRepository.catchFish(userStore.userId, fish.value.randomId);
       setTimeout(() => {
         isRotatingAndMovingUp.value = false;
         isButtonVisible.value = false;
@@ -125,8 +108,6 @@ watch(fish, (newFish) => {
 
     if (FishImages[fishName]) {
       imagePath.value = FishImages[fishName];
-    } else {
-      imagePath.value = "/images/default.png";
     }
 
     if (FishImageWidths[fishName]) {
@@ -177,7 +158,6 @@ const fishingGameLoop = async () => {
   moveRightTimer = setTimeout(() => {
     if (clickCount.value < (fish.value?.fish.requiredInteractions ?? 0)) {
       disabled.value = true;
-      isProgressContainerVisible.value = false;
       isFadeIn.value = false;
       isMovingRight.value = true;
     }

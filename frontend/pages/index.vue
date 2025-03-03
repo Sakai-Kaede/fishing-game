@@ -33,9 +33,8 @@
               class="animated-image-button"
               :style="{ width: link.size + 'rem' }"
             >
-              <component
-                :is="link.icon"
-                v-if="link.icon"
+              <PhosphorIconSignIn
+                v-if="link.to === '/login'"
                 class="login"
                 size="100"
               />
@@ -56,10 +55,6 @@
 <script setup lang="ts">
 import "@/assets/scss/main.scss";
 import { useUserStore } from "@/store/user";
-import { computed, ref, onMounted } from "vue";
-import { PhSignIn } from "@phosphor-icons/vue";
-
-// 画像のimport
 import waveImg from "@/assets/images/tools/wave.svg";
 import trophyImg from "@/assets/images/naviIcon/trophy.png";
 import shopImg from "@/assets/images/naviIcon/shop.png";
@@ -98,8 +93,7 @@ const topLinks = [
 ];
 
 const bottomLinks = [
-  { to: "/login", icon: PhSignIn, size: 15 },
-
+  { to: "/login", size: 15 },
   { to: "/shop", imgSrc: shopImg, alt: "お店", class: "shop-icon", size: 20 },
   {
     to: "/illustratedBook",

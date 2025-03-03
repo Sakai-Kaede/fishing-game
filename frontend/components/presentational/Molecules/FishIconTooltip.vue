@@ -16,7 +16,7 @@ export default defineComponent({
       required: true,
     },
     color: {
-      type: String as () => AchievementColor,
+      type: String as PropType<AchievementColor>,
       required: true,
     },
     size: {

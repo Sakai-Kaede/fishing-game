@@ -32,6 +32,7 @@
 </template>
 
 <script setup lang="ts">
+import "@/assets/scss/main.scss";
 const props = defineProps<{
   modelValue: number;
 }>();
@@ -101,25 +102,24 @@ let intervalId: NodeJS.Timeout | null = null;
 $primary-color: rgba(93, 173, 226, 0.9);
 $hover-color: rgba(52, 152, 219, 0.9);
 $active-color: rgba(46, 134, 193, 0.9);
-$text-color: #ffffff;
-$depth-text-color: #ffffff;
 
 button {
   width: 6rem;
   height: 6rem;
   border-radius: 50%;
   background-color: $primary-color;
-  color: $text-color;
+  color: $gray-10;
   border: none;
   box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 0.4);
   transition: background-color 0.3s ease, transform 0.1s ease;
+  z-index: 10;
 
   &:hover {
-    background-color: $hover-color;
+    background-color: $gray-10;
   }
 
   &:active {
-    background-color: $active-color;
+    background-color: $gray-10;
     transform: scale(0.95);
   }
 }

@@ -1,32 +1,197 @@
 <template>
-  <NuxtLink to="/login">
-    <PhosphorIconSignIn class="login" size="100" />
-  </NuxtLink>
-  <NuxtLink to="/ranking">
-    <img
-      src="@/assets/images/naviIcon/trophy.png"
-      alt="トロフィー"
-      class="trophy-icon"
-    />
-  </NuxtLink>
-  <NuxtLink to="/shop">
-    <img src="@/assets/images/naviIcon/shop.png" alt="お店" class="shop-icon" />
-  </NuxtLink>
-  <NuxtLink to="/poker">
-    <img
-      src="@/assets/images/naviIcon/poker.png"
-      alt="ポーカー"
-      class="shop-icon"
-    />
-  </NuxtLink>
-  <NuxtLink to="/illustratedBook">
-    <img src="@/assets/images/naviIcon/illustratedBook.png" alt="図鑑" />
-  </NuxtLink>
-  <NuxtLink to="/fishing">
-    <img src="@/assets/images/naviIcon/fishing.png" alt="釣り" />
-  </NuxtLink>
+  <div class="home-wrapper">
+    <div class="background-gradient">
+      <div class="wave-container">
+        <img :src="waveImage" alt="波" class="wave wave-top" />
+        <img :src="waveImage" alt="波" class="wave wave-bottom" />
+      </div>
+      <div class="navigation-container">
+        <div class="bottom-row">
+          <NuxtLink
+            v-for="link in topLinks"
+            :key="link.to"
+            :to="link.to"
+            v-bind="linkProps(link.to)"
+            class="nuxt-link"
+          >
+            <div
+              class="animated-image-button"
+              :style="{ width: link.size + 'rem' }"
+            >
+              <img :src="link.imgSrc" :alt="link.alt" />
+            </div>
+          </NuxtLink>
+        </div>
+        <div class="top-row">
+          <NuxtLink
+            v-for="link in bottomLinks"
+            :key="link.to"
+            :to="link.to"
+            class="nuxt-link"
+          >
+            <div
+              class="animated-image-button"
+              :style="{ width: link.size + 'rem' }"
+            >
+              <component
+                :is="link.icon"
+                v-if="link.icon"
+                class="login"
+                size="100"
+              />
+              <img
+                v-else
+                :src="link.imgSrc"
+                :alt="link.alt"
+                :class="link.class"
+              />
+            </div>
+          </NuxtLink>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import "@/assets/scss/main.scss";
+import { useUserStore } from "@/store/user";
+import { computed, ref, onMounted } from "vue";
+import { PhSignIn } from "@phosphor-icons/vue";
 
-<style></style>
+// 画像のimport
+import waveImg from "@/assets/images/tools/wave.svg";
+import trophyImg from "@/assets/images/naviIcon/trophy.png";
+import shopImg from "@/assets/images/naviIcon/shop.png";
+import pokerImg from "@/assets/images/naviIcon/poker.png";
+import fishingImg from "@/assets/images/naviIcon/fishing.png";
+import illustratedBookImg from "@/assets/images/naviIcon/illustratedBook.png";
+
+const userStore = useUserStore();
+const waveImage = ref(waveImg);
+
+const isUserLoggedIn = ref(false);
+onMounted(() => {
+  isUserLoggedIn.value = !!userStore.userId;
+});
+
+const linkProps = (to: string) =>
+  computed(() => ({
+    to,
+    class: { disabled: !isUserLoggedIn.value },
+    style: {
+      pointerEvents: isUserLoggedIn.value ? "auto" : "none",
+      opacity: isUserLoggedIn.value ? 1 : 0.5,
+    },
+  }));
+
+const topLinks = [
+  { to: "/fishing", imgSrc: fishingImg, alt: "釣り", size: 35 },
+  { to: "/poker", imgSrc: pokerImg, alt: "ポーカー", size: 30 },
+  {
+    to: "/ranking",
+    imgSrc: trophyImg,
+    alt: "トロフィー",
+    class: "trophy-icon",
+    size: 20,
+  },
+];
+
+const bottomLinks = [
+  { to: "/login", icon: PhSignIn, size: 15 },
+
+  { to: "/shop", imgSrc: shopImg, alt: "お店", class: "shop-icon", size: 20 },
+  {
+    to: "/illustratedBook",
+    imgSrc: illustratedBookImg,
+    alt: "図鑑",
+    size: 25,
+  },
+];
+</script>
+
+<style scoped lang="scss">
+.background-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #ffaf87, #ff8284);
+  z-index: -3;
+}
+
+.wave-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -2;
+
+  .wave {
+    position: absolute;
+    width: 200%;
+    height: auto;
+    animation: wave-animation 10s infinite linear;
+
+    &-top {
+      bottom: 0.5rem;
+      animation-delay: -1s;
+      filter: brightness(0.8);
+    }
+
+    &-bottom {
+      bottom: 0;
+      animation-delay: 0s;
+    }
+  }
+}
+
+.navigation-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 3rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+
+  .top-row,
+  .bottom-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .nuxt-link {
+    transition: transform 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  .animated-image-button {
+    height: auto;
+    padding: 10px;
+    background: linear-gradient(145deg, #ffe27a, #e6b800);
+    border-radius: 15px;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3),
+      inset -4px -4px 8px rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+    }
+  }
+}
+</style>

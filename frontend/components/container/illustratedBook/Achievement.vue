@@ -34,9 +34,10 @@
 <script setup lang="ts">
 import "@/assets/scss/main.scss";
 import { useUserStore } from "@/store/user";
+import type { AchievementColor } from "@/types/type";
 const userStore = useUserStore();
 
-const getAchievementColor = (achievementName: string) => {
+const getAchievementColor = (achievementName: string): AchievementColor => {
   const allAchievements = getAchievements();
 
   for (const group of allAchievements) {
@@ -49,13 +50,13 @@ const getAchievementColor = (achievementName: string) => {
       );
 
       if (userAchievement) {
-        return achievement.color;
+        return achievement.color as AchievementColor;
       } else {
-        return "gray";
+        return "gray" as AchievementColor;
       }
     }
   }
-  return "gray";
+  return "gray" as AchievementColor;
 };
 
 const getAchievements = () => {

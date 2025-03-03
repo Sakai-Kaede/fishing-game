@@ -13,6 +13,9 @@
       :placeholder="placeholder"
       :required="required"
       :disabled="disabled"
+      :min="min"
+      :max="max"
+      :step="step"
       class="text-input__input"
       :aria-invalid="!!errorMessage"
       :style="{
@@ -77,12 +80,30 @@ const props = defineProps({
     type: String,
     default: "medium",
   },
+  min: {
+    type: Number,
+    default: undefined,
+  },
+  max: {
+    type: Number,
+    default: undefined,
+  },
+  step: {
+    type: Number,
+    default: 1,
+  },
 });
 
 const handleInput = (event: Event) => {
   const target = event.target as HTMLInputElement | null;
   if (target) {
-    emit("update:modelValue", target.value);
+    let value = target.value;
+    if (props.type === "number") {
+      const parsedValue =
+        Math.round(Number(value) / (props.step || 1)) * (props.step || 1);
+      value = String(parsedValue);
+    }
+    emit("update:modelValue", value);
   }
 };
 
@@ -126,10 +147,6 @@ const computedWidth = computed(() => {
 
 <style scoped lang="scss">
 .text-input {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-
   &__label {
     margin-bottom: 2px;
     font-size: 1.5rem;

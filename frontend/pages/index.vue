@@ -19,6 +19,7 @@
               :style="{ width: link.size + 'rem' }"
             >
               <img :src="link.imgSrc" :alt="link.alt" />
+              <span class="icon-label">{{ link.alt }}</span>
             </div>
           </NuxtLink>
         </div>
@@ -27,6 +28,7 @@
             v-for="link in bottomLinks"
             :key="link.to"
             :to="link.to"
+            v-bind="linkProps(link.to)"
             class="nuxt-link"
           >
             <div
@@ -38,12 +40,10 @@
                 class="login"
                 size="100"
               />
-              <img
-                v-else
-                :src="link.imgSrc"
-                :alt="link.alt"
-                :class="link.class"
-              />
+              <template v-else>
+                <img :src="link.imgSrc" :alt="link.alt" :class="link.class" />
+                <span class="icon-label large">{{ link.alt }}</span>
+              </template>
             </div>
           </NuxtLink>
         </div>
@@ -70,15 +70,13 @@ onMounted(() => {
   isUserLoggedIn.value = !!userStore.userId;
 });
 
-const linkProps = (to: string) =>
-  computed(() => ({
-    to,
-    class: { disabled: !isUserLoggedIn.value },
-    style: {
-      pointerEvents: isUserLoggedIn.value ? "auto" : "none",
-      opacity: isUserLoggedIn.value ? 1 : 0.5,
-    },
-  }));
+const linkProps = (to: string) => ({
+  class: { disabled: !isUserLoggedIn.value },
+  style: {
+    pointerEvents: isUserLoggedIn.value || to === "/login" ? "auto" : "none",
+    opacity: isUserLoggedIn.value || to === "/login" ? 1 : 0.5,
+  },
+});
 
 const topLinks = [
   { to: "/fishing", imgSrc: fishingImg, alt: "釣り", size: 35 },
@@ -86,7 +84,7 @@ const topLinks = [
   {
     to: "/ranking",
     imgSrc: trophyImg,
-    alt: "トロフィー",
+    alt: "ランキング",
     class: "trophy-icon",
     size: 20,
   },
@@ -94,13 +92,14 @@ const topLinks = [
 
 const bottomLinks = [
   { to: "/login", size: 15 },
-  { to: "/shop", imgSrc: shopImg, alt: "お店", class: "shop-icon", size: 20 },
   {
-    to: "/illustratedBook",
-    imgSrc: illustratedBookImg,
-    alt: "図鑑",
-    size: 25,
+    to: "/shop",
+    imgSrc: shopImg,
+    alt: "ショップ",
+    class: "shop-icon",
+    size: 20,
   },
+  { to: "/illustratedBook", imgSrc: illustratedBookImg, alt: "図鑑", size: 25 },
 ];
 </script>
 
@@ -170,6 +169,7 @@ const bottomLinks = [
   }
 
   .animated-image-button {
+    position: relative;
     height: auto;
     padding: 10px;
     background: linear-gradient(145deg, #ffe27a, #e6b800);
@@ -179,12 +179,20 @@ const bottomLinks = [
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
 
     img {
       width: 100%;
       height: auto;
       filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .icon-label {
+      position: absolute;
+      font-size: 4rem;
+      font-weight: bold;
+      color: $gray-20;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      -webkit-text-stroke: 2px $gray-80;
     }
   }
 }

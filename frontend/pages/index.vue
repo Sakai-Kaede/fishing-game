@@ -95,7 +95,7 @@ const bottomLinks = [
   {
     to: "/shop",
     imgSrc: shopImg,
-    alt: "ショップ",
+    alt: "釣竿店",
     class: "shop-icon",
     size: 20,
   },

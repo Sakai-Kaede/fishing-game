@@ -93,6 +93,7 @@ const handleCaughtFish = async () => {
       isFadeIn.value = false;
       isRotatingAndMovingUp.value = true;
       await fishRepository.catchFish(userStore.userId, fish.value.randomId);
+      await userStore.getUserData();
       setTimeout(() => {
         isRotatingAndMovingUp.value = false;
         isButtonVisible.value = false;

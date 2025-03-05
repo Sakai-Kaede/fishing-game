@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import type { User } from "@/types/type";
 import { fishList } from "@/constants/FishData";
 import { RepositoryFactory } from "@/repositories/index";
+import { usePokerStore } from "@/store/poker";
 
 export const useUserStore = defineStore(
   "user",
@@ -13,6 +14,7 @@ export const useUserStore = defineStore(
     const caughtFish = ref<Array<any> | null>(null);
     const achievements = ref<Array<any> | null>(null);
     const highScoreFish = ref<{ name: string; score: number } | null>(null);
+    const pokerStore = usePokerStore();
 
     // ユーザー登録
     async function register(
@@ -28,14 +30,16 @@ export const useUserStore = defineStore(
           inputFavoriteFish
         )) as User;
 
-        localStorage.removeItem("user");
-
-        // ユーザー情報をストアに保存
+        // ユーザー情報を初期化
         username.value = user.username;
         userId.value = user.userId;
         sumScore.value = 0;
         fishingRodLevel.value = 1;
         highScoreFish.value = { name: "デフォルトの魚", score: 0 };
+        caughtFish.value = [];
+        achievements.value = [];
+
+        pokerStore.init();
 
         return { success: true, message: "ユーザー登録に成功しました。" };
       } catch (error: unknown) {
@@ -61,8 +65,6 @@ export const useUserStore = defineStore(
           inputFavoriteFish
         )) as User;
 
-        localStorage.removeItem("user");
-
         // ユーザーデータを更新
         username.value = user.username;
         userId.value = user.userId;
@@ -71,6 +73,8 @@ export const useUserStore = defineStore(
         caughtFish.value = [...user.caughtFish];
         achievements.value = [...user.achievements];
         highScoreFish.value = getHighestScoringFish();
+
+        pokerStore.init();
 
         return { success: true, message: "ログインに成功しました。" };
       } catch (error: unknown) {

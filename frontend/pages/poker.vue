@@ -1,10 +1,14 @@
 <template>
   <div class="poker-container">
+    <div>
+      <p class="poker-massage">{{ pokerStore.message }}</p>
+    </div>
     <PokerHands v-show="!pokerStore.isDoubleUp" />
     <PokerDoubleUp v-show="pokerStore.isDoubleUp" />
 
     <div class="bet-section">
       <AtomsButton
+        class="bet-button"
         v-show="pokerStore.isNotStartPoker"
         @click="openBetAmountModal"
         variant="primary_poker"
@@ -21,10 +25,9 @@
     </div>
 
     <div class="double-up-section" v-show="pokerStore.isDoubleUpRequested">
-      <span class="double-up-text">ダブルアップに挑戦しますか？</span>
       <AtomsButton
         @click="handleDecline"
-        variant="primary_poker"
+        variant="secondary_poker"
         class="decline-button"
         size="large"
         >いいえ</AtomsButton
@@ -78,9 +81,10 @@ const openBetAmountModal = () => {
 
 // モーダルが確定された時の処理
 const handleBetConfirmation = async (betAmount: number) => {
+  pokerStore.isNotStartPoker = false;
   pokerStore.bet = betAmount;
-  await pokerStore.pokerDeal();
   isModalOpen.value = false;
+  await pokerStore.pokerDeal();
 };
 
 // モーダルが閉じられた時の処理
@@ -106,6 +110,17 @@ const finishDoubleUp = async () => {
 </script>
 
 <style scoped lang="scss">
+.bet-button {
+  padding: 2rem;
+  font-size: 3rem;
+}
+.poker-massage {
+  font-size: 4rem;
+  color: $gray-20;
+  white-space: pre-wrap;
+  text-align: center;
+}
+
 .poker-container {
   background: radial-gradient(circle, #145214, #0a290a);
 
@@ -123,13 +138,19 @@ const finishDoubleUp = async () => {
   margin-bottom: 1rem;
 }
 
-.double-up-text {
-  color: $gray-20;
-  font-size: 2rem;
-}
-
-.decline-button {
-  margin: 0 1rem;
+.double-up-section {
+  display: flex;
+  justify-content: center;
+  gap: 5rem;
+  .decline-button {
+    padding: 1.5rem;
+    font-size: 2rem;
+    color: $gray-20;
+  }
+  .accept-button {
+    padding: 2.5rem;
+    font-size: 2rem;
+  }
 }
 
 .double-up-button {

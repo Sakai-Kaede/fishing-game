@@ -27,7 +27,9 @@
 <script setup lang="ts">
 import "@/assets/scss/main.scss";
 import { usePokerStore } from "@/store/poker";
+import { useUserStore } from "@/store/user";
 const pokerStore = usePokerStore();
+const userStore = useUserStore();
 const props = defineProps({
   isOpen: Boolean,
 });
@@ -54,6 +56,8 @@ const confirmBet = () => {
     betAmountError.value = "有効な金額を入力してください。";
   } else if (Number(betAmount.value) > 10000) {
     betAmountError.value = "ベットできる最高額は10,000までです。";
+  } else if (Number(betAmount.value) > userStore.sumScore) {
+    betAmountError.value = "所持金を超えています";
   } else {
     betAmountError.value = "";
     emit("confirm", betAmount.value);

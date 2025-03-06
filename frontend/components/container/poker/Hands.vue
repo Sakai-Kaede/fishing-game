@@ -22,6 +22,7 @@
       v-show="pokerStore.isChange && !pokerStore.isNotStartPoker"
     >
       <AtomsButton
+        class="change-button"
         v-show="pokerStore.swapIndices.length === 0"
         @click="changeCards"
         variant="primary_poker"
@@ -29,6 +30,7 @@
         カードを交換しない
       </AtomsButton>
       <AtomsButton
+        class="change-button"
         v-show="pokerStore.swapIndices.length !== 0"
         @click="changeCards"
         variant="primary_poker"
@@ -63,6 +65,10 @@ const changeCards = async () => {
 </script>
 
 <style scoped>
+.change-button {
+  padding: 2rem;
+  font-size: 2rem;
+}
 .hand {
   display: flex;
   gap: 15px;

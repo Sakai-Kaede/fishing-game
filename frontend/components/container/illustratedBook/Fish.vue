@@ -1,21 +1,24 @@
 <template>
   <div class="fish-book">
     <div class="filter-range">
-      <div class="filter-input-container">
-        <AtomsTextInput
-          :id="'depth'"
-          :modelValue="displayDepth"
-          @update:modelValue="updateDepth"
-          label="捕獲範囲でフィルタリング："
-          type="number"
-          placeholder="深度を入力"
-          :min="0"
-          :max="1000"
-          :name="'depth'"
-          :size="'large'"
-          :step="10"
-          @input="filterFishByDepth"
-        />
+      <div class="filter-input-wrapper">
+        <div class="filter-input-container">
+          <AtomsTextInput
+            :id="'depth'"
+            :modelValue="displayDepth"
+            @update:modelValue="updateDepth"
+            label="捕獲範囲でフィルタリング："
+            placeholder="深度を入力"
+            :min="0"
+            :max="1000"
+            :name="'depth'"
+            :size="'large'"
+            :step="10"
+            :showButtons="true"
+            @input="filterFishByDepth"
+          />
+        </div>
+
         <button
           :class="{ 'is-visible': depthString }"
           @click="clearFilter"
@@ -173,6 +176,13 @@ const clearFilter = () => {
   justify-content: center;
 }
 
+.filter-input-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .filter-input-container {
   display: flex;
   align-items: center;
@@ -190,6 +200,11 @@ const clearFilter = () => {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
+  position: absolute;
+  left: 100%;
+  margin-left: 10px;
+  width: 20rem;
+  bottom: 0;
 }
 
 .filter-clear-button.is-visible {
@@ -199,6 +214,8 @@ const clearFilter = () => {
 
 .sort-buttons {
   margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
 }
 
 .sort-buttons button {

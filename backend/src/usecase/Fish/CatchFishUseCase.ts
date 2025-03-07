@@ -55,7 +55,7 @@ export class CaughtFishUseCase {
       throw new Error("ユーザーが見つかりません");
     }
 
-    await this.userRepository.incrementCaughtFishCount(
+    const updateCaughtFish = await this.userRepository.incrementCaughtFishCount(
       userId,
       latestPreFish.fish.name
     );
@@ -70,8 +70,7 @@ export class CaughtFishUseCase {
       undefined // 好きな魚
     );
 
-    const caughtFish = user.caughtFish;
-    await this.userRepository.addFishingAchievements(userId, caughtFish);
+    await this.userRepository.addFishingAchievements(userId, updateCaughtFish);
     const newScore = newUser.addScore(fishScore);
     await this.userRepository.updateSumScore(userId, newScore);
 

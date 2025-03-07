@@ -114,7 +114,7 @@ watch(fish, (newFish) => {
     if (FishImageWidths[fishName]) {
       imageWidth.value = FishImageWidths[fishName];
     } else {
-      imageWidth.value = 50; // デフォルトの幅
+      imageWidth.value = 50;
     }
   }
 });
@@ -159,6 +159,7 @@ const fishingGameLoop = async () => {
   moveRightTimer = setTimeout(() => {
     if (clickCount.value < (fish.value?.fish.requiredInteractions ?? 0)) {
       disabled.value = true;
+      emit("fishEscape");
       isFadeIn.value = false;
       isMovingRight.value = true;
     }

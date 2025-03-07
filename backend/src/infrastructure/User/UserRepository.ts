@@ -300,9 +300,9 @@ export class UserRepository {
     try {
       const users = await UserModel.find(
         {},
-        { username: 1, sumScore: 1, achievements: 1, _id: 0 }
+        { username: 1, sumScore: 1, achievements: 1, createdAt: 1, _id: 0 }
       )
-        .sort({ sumScore: -1 })
+        .sort({ sumScore: -1, createdAt: 1 })
         .limit(100);
 
       return users.map((user) => ({

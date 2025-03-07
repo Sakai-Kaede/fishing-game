@@ -33,7 +33,7 @@ export class DealPokerUseCase {
       throw new Error(`ユーザーID ${userId} が見つかりません`);
     }
 
-    if (user.sumScore - bet <= 0) {
+    if (user.sumScore - bet < 0) {
       throw new Error("sumScoreより多くベッドすることはできません");
     }
 

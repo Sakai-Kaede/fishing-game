@@ -38,8 +38,8 @@ export class User {
     }[] = [],
     favoriteFish: string = "xxx"
   ) {
-    if (username.length < 3 || username.length > 256) {
-      throw new Error("ユーザー名は3文字以上256文字以内である必要があります");
+    if (username.length < 3 || username.length > 8) {
+      throw new Error("ユーザー名は3文字以上8文字以内である必要があります");
     }
     if (password.length < 6 || password.length > 256) {
       throw new Error("パスワードは6文字以上256文字以内である必要があります");

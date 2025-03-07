@@ -51,34 +51,16 @@ export class CreatePreFishUseCase {
       FishInterface.requiredInteractions / fishingRodLevel
     );
 
-    if (latestPreFish) {
-      // 更新処理
-      const updateFish = await this.fishRepository.updatePreFish(
-        FishInterface,
-        randomId,
-        userId
-      );
-      return {
-        fish: {
-          name: updateFish.fish.name,
-          score: updateFish.fish.score,
-          requiredInteractions: updateFish.fish.requiredInteractions,
-        },
-        randomId: updateFish.randomId,
-        message: "既存のpreFishが更新されました",
-      };
-    } else {
-      // 新規作成処理
-      const savedFish = await this.fishRepository.savePreFish(
-        FishInterface,
-        randomId,
-        userId
-      );
-      return {
-        fish: savedFish.fish,
-        randomId: savedFish.randomId,
-        message: "新しいpreFishが作成されました",
-      };
-    }
+    const savedFish = await this.fishRepository.savePreFish(
+      FishInterface,
+      randomId,
+      userId
+    );
+    await this.fishRepository.deleteOldPreFishByUserId(userId);
+    FishInterface.requiredInteractions = FishInterface.requiredInteractions;
+    return {
+      fish: savedFish.fish,
+      randomId: savedFish.randomId,
+    };
   }
 }

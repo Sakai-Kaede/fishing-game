@@ -7,6 +7,7 @@
     />
     <AtomsUserProfile class="user-profile" />
     <NuxtPage />
+    <MoleculesNotificationList />
   </div>
 </template>
 

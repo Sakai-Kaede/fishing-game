@@ -125,6 +125,7 @@ export const usePokerStore = defineStore(
           isShowDoubleUpUI.value = false;
           isNotStartPoker.value = true;
           message.value = `おめでとうございます!${score.value}円獲得しました`;
+          await userStore.getUserData();
           return { success: true, message: "得点を加算しました。" };
         } catch (error: unknown) {
           throw error;
@@ -148,6 +149,7 @@ export const usePokerStore = defineStore(
           isNotStartPoker.value = true;
           isShowDoubleUpUI.value = false;
           userStore.sumScore += response.DOUBLEUP_RESULT.newScore;
+          await userStore.getUserData();
         } else if (!guessCorrect.value) {
           message.value = `ダブルアップに失敗しました`;
           isNotStartPoker.value = true;

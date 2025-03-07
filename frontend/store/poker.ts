@@ -28,6 +28,7 @@ export const usePokerStore = defineStore(
     const isChange = ref(true);
     const isDoubleUpRequested = ref(false);
     const doubleUpSuccessCount = ref(0);
+    const message = ref("ベッドする金額を決めて下さい");
 
     const init = () => {
       hand.value = [];
@@ -41,6 +42,7 @@ export const usePokerStore = defineStore(
       isShowDoubleUpUI.value = false;
       isChange.value = true;
       doubleUpSuccessCount.value = 0;
+      message.value = "ベッドする金額を決めて下さい";
     };
 
     const pokerDeal = async () => {
@@ -54,6 +56,7 @@ export const usePokerStore = defineStore(
         hand.value = response.POKER_DEAL.hand;
         userStore.sumScore = response.POKER_DEAL.updateSumScore;
         isNotStartPoker.value = false;
+        message.value = "交換するカードを決めて下さい";
         return { success: true, message: "手札を取得しました。" };
       } catch (error: unknown) {
         throw error;
@@ -79,9 +82,11 @@ export const usePokerStore = defineStore(
         hand.value = response.POKER_RESULT.hand;
         score.value = response.POKER_RESULT.score;
         if (score.value !== 0) {
+          message.value = "役ができました！\nダブルアップに挑戦しますか？";
           return { success: true, message: "役ができました！" };
         } else {
           isNotStartPoker.value = true;
+          message.value = "役ができませんでした";
           return { success: true, message: "役ができませんでした..." };
         }
       } catch (error: unknown) {
@@ -100,7 +105,7 @@ export const usePokerStore = defineStore(
           isShowDoubleUpUI.value = true;
           doubleUpHand.value = [];
           doubleUpHand.value.push(response.DOUBLEUP_DEAL.card);
-
+          message.value = "予想しましょう";
           return {
             success: true,
             message: "ダブルアップのカードを配りました。",
@@ -119,6 +124,7 @@ export const usePokerStore = defineStore(
           userStore.sumScore = response.DOUBLEUP_DEAL.updateSumScore;
           isShowDoubleUpUI.value = false;
           isNotStartPoker.value = true;
+          message.value = `おめでとうございます!${score.value}円獲得しました`;
           return { success: true, message: "得点を加算しました。" };
         } catch (error: unknown) {
           throw error;
@@ -137,12 +143,21 @@ export const usePokerStore = defineStore(
         doubleUpHand.value.push(response.DOUBLEUP_RESULT.drawnCard);
         score.value = response.DOUBLEUP_RESULT.newScore;
         const lastDrawnCard = doubleUpHand.value[doubleUpHand.value.length - 2];
-
-        if (!guessCorrect.value || doubleUpSuccessCount.value + 1 === 10) {
+        if (guessCorrect.value && doubleUpSuccessCount.value + 1 === 10) {
+          message.value = `おめでとうございます!\n10回ダブルアップに成功して ${score.value}円獲得しました`;
           isNotStartPoker.value = true;
           isShowDoubleUpUI.value = false;
-        }
-        if (response.DOUBLEUP_RESULT.drawnCard.rank !== lastDrawnCard.rank) {
+          userStore.sumScore += response.DOUBLEUP_RESULT.newScore;
+        } else if (!guessCorrect.value) {
+          message.value = `ダブルアップに失敗しました`;
+          isNotStartPoker.value = true;
+          isShowDoubleUpUI.value = false;
+        } else if (
+          response.DOUBLEUP_RESULT.drawnCard.rank !== lastDrawnCard.rank
+        ) {
+          message.value = `ダブルアップに${
+            doubleUpSuccessCount.value + 1
+          }回成功しました`;
           doubleUpSuccessCount.value++;
         }
 
@@ -162,6 +177,7 @@ export const usePokerStore = defineStore(
       pokerDeal,
       score,
       doubleUpHand,
+      message,
       isNotStartPoker,
       isShowDoubleUpUI,
       isDoubleUp,

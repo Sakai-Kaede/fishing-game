@@ -15,7 +15,7 @@
     </div>
 
     <div v-show="pokerStore.isShowDoubleUpUI" class="double-up-ui">
-      <span class="double-up-text">次のカードは？</span>
+      <span class="double-up-text">次のカードの数字は？</span>
       <AtomsButton
         @click="handleJudgeDoubleUp('higher')"
         class="double-up-button"

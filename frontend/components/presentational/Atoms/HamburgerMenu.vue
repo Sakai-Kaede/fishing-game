@@ -10,18 +10,59 @@
     <nav class="sidebar" :class="{ open: isOpen }">
       <ul>
         <li>
-          <NuxtLink to="/">
+          <NuxtLink to="/" active-class="active-link" @click.native="closeMenu">
+            <PhosphorIconHouse size="2.5rem" />
             <span>ホーム</span>
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/ranking">
+          <NuxtLink
+            to="/fishing"
+            active-class="active-link"
+            @click.native="closeMenu"
+          >
+            <PhosphorIconFishSimple size="2.5rem" />
+            <span>釣り</span>
+          </NuxtLink>
+        </li>
+        <li>
+          <NuxtLink
+            to="/poker"
+            active-class="active-link"
+            @click.native="closeMenu"
+          >
+            <PhosphorIconDiamond size="2.5rem" />
+            <span>ポーカー</span>
+          </NuxtLink>
+        </li>
+        <li>
+          <NuxtLink
+            to="/ranking"
+            active-class="active-link"
+            @click.native="closeMenu"
+          >
+            <PhosphorIconTrophy size="2.5rem" />
             <span>ランキング</span>
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/shop">
-            <span>釣り道具店</span>
+          <NuxtLink
+            to="/illustratedBook"
+            active-class="active-link"
+            @click.native="closeMenu"
+          >
+            <PhosphorIconBook size="2.5rem" />
+            <span>図鑑</span>
+          </NuxtLink>
+        </li>
+        <li>
+          <NuxtLink
+            to="/shop"
+            active-class="active-link"
+            @click.native="closeMenu"
+          >
+            <PhosphorIconStorefront size="2.5rem" />
+            <span>釣竿店</span>
           </NuxtLink>
         </li>
       </ul>
@@ -45,10 +86,20 @@ const closeMenu = () => {
 </script>
 
 <style scoped lang="scss">
+.active-link {
+  background-color: $skyblue-60 !important;
+  color: $gray-10 !important;
+  padding: 0 2rem;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
 .hamburger-button {
   position: absolute;
-  width: 5rem;
-  height: 5rem;
+  top: 1rem;
+  left: 1rem;
+  width: 4.5rem;
+  height: 4.5rem;
   background: none;
   border: none;
   cursor: pointer;
@@ -65,36 +116,53 @@ const closeMenu = () => {
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
   transition: left 0.3s ease-in-out;
   z-index: 999;
-
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-top: 3rem;
 
-.sidebar.open {
-  left: 0;
-}
+  &.open {
+    left: 0;
+  }
 
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
+  ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+  }
 
-.sidebar li {
-  margin: 4rem 0;
-}
+  li {
+    margin: 1.5rem 0;
+    width: 100%;
 
-.sidebar a {
-  color: $gray-80;
-  text-decoration: none;
-  font-size: 2.5rem;
-  font-weight: bold;
-  transition: opacity 0.3s;
-}
+    &:first-child a {
+      margin-top: 8rem;
+    }
+  }
 
-.sidebar a:hover {
-  opacity: 0.7;
+  a {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: $gray-80;
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: left;
+    padding: 1rem 2rem 1rem 4rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 8px;
+    box-sizing: border-box;
+
+    svg {
+      margin-right: 1rem;
+    }
+
+    &:hover {
+      background-color: $skyblue-30;
+    }
+  }
 }
 
 .overlay {

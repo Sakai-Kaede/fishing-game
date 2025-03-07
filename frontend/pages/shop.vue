@@ -45,7 +45,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
 import { useUserStore } from "@/store/user";
 import "@/assets/scss/main.scss";
 
@@ -57,7 +56,11 @@ const isDataLoaded = ref(false);
 const showSpeechBubble = ref(false);
 let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
-const messages = ["釣り日和ですね！", "ゆっくり見て行ってください"];
+const messages = [
+  "釣り日和ですね！",
+  "ゆっくり見て行ってください",
+  "釣竿のレベルを上げると\n釣れる魚の種類が増えますよ",
+];
 
 const showRandomGreeting = () => {
   const randomMessage = messages[Math.floor(Math.random() * messages.length)];

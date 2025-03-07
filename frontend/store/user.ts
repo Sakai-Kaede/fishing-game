@@ -3,6 +3,7 @@ import type { User } from "@/types/type";
 import { fishList } from "@/constants/FishData";
 import { RepositoryFactory } from "@/repositories/index";
 import { usePokerStore } from "@/store/poker";
+import { useNotification } from "@/composable/useNotification";
 
 export const useUserStore = defineStore(
   "user",
@@ -15,6 +16,8 @@ export const useUserStore = defineStore(
     const achievements = ref<Array<any> | null>(null);
     const highScoreFish = ref<{ name: string; score: number } | null>(null);
     const pokerStore = usePokerStore();
+    const previousAchievementNames = ref<string[]>([]);
+    const { addNotification } = useNotification();
 
     // ユーザー登録
     async function register(
@@ -118,6 +121,19 @@ export const useUserStore = defineStore(
         fishingRodLevel.value = user.fishingRodLevel;
         highScoreFish.value = getHighestScoringFish();
 
+        const newAchievements = user.achievements || [];
+        const addedAchievements = newAchievements.filter(
+          (ach) => !previousAchievementNames.value.includes(ach.name)
+        );
+
+        // 新しい achievements を通知（1回のみ）
+        addedAchievements.forEach((achievement) => {
+          addNotification(achievement.name, achievement.level);
+        });
+
+        achievements.value = newAchievements;
+        previousAchievementNames.value = newAchievements.map((ach) => ach.name);
+
         return { success: true, message: "ユーザー情報を取得しました。" };
       } catch (error: unknown) {
         let errorMessage = "ユーザー情報の取得に失敗しました。";
@@ -181,6 +197,7 @@ export const useUserStore = defineStore(
       getUserData,
       updateHighScoreFish,
       getCaughtFishNames,
+      previousAchievementNames,
     };
   },
   {

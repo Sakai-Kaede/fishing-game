@@ -1,9 +1,9 @@
 <template>
-  <span class="tooltip">
+  <span class="tooltip" @click="toggleTooltip" @mouseleave="hideTooltip">
     <span class="tooltip-target">
       <slot name="target"></slot>
     </span>
-    <span class="tooltip-text">
+    <span class="tooltip-text" :class="{ 'is-visible': isTooltipVisible }">
       <slot name="text"></slot>
     </span>
   </span>
@@ -11,6 +11,16 @@
 
 <script setup lang="ts">
 import "@/assets/scss/main.scss";
+
+const isTooltipVisible = ref(false);
+
+const toggleTooltip = () => {
+  isTooltipVisible.value = !isTooltipVisible.value;
+};
+
+const hideTooltip = () => {
+  isTooltipVisible.value = false;
+};
 </script>
 
 <style scoped lang="scss">
@@ -50,6 +60,11 @@ import "@/assets/scss/main.scss";
     border: 7px solid transparent;
     border-bottom: 7px solid $gray-80;
   }
+}
+
+.tooltip-text.is-visible {
+  opacity: 1;
+  visibility: visible;
 }
 
 .tooltip-target {

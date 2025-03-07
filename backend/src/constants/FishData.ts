@@ -161,7 +161,7 @@ export const fishList = [
   },
   {
     name: "キンメダイ",
-    score: 270,
+    score: 405,
     frequency: 270,
     requiredInteractions: 25,
     CatchableMinDepth: 20,
@@ -193,7 +193,7 @@ export const fishList = [
   },
   {
     name: "伊勢海老",
-    score: 250,
+    score: 375,
     frequency: 250,
     requiredInteractions: 20,
     CatchableMinDepth: 0,
@@ -201,7 +201,7 @@ export const fishList = [
   },
   {
     name: "マンボウ",
-    score: 300,
+    score: 450,
     frequency: 300,
     requiredInteractions: 45,
     CatchableMinDepth: 10,
@@ -209,7 +209,7 @@ export const fishList = [
   },
   {
     name: "カジキ",
-    score: 450,
+    score: 900,
     frequency: 450,
     requiredInteractions: 300,
     CatchableMinDepth: 40,
@@ -217,7 +217,7 @@ export const fishList = [
   },
   {
     name: "ザトウクジラ",
-    score: 600,
+    score: 1200,
     frequency: 600,
     requiredInteractions: 700,
     CatchableMinDepth: 40,
@@ -225,7 +225,7 @@ export const fishList = [
   },
   {
     name: "リュウグウノツカイ",
-    score: 800,
+    score: 2400,
     frequency: 800,
     requiredInteractions: 500,
     CatchableMinDepth: 70,
@@ -233,8 +233,8 @@ export const fishList = [
   },
   {
     name: "ダンクルオステウス",
-    score: 1200,
-    frequency: 1200,
+    score: 4500,
+    frequency: 1500,
     requiredInteractions: 999,
     CatchableMinDepth: 85,
     CatchableMaxDepth: 100,

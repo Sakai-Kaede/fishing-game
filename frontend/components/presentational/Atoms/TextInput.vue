@@ -283,6 +283,7 @@ const computedWidth = computed(() => {
     align-items: center;
     margin-top: 8px;
     color: $gray-70;
+    white-space: pre-wrap;
     p {
       margin-left: 8px;
     }

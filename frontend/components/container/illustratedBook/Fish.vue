@@ -101,14 +101,14 @@ const depthString = ref<string>("");
 // 表示用の値（10倍）
 const displayDepth = computed(() => {
   const depth = parseInt(depthString.value, 10);
-  return isNaN(depth) ? "" : String(depth * 10); // `string` に変換
+  return isNaN(depth) ? "" : String(depth * 10);
 });
 
 // 入力値の更新処理（10分の1にして格納）
 const updateDepth = (value: string) => {
   const parsedValue = parseInt(value, 10);
   if (!isNaN(parsedValue)) {
-    depthString.value = String(parsedValue / 10); // `string` 型で格納
+    depthString.value = String(parsedValue / 10);
     filterFishByDepth();
   }
 };
@@ -131,9 +131,9 @@ const getFishImage = (fishName: string): string => {
 
 // スコアに応じたカードのバリアントを決定
 const getVariant = (score: number): string => {
-  if (score >= 800) return "gold";
+  if (score >= 1000) return "gold";
   if (score >= 450) return "silver";
-  if (score >= 250) return "bronze";
+  if (score >= 350) return "bronze";
   return "blue";
 };
 

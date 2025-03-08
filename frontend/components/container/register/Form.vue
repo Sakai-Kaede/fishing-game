@@ -95,7 +95,9 @@ const registerUser = async (event: Event) => {
   if (!username.value) {
     usernameError.value = "ユーザー名は必須です。";
   } else if (username.value.length < 3) {
-    usernameError.value = "ユーザー名は3文字以上で入力してください。";
+    usernameError.value = "ユーザー名は3文字以上で\n入力してください。";
+  } else if (username.value.length > 8) {
+    usernameError.value = "ユーザー名は8文字以下で\n入力してください。";
   } else {
     usernameError.value = "";
   }
@@ -103,7 +105,7 @@ const registerUser = async (event: Event) => {
   if (!password.value) {
     passwordError.value = "パスワードは必須です。";
   } else if (password.value.length < 6) {
-    passwordError.value = "パスワードは6文字以上で入力してください。";
+    passwordError.value = "パスワードは6文字以上で\n入力してください。";
   } else {
     passwordError.value = "";
   }

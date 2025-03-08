@@ -2,7 +2,7 @@
   <div class="form-container">
     <AtomsCard variant="default" size="large">
       <template #title>
-        <h2>ユーザー登録</h2>
+        <h2>ログイン</h2>
       </template>
       <template #description>
         <form @submit.prevent="registerUser" class="register-form">

@@ -1,6 +1,11 @@
 <template>
   <div v-if="fish && fish.fish">
-    <div>
+    <div class="fish-container">
+      <PhosphorIconHandPointing
+        v-if="showClickHint"
+        class="click-hint"
+        size="7rem"
+      />
       <AtomsAnimatedImageButton
         v-if="isButtonVisible"
         :class="{
@@ -53,6 +58,7 @@ const isRotatingAndMovingUp = ref(false);
 const isMovingRight = ref(false);
 const isFadeIn = ref(false);
 const disabled = ref(false);
+const showClickHint = ref(false);
 
 // ボタン押下回数を管理
 const clickCount = ref(0);
@@ -126,9 +132,26 @@ watch(fish, (newFish) => {
     emit("fishSpawned");
   }
 });
+watch(fish, (newFish) => {
+  if (newFish && newFish.fish) {
+    showClickHint.value = false;
+
+    clickHintTimer = setTimeout(() => {
+      if (clickCount.value === 0) {
+        showClickHint.value = true;
+      }
+    }, 10000);
+  }
+});
+watch(clickCount, (newCount) => {
+  if (newCount > 0) {
+    showClickHint.value = false; // クリックされたら非表示
+  }
+});
 let intervalId: NodeJS.Timeout | null = null;
 let moveRightTimer: NodeJS.Timeout | null = null; // 右移動のタイマー
 let gameLoopTimer: NodeJS.Timeout | null = null; // fishingGameLoopのタイマー
+let clickHintTimer: NodeJS.Timeout | null = null;
 
 // ゲームループを停止するフラグ
 let stopGameLoop = false;
@@ -162,6 +185,7 @@ const fishingGameLoop = async () => {
       emit("fishEscape");
       isFadeIn.value = false;
       isMovingRight.value = true;
+      showClickHint.value = false;
     }
   }, 20000);
 
@@ -186,12 +210,29 @@ onBeforeUnmount(() => {
     clearTimeout(gameLoopTimer);
     gameLoopTimer = null;
   }
+  if (clickHintTimer) {
+    clearTimeout(clickHintTimer);
+    clickHintTimer = null;
+  }
 
   stopGameLoop = true;
 });
 </script>
 
 <style scoped lang="scss">
+.fish-container {
+  position: relative;
+}
+
+.click-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: clickPulse 1.5s infinite alternate;
+  pointer-events: none;
+  z-index: 10;
+}
 .rotatingAndMovingUp {
   position: relative;
   animation: rotateAndMoveUp 3s ease-in-out forwards;

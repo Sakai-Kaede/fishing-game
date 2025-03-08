@@ -32,10 +32,10 @@ const fishStyle = computed(() => {
       background = "#587fb9";
       break;
     case "gray":
-      background = "#cbcbcb";
+      background = "rgba(203, 203, 203, 0.5)";
       break;
     default:
-      background = "#cbcbcb";
+      background = "rgba(203, 203, 203, 0.5)";
       break;
   }
   return {

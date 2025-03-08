@@ -88,18 +88,21 @@ const backgroundStyle = computed(() => {
 });
 
 onMounted(() => {
+  setInterval(() => {
+    currentDepth.value = depth.value;
+    shadowSwitch_1.value = !shadowSwitch_1.value;
+    shadowFlag_1.value = true;
+  }, 12000);
+  setInterval(() => {
+    currentDepth.value = depth.value;
+    shadowSwitch_2.value = !shadowSwitch_2.value;
+    shadowFlag_2.value = true;
+  }, 15000);
   setTimeout(() => {
-    setInterval(() => {
-      currentDepth.value = depth.value;
-      shadowSwitch_1.value = !shadowSwitch_1.value;
-      shadowFlag_1.value = true;
-    }, 12000);
-    setInterval(() => {
-      currentDepth.value = depth.value;
-      shadowSwitch_2.value = !shadowSwitch_2.value;
-      shadowFlag_2.value = true;
-    }, 15000);
-  }, 5000);
+    currentDepth.value = depth.value;
+    shadowSwitch_1.value = !shadowSwitch_1.value;
+    shadowFlag_1.value = true;
+  }, 2000);
 });
 </script>
 
@@ -171,6 +174,7 @@ onMounted(() => {
 
 .adjust-depth {
   position: absolute;
+  z-index: 10;
   bottom: 7rem;
   left: 50%;
   transform: translateX(-50%);

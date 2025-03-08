@@ -14,6 +14,7 @@ import "@/assets/scss/main.scss";
   justify-content: center;
   align-items: center;
   background-color: $blue-10;
+  min-height: 100vh;
 
   .board {
     margin: 5rem;

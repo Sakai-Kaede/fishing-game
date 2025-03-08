@@ -131,9 +131,9 @@ const getFishImage = (fishName: string): string => {
 
 // スコアに応じたカードのバリアントを決定
 const getVariant = (score: number): string => {
-  if (score >= 800) return "gold";
+  if (score >= 1000) return "gold";
   if (score >= 450) return "silver";
-  if (score >= 250) return "bronze";
+  if (score >= 350) return "bronze";
   return "blue";
 };
 

@@ -26,7 +26,7 @@ import タコ from "@/assets/images/fish/tako.png";
 import トビウオ from "@/assets/images/fish/tobiuo.png";
 import ウミガメ from "@/assets/images/fish/umigame.png";
 import ウナギ from "@/assets/images/fish/unagi.png";
-import ウツボ from "@/assets/images/fish/unagi.png";
+import ウツボ from "@/assets/images/fish/utsubo.png";
 import ザトウクジラ from "@/assets/images/fish/zatoukujira.png";
 import デフォルトの魚 from "@/assets/images/fish/default-fish.png";
 

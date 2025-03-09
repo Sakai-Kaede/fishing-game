@@ -47,6 +47,8 @@ export class CreatePreFishUseCase {
     const fishingRodLevel = userData.fishingRodLevel;
     const { fish: FishInterface, randomId } = fishDomain.getFish();
 
+    const saveRequiredInteractions = FishInterface.requiredInteractions;
+
     FishInterface.requiredInteractions = Math.ceil(
       FishInterface.requiredInteractions / fishingRodLevel
     );
@@ -57,7 +59,7 @@ export class CreatePreFishUseCase {
       userId
     );
     await this.fishRepository.deleteOldPreFishByUserId(userId);
-    FishInterface.requiredInteractions = FishInterface.requiredInteractions;
+    FishInterface.requiredInteractions = saveRequiredInteractions;
     return {
       fish: savedFish.fish,
       randomId: savedFish.randomId,

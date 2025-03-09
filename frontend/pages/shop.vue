@@ -15,23 +15,23 @@
           <ShopFishingRodUpdateButton
             :level="5"
             class="button"
-            @click="onReactionHandling(5, userStore.sumScore < 1000)"
-          />
-        </div>
-        <div class="item">
-          <span class="price-text">3000円</span>
-          <ShopFishingRodUpdateButton
-            :level="10"
-            class="button"
-            @click="onReactionHandling(10, userStore.sumScore < 3000)"
+            @click="onReactionHandling(5, userStore.sumScore <= 1000)"
           />
         </div>
         <div class="item">
           <span class="price-text">5000円</span>
           <ShopFishingRodUpdateButton
+            :level="10"
+            class="button"
+            @click="onReactionHandling(10, userStore.sumScore <= 5000)"
+          />
+        </div>
+        <div class="item">
+          <span class="price-text">10000円</span>
+          <ShopFishingRodUpdateButton
             :level="20"
             class="button"
-            @click="onReactionHandling(20, userStore.sumScore < 5000)"
+            @click="onReactionHandling(20, userStore.sumScore <= 10000)"
           />
         </div>
       </div>
@@ -78,12 +78,12 @@ const onReactionHandling = (reqLevel: number, notEnoughError: boolean) => {
         purchaseRod("お買い上げありがとうございます！", 1000, 5);
         break;
       case 10:
-        purchaseRod("お選びいただきありがとうございます！", 3000, 10);
+        purchaseRod("お選びいただきありがとうございます！", 5000, 10);
         break;
       case 20:
         purchaseRod(
           "お買い上げありがとうございます。最高の釣竿です！",
-          5000,
+          10000,
           20
         );
         break;

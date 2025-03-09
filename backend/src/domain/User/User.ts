@@ -89,9 +89,9 @@ export class User {
       case 5:
         return [5, 1000];
       case 10:
-        return [10, 3000];
+        return [10, 5000];
       case 20:
-        return [20, 5000];
+        return [20, 10000];
       default:
         throw new Error("無効な入力です");
     }

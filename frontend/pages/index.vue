@@ -35,6 +35,12 @@
               class="animated-image-button"
               :style="{ width: link.size + 'rem' }"
             >
+              <PhosphorIconHandPointing
+                v-if="showClickHint && link.to === '/login'"
+                class="click-hint"
+                size="7rem"
+                color="black"
+              />
               <PhosphorIconSignIn
                 v-if="link.to === '/login'"
                 class="login"
@@ -64,10 +70,14 @@ import illustratedBookImg from "@/assets/images/naviIcon/illustratedBook.png";
 
 const userStore = useUserStore();
 const waveImage = ref(waveImg);
+const showClickHint = ref(false);
 
 const isUserLoggedIn = ref(false);
 onMounted(() => {
   isUserLoggedIn.value = !!userStore.userId;
+  if (!userStore.userId) {
+    showClickHint.value = true;
+  }
 });
 
 const linkProps = (to: string) => ({
@@ -152,6 +162,16 @@ const bottomLinks = [
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 15px;
+
+  .click-hint {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: clickPulse 1.5s infinite alternate;
+    pointer-events: none;
+    z-index: 10;
+  }
 
   .top-row,
   .bottom-row {

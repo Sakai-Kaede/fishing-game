@@ -1,5 +1,10 @@
 <div id="top"></div>
 
+## 遊び方
+
+以下のリンクからゲームをプレイできます！  
+🔗 [釣りゲームをプレイする](https://fishing-game-frontend.vercel.app/)
+
 ## 使用技術一覧
 
 <p style="display: inline">

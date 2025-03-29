@@ -59,6 +59,7 @@ const changeCards = async () => {
   );
   if (result.message === "役ができました！") {
     pokerStore.isDoubleUpRequested = true;
+    pokerStore.isChange = false;
   }
   pokerStore.swapIndices = [];
 };

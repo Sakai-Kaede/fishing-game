@@ -85,7 +85,6 @@ export const usePokerStore = defineStore(
 
     const changeAndCalculateHand = async (changeCard: number[]) => {
       try {
-        isChange.value = false;
         const pokerRepository = RepositoryFactory.get("poker");
         const response = (await pokerRepository.changeAndCalculateHand(
           userStore.userId,
@@ -98,6 +97,7 @@ export const usePokerStore = defineStore(
           return { success: true, message: "役ができました！" };
         } else {
           isNotStartPoker.value = true;
+          isChange.value = false;
           message.value = "役ができませんでした";
           return { success: true, message: "役ができませんでした..." };
         }

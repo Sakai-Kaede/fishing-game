@@ -45,6 +45,18 @@ export const usePokerStore = defineStore(
       message.value = "ベッドする金額を決めて下さい";
     };
 
+    // 進行不可能でないか、条件をチェックする
+    watchEffect(() => {
+      if (
+        !isChange.value &&
+        !isDoubleUpRequested.value &&
+        !isNotStartPoker.value &&
+        !isDoubleUp.value
+      ) {
+        isNotStartPoker.value = true;
+      }
+    });
+
     const pokerDeal = async () => {
       try {
         const pokerRepository = RepositoryFactory.get("poker");
